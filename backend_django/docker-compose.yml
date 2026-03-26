@@ -1,0 +1,29 @@
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: careerleap_postgres
+    environment:
+      POSTGRES_DB: careerleap
+      POSTGRES_USER: careerleap_user
+      POSTGRES_PASSWORD: careerleap_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U careerleap_user -d careerleap"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  adminer:
+    image: adminer:latest
+    container_name: careerleap_adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

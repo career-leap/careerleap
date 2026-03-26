@@ -1,0 +1,96 @@
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:16-alpine
+    container_name: careerleap_postgres
+    environment:
+      POSTGRES_DB: careerleap
+      POSTGRES_USER: careerleap_user
+      POSTGRES_PASSWORD: careerleap_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U careerleap_user -d careerleap"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - careerleap_network
+
+  # Django Backend
+  backend:
+    build:
+      context: ./backend_django
+      dockerfile: Dockerfile
+    container_name: careerleap_backend
+    environment:
+      # Database
+      DB_NAME: careerleap
+      DB_USER: careerleap_user
+      DB_PASSWORD: careerleap_pass
+      DB_HOST: db
+      DB_PORT: 5432
+      # Security (generate a real secret key for production)
+      SECRET_KEY: ${SECRET_KEY:-django-insecure-dev-key-change-in-production}
+      DEBUG: ${DEBUG:-True}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1,backend}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:5177,http://frontend:5177}
+      # JWT Settings
+      JWT_ACCESS_TOKEN_LIFETIME_MINUTES: ${JWT_ACCESS_TOKEN_LIFETIME_MINUTES:-15}
+      JWT_REFRESH_TOKEN_LIFETIME_DAYS: ${JWT_REFRESH_TOKEN_LIFETIME_DAYS:-7}
+      JWT_COOKIE_SECURE: ${JWT_COOKIE_SECURE:-False}
+      # Email
+      EMAIL_BACKEND: ${EMAIL_BACKEND:-django.core.mail.backends.console.EmailBackend}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5177}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend_django:/app
+      - backend_media:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - careerleap_network
+    command: python manage.py runserver 0.0.0.0:8000
+
+  # React Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: careerleap_frontend
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=/api
+    ports:
+      - "5177:5177"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - careerleap_network
+
+  # Adminer - Database Management UI
+  adminer:
+    image: adminer:latest
+    container_name: careerleap_adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - careerleap_network
+
+volumes:
+  postgres_data:
+  backend_media:
+
+networks:
+  careerleap_network:
+    driver: bridge

@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+/* Enable dark mode with class strategy for manual toggling */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Base styles with dark mode transition */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  @apply antialiased;
+}
+
+/* Smooth theme transitions for all color-related properties */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Custom animations */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Selection styling */
+::selection {
+  @apply bg-indigo-600 text-white;
+}
+
+/* Scrollbar styling for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-500;
+}
+
+/* Focus ring for accessibility */
+*:focus-visible {
+  @apply outline-none ring-2 ring-indigo-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-900;
+}
+
+/* Disable transitions on page load to prevent flash */
+.preload * {
+  transition: none !important;
+}

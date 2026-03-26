@@ -1,0 +1,45 @@
+src/
+├── components/
+│   ├── Navigation.jsx
+│   ├── Footer.jsx
+│   ├── Hero.jsx
+│   ├── FeatureCard.jsx
+│   ├── MentorCard.jsx
+│   ├── PricingCard.jsx
+│   └── StepCard.jsx
+├── pages/
+│   ├── Home.jsx
+│   ├── About.jsx
+│   ├── Mentors.jsx
+│   ├── HowItWorks.jsx
+│   ├── Pricing.jsx
+│   └── Contact.jsx
+├── App.jsx
+└── index.css
+
+
+
+┌─────────────┐      ┌─────────────┐      ┌─────────────┐
+│   React     │──────▶│   Node.js   │──────▶│  PostgreSQL │
+│   Frontend  │◀──────│   Express   │◀──────│   Database  │
+└─────────────┘      └─────────────┘      └─────────────┘
+                            │
+                     ┌─────────────┐
+                    │     JWT     │
+                     │   Tokens    │
+                     └─────────────┘
+
+careerleap/
+├── client/                 # React frontend (your current code)
+│   ├── src/
+│   └── package.json
+├── server/                 # Node.js backend (new)
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── utils/
+│   ├── server.js
+│   └── package.json
+└── database/              # Migrations/seeds

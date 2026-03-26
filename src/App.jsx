@@ -1,0 +1,220 @@
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, NavLink, Navigate } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
+import { useAuthStore } from './store/authStore';
+import ThemeToggle from './components/ThemeToggle';
+import Home from './pages/Home';
+import About from './pages/About';
+import Mentors from './pages/Mentors';
+import HowItWorks from './pages/HowItWorks';
+import Pricing from './pages/Pricing';
+import Contact from './pages/Contact';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import Profile from './pages/Profile';
+import MySessions from './pages/MySessions';
+import FileUpload from './pages/FileUpload';
+
+// Protected route wrapper
+function ProtectedRoute({ children }) {
+  const { isAuthenticated } = useAuthStore();
+  return isAuthenticated ? children : <Navigate to="/login" />;
+}
+
+// Navigation component
+function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
+  const { user, isAuthenticated, logout } = useAuthStore();
+  
+  return (
+    <nav className="fixed top-0 left-0 right-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md z-50 border-b border-gray-200 dark:border-gray-700 transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <NavLink to="/" className="flex items-center gap-2 text-2xl font-extrabold text-indigo-600">
+            <img src="/image.png" alt="CareerLeap Logo" className="h-9 w-auto object-contain" />
+            CareerLeap
+          </NavLink>
+
+          <div className="hidden md:flex items-center gap-8">
+            <NavLink to="/" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Home</NavLink>
+            <NavLink to="/about" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>About</NavLink>
+            {isAuthenticated && (
+              <>
+                <NavLink to="/mentors" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Mentors</NavLink>
+                <NavLink to="/my-sessions" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>My Sessions</NavLink>
+                <NavLink to="/files" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Files</NavLink>
+                <NavLink to="/profile" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Profile</NavLink>
+              </>
+            )}
+          </div>
+
+          <div className="hidden md:flex items-center gap-4">
+            <ThemeToggle />
+            {isAuthenticated ? (
+              <>
+                <span className="text-gray-700 dark:text-gray-300">Hello, {user?.firstName}</span>
+                <button 
+                  onClick={logout}
+                  className="px-4 py-2 text-red-600 dark:text-red-400 border-2 border-red-600 dark:border-red-400 rounded-lg font-semibold hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition-all"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <NavLink to="/login" className="px-4 py-2 text-indigo-600 dark:text-indigo-400 border-2 border-indigo-600 dark:border-indigo-400 rounded-lg font-semibold hover:bg-indigo-600 hover:text-white transition-all">
+                  Log In
+                </NavLink>
+                <NavLink to="/register" className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
+                  Get Started
+                </NavLink>
+              </>
+            )}
+          </div>
+
+          <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle />
+            <button 
+              className="p-2 text-indigo-600 dark:text-indigo-400"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+
+        {mobileMenuOpen && (
+          <div className="md:hidden py-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex flex-col gap-4">
+              <NavLink to="/" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 dark:text-gray-300">Home</NavLink>
+              <NavLink to="/about" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 dark:text-gray-300">About</NavLink>
+              {isAuthenticated && (
+                <>
+                  <NavLink to="/mentors" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 dark:text-gray-300">Mentors</NavLink>
+                  <NavLink to="/my-sessions" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 dark:text-gray-300">My Sessions</NavLink>
+                  <NavLink to="/files" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 dark:text-gray-300">Files</NavLink>
+                  <NavLink to="/profile" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 dark:text-gray-300">Profile</NavLink>
+                </>
+              )}
+              {isAuthenticated ? (
+                <button onClick={() => { logout(); setMobileMenuOpen(false); }} className="text-red-600 dark:text-red-400">Logout</button>
+              ) : (
+                <>
+                  <NavLink to="/login" onClick={() => setMobileMenuOpen(false)} className="text-indigo-600 dark:text-indigo-400">Login</NavLink>
+                  <NavLink to="/register" onClick={() => setMobileMenuOpen(false)} className="text-indigo-600 dark:text-indigo-400">Register</NavLink>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+}
+
+function App() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { checkAuth } = useAuthStore();
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  return (
+    <Router>
+      <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
+        <Navigation mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
+        
+        <main className="pt-16">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route 
+              path="/mentors" 
+              element={
+                <ProtectedRoute>
+                  <Mentors />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/profile" 
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/my-sessions" 
+              element={
+                <ProtectedRoute>
+                  <MySessions />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/files" 
+              element={
+                <ProtectedRoute>
+                  <FileUpload />
+                </ProtectedRoute>
+              } 
+            />
+          </Routes>
+        </main>
+
+        <footer className="bg-slate-900 dark:bg-black text-white py-16 px-4 transition-colors">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="flex items-center gap-2 text-2xl font-extrabold text-white mb-4">
+                <img src="/image.png" alt="CareerLeap Logo" className="h-9 w-auto object-contain" />
+                CareerLeap
+              </div>
+              <p className="text-gray-400 text-sm">
+                Connecting ambitious professionals with industry experts for personalized career guidance.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Platform</h4>
+              <ul className="space-y-2 text-gray-400 text-sm">
+                <li><NavLink to="/mentors" className="hover:text-white transition-colors">Find a Mentor</NavLink></li>
+                <li><a href="#" className="hover:text-white transition-colors">Become a Mentor</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Courses</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Company</h4>
+              <ul className="space-y-2 text-gray-400 text-sm">
+                <li><NavLink to="/about" className="hover:text-white transition-colors">About Us</NavLink></li>
+                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Support</h4>
+              <ul className="space-y-2 text-gray-400 text-sm">
+                <li><NavLink to="/contact" className="hover:text-white transition-colors">Help Center</NavLink></li>
+                <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Terms</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="max-w-7xl mx-auto pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+            © 2026 CareerLeap. All rights reserved.
+          </div>
+        </footer>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
