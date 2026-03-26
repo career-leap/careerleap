@@ -14,5 +14,5 @@ COPY . .
 # Expose Vite dev server port
 EXPOSE 5177
 
-# Start development server
-CMD ["npm", "run", "dev", "--", "--host"]
+# Start development server on port 5177
+CMD ["npm", "run", "dev", "--", "--host", "--port", "5177"]
