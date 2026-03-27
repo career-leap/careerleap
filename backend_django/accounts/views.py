@@ -13,7 +13,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
 from django_ratelimit.decorators import ratelimit
-from .serializers import UserSerializer, UserCreateSerializer, LoginSerializer
+from .serializers import UserSerializer, UserCreateSerializer, LoginSerializer, UserUpdateSerializer
 
 User = get_user_model()
 
@@ -233,6 +233,29 @@ def get_me(request):
         'success': True,
         'user': serializer.data
     })
+
+
+@api_view(['PUT', 'PATCH'])
+@permission_classes([IsAuthenticated])
+def update_profile(request):
+    """Update current user's profile"""
+    user = request.user
+    serializer = UserUpdateSerializer(user, data=request.data, partial=True)
+    
+    if serializer.is_valid():
+        serializer.save()
+        # Return updated user data
+        return Response({
+            'success': True,
+            'message': 'Profile updated successfully',
+            'user': UserSerializer(user).data
+        })
+    
+    return Response({
+        'success': False,
+        'message': 'Validation failed',
+        'errors': serializer.errors
+    }, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])

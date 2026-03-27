@@ -5,6 +5,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', views.login, name='login'),
     path('me/', views.get_me, name='get_me'),
+    path('profile/', views.update_profile, name='update_profile'),
     path('logout/', views.logout, name='logout'),
     path('refresh/', views.refresh_token, name='refresh'),
     # Password reset endpoints

@@ -27,12 +27,18 @@ export default function Profile() {
     e.preventDefault();
     setLoading(true);
     try {
-      await api.patch('/users/profile', formData);
-      await checkAuth(); // Refresh user data
-      setMessage('Profile updated!');
-      setEditing(false);
+      const response = await api.patch('/auth/profile/', formData);
+      if (response.data.success) {
+        // Update user data in store with the returned user data
+        useAuthStore.setState({ user: response.data.user });
+        setMessage('Profile updated successfully!');
+        setEditing(false);
+      } else {
+        setMessage(response.data.message || 'Failed to update profile');
+      }
     } catch (error) {
-      setMessage('Failed to update profile');
+      const errorMessage = error.response?.data?.message || error.response?.data?.errors?.firstName?.[0] || error.response?.data?.errors?.lastName?.[0] || 'Failed to update profile';
+      setMessage(errorMessage);
     }
     setLoading(false);
   };

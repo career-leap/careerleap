@@ -122,3 +122,20 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
+
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    """Serializer for updating user profile"""
+    firstName = serializers.CharField(source='first_name', required=False)
+    lastName = serializers.CharField(source='last_name', required=False)
+    yearsOfExperience = serializers.IntegerField(source='years_of_experience', required=False, allow_null=True)
+    
+    class Meta:
+        model = User
+        fields = ['firstName', 'lastName', 'bio', 'industry', 'location', 'yearsOfExperience']
+    
+    def validate_yearsOfExperience(self, value):
+        """Validate years of experience is a positive integer"""
+        if value is not None and value < 0:
+            raise serializers.ValidationError("Years of experience cannot be negative.")
+        return value
