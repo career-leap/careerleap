@@ -4,6 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+from django.core.mail import send_mail
+from django.conf import settings
 from datetime import datetime, timedelta
 from .models import Session
 from .serializers import SessionSerializer, SessionCreateSerializer, SessionUpdateSerializer
@@ -112,6 +114,42 @@ def create_session(request):
         mentee=request.user,
         **serializer.validated_data
     )
+    
+    # Send email notification to admin
+    try:
+        mentor = session.mentor
+        mentee = session.mentee
+        scheduled_at = session.scheduled_at
+        
+        email_subject = f"New Session Booking: {mentee.first_name} {mentee.last_name} with {mentor.first_name} {mentor.last_name}"
+        email_body = f"""A new session has been booked on CareerLeap.
+
+Session Details:
+----------------
+Mentee: {mentee.first_name} {mentee.last_name} ({mentee.email})
+Mentor: {mentor.first_name} {mentor.last_name} ({mentor.email})
+Date & Time: {scheduled_at.strftime('%B %d, %Y at %I:%M %p')}
+Topic: {session.topic or 'Not specified'}
+Duration: {session.duration} minutes
+Status: {session.status}
+
+Session ID: {session.id}
+Booked at: {session.created_at.strftime('%B %d, %Y at %I:%M %p')}
+
+---
+This is an automated notification from CareerLeap.
+"""
+        
+        send_mail(
+            subject=email_subject,
+            message=email_body,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=['info@career-leap.academy'],
+            fail_silently=True,
+        )
+    except Exception:
+        # Don't fail the booking if email fails
+        pass
     
     return Response({
         'success': True,
