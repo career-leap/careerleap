@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Check } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const plans = [
   {
@@ -9,7 +10,7 @@ const plans = [
     description: 'Perfect for exploring mentorship',
     features: ['Browse all mentors', '1 free intro session', 'Community access', 'Basic profile', 'Email support'],
     featured: false,
-    buttonText: 'Get Started',
+    buttonText: 'Contact Us',
     buttonStyle: 'outline'
   },
   {
@@ -85,15 +86,16 @@ export default function Pricing() {
                 ))}
               </ul>
               
-              <button 
-                className={`w-full py-3 rounded-lg font-semibold transition-all ${
+              <Link
+                to="/contact"
+                className={`block w-full py-3 rounded-lg font-semibold text-center transition-all ${
                   plan.buttonStyle === 'primary' 
                     ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg' 
                     : 'border-2 border-indigo-600 dark:border-indigo-500 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 dark:hover:text-white'
                 }`}
               >
                 {plan.buttonText}
-              </button>
+              </Link>
             </div>
           ))}
         </div>

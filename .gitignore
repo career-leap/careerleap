@@ -84,3 +84,4 @@ coverage.xml
 
 # Project documentation (for AI agents only)
 AGENTS.md
+RENDER_DEPLOY_PLAN.md

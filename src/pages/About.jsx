@@ -234,49 +234,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Leadership & Standards */}
-      <section className="py-20 px-4 bg-white dark:bg-gray-900 transition-colors">
-        <div className="max-w-7xl mx-auto">
-          <motion.div 
-            className="max-w-3xl mx-auto text-center mb-12"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="w-12 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mx-auto mb-6" />
-            <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-4">Leadership & Standards</h2>
-          </motion.div>
-
-          <motion.div 
-            className="max-w-2xl mx-auto bg-slate-50 dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white text-xl font-bold">
-                [F]
-              </div>
-              <div>
-                <p className="text-sm text-gray-500 dark:text-gray-500 uppercase tracking-wider font-semibold">Founder</p>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white">[Full Name]</h3>
-              </div>
-            </div>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              <span className="font-semibold text-slate-700 dark:text-gray-300">Background:</span> [Brief professional summary – 1–2 lines]
-            </p>
-            <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
-              <p className="text-gray-600 dark:text-gray-400">
-                CareerLeap operates with defined cohort standards, structured evaluation frameworks, and measurable development benchmarks.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Core Values */}
+{/* Core Values */}
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-800 dark:to-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <motion.div 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuthStore } from '../store/authStore';
 import api from '../lib/api';
-import { Briefcase, MapPin, DollarSign, Camera } from 'lucide-react';
+import { Briefcase, MapPin, Camera } from 'lucide-react';
 
 export default function Profile() {
   const { user, checkAuth } = useAuthStore();
@@ -193,13 +193,6 @@ export default function Profile() {
         {user.role === 'mentor' && user.mentorProfile && (
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-8 mt-6 transition-colors">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Mentor Settings</h2>
-            <div className="flex items-center gap-3 mb-4">
-              <DollarSign className="text-gray-400 dark:text-gray-500" />
-              <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Hourly Rate</p>
-                <p className="font-medium text-gray-900 dark:text-white">${user.mentorProfile.hourlyRate}/hour</p>
-              </div>
-            </div>
             <div className="flex items-center gap-3">
               <div className="text-sm text-gray-500 dark:text-gray-400">Availability</div>
               <span className={`px-3 py-1 rounded-full text-sm ${user.mentorProfile.isAvailable ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-400'}`}>

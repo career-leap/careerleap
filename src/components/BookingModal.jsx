@@ -182,13 +182,9 @@ export default function BookingModal({ isOpen, onClose, mentor }) {
                 <span className="text-gray-500 dark:text-gray-400">Date</span>
                 <span className="font-medium text-gray-900 dark:text-white">{selectedDate}</span>
               </div>
-              <div className="flex justify-between mb-2">
+              <div className="flex justify-between">
                 <span className="text-gray-500 dark:text-gray-400">Time</span>
                 <span className="font-medium text-gray-900 dark:text-white">{selectedSlot?.hour}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-500 dark:text-gray-400">Price</span>
-                <span className="font-medium text-gray-900 dark:text-white">${profile.hourly_rate || profile.hourlyRate || 0}/hr</span>
               </div>
             </div>
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Star, MapPin, Briefcase, DollarSign } from 'lucide-react';
+import { Star, MapPin, Briefcase } from 'lucide-react';
 import BookingModal from './BookingModal';
 
 export default function MentorCard({ mentor }) {
@@ -58,11 +58,7 @@ export default function MentorCard({ mentor }) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
-          <div className="flex items-center gap-1 text-indigo-600 dark:text-indigo-400 font-bold">
-            <DollarSign size={18} />
-            <span>{profile.hourly_rate || profile.hourlyRate || 0}/hr</span>
-          </div>
+        <div className="flex items-center justify-end pt-4 border-t border-gray-100 dark:border-gray-700">
           <button 
             onClick={() => setShowBooking(true)}
             className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"

@@ -16,6 +16,9 @@ import ResetPassword from './pages/ResetPassword';
 import Profile from './pages/Profile';
 import MySessions from './pages/MySessions';
 import FileUpload from './pages/FileUpload';
+import Impressum from './pages/Impressum';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import CookiePolicy from './pages/CookiePolicy';
 
 // Protected route wrapper
 function ProtectedRoute({ children }) {
@@ -66,7 +69,7 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
                 <NavLink to="/login" className="px-4 py-2 text-indigo-600 dark:text-indigo-400 border-2 border-indigo-600 dark:border-indigo-400 rounded-lg font-semibold hover:bg-indigo-600 hover:text-white transition-all">
                   Log In
                 </NavLink>
-                <NavLink to="/register" className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
+                <NavLink to="/contact" className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
                   Get Started
                 </NavLink>
               </>
@@ -102,7 +105,7 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
               ) : (
                 <>
                   <NavLink to="/login" onClick={() => setMobileMenuOpen(false)} className="text-indigo-600 dark:text-indigo-400">Login</NavLink>
-                  <NavLink to="/register" onClick={() => setMobileMenuOpen(false)} className="text-indigo-600 dark:text-indigo-400">Register</NavLink>
+                  <NavLink to="/contact" onClick={() => setMobileMenuOpen(false)} className="text-indigo-600 dark:text-indigo-400">Get Started</NavLink>
                 </>
               )}
             </div>
@@ -169,6 +172,9 @@ function App() {
                 </ProtectedRoute>
               } 
             />
+            <Route path="/impressum" element={<Impressum />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/cookies" element={<CookiePolicy />} />
           </Routes>
         </main>
 
@@ -203,8 +209,9 @@ function App() {
               <h4 className="font-semibold mb-4">Support</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
                 <li><NavLink to="/contact" className="hover:text-white transition-colors">Help Center</NavLink></li>
-                <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Terms</a></li>
+                <li><NavLink to="/privacy" className="hover:text-white transition-colors">Privacy</NavLink></li>
+                <li><NavLink to="/cookies" className="hover:text-white transition-colors">Cookie Policy</NavLink></li>
+                <li><NavLink to="/impressum" className="hover:text-white transition-colors">Impressum</NavLink></li>
               </ul>
             </div>
           </div>
