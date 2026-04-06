@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Loader2 } from 'lucide-react';
+import api from '../lib/api';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -8,11 +9,28 @@ export default function Contact() {
     subject: '',
     message: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState({ type: '', message: '' });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert('Thank you for your message! We will get back to you soon.');
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setLoading(true);
+    setStatus({ type: '', message: '' });
+
+    try {
+      const response = await api.post('/auth/contact/', formData);
+      if (response.data.success) {
+        setStatus({ type: 'success', message: response.data.message });
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setStatus({ type: 'error', message: response.data.message || 'Failed to send message' });
+      }
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Failed to send message. Please try again later.';
+      setStatus({ type: 'error', message: errorMessage });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -37,33 +55,24 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-slate-900 dark:text-white">Email Us</h4>
-                  <p className="text-gray-600 dark:text-gray-400">hello@careerleap.com</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-400">
-                  <Phone size={24} />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-slate-900 dark:text-white">Call Us</h4>
-                  <p className="text-gray-600 dark:text-gray-400">+1 (555) 123-4567</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-400">
-                  <MapPin size={24} />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-slate-900 dark:text-white">Visit Us</h4>
-                  <p className="text-gray-600 dark:text-gray-400">123 Innovation Drive, San Francisco, CA 94102</p>
+                  <a href="mailto:info@career-leap.academy" className="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                    info@career-leap.academy
+                  </a>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="bg-slate-50 dark:bg-gray-800 rounded-2xl p-8 transition-colors">
+            {status.message && (
+              <div className={`mb-6 p-4 rounded-lg ${
+                status.type === 'success' 
+                  ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' 
+                  : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'
+              }`}>
+                {status.message}
+              </div>
+            )}
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label className="block font-semibold text-slate-900 dark:text-white mb-2">Your Name</label>
@@ -114,9 +123,17 @@ export default function Contact() {
               
               <button
                 type="submit"
-                className="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg transition-all"
+                disabled={loading}
+                className="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                Send Message
+                {loading ? (
+                  <>
+                    <Loader2 className="animate-spin" size={20} />
+                    Sending...
+                  </>
+                ) : (
+                  'Send Message'
+                )}
               </button>
             </form>
           </div>

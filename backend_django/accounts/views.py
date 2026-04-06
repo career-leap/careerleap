@@ -494,3 +494,78 @@ def validate_reset_token(request):
         'valid': True,
         'message': 'Token is valid'
     })
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+@ratelimit(key='ip', rate='5/m', method=['POST'])
+def contact_form(request):
+    """
+    Handle contact form submissions.
+    Sends an email to info@career-leap.academy with the form data.
+    Rate limited to 5 submissions per minute per IP.
+    """
+    # Check if request was rate limited
+    if getattr(request, 'limited', False):
+        return Response({
+            'success': False,
+            'message': 'Too many requests. Please try again later.'
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
+    
+    # Get form data
+    name = request.data.get('name', '').strip()
+    email = request.data.get('email', '').strip()
+    subject = request.data.get('subject', '').strip()
+    message = request.data.get('message', '').strip()
+    
+    # Validate required fields
+    if not all([name, email, subject, message]):
+        return Response({
+            'success': False,
+            'message': 'All fields are required'
+        }, status=status.HTTP_400_BAD_REQUEST)
+    
+    # Validate email format
+    from django.core.validators import validate_email
+    from django.core.exceptions import ValidationError
+    try:
+        validate_email(email)
+    except ValidationError:
+        return Response({
+            'success': False,
+            'message': 'Invalid email address'
+        }, status=status.HTTP_400_BAD_REQUEST)
+    
+    # Construct email
+    email_subject = f"Contact Form: {subject}"
+    email_body = f"""New message from CareerLeap contact form:
+
+Name: {name}
+Email: {email}
+Subject: {subject}
+
+Message:
+{message}
+
+---
+This message was sent from the CareerLeap website contact form.
+"""
+    
+    try:
+        send_mail(
+            subject=email_subject,
+            message=email_body,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=['info@career-leap.academy'],
+            fail_silently=False,
+        )
+        
+        return Response({
+            'success': True,
+            'message': 'Your message has been sent successfully. We will get back to you soon.'
+        })
+    except Exception as e:
+        return Response({
+            'success': False,
+            'message': 'Failed to send message. Please try again later.'
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
