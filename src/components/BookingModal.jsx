@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useBookingStore } from '../store/bookingStore';
 import { X, Calendar, Clock, Check } from 'lucide-react';
 
@@ -16,8 +16,16 @@ export default function BookingModal({ isOpen, onClose, mentor }) {
     fetchAvailability,
     selectSlot,
     bookSession,
-    clearBooking
+    clearBooking,
+    setSelectedMentor
   } = useBookingStore();
+
+  // Set the mentor in the store when the modal opens
+  useEffect(() => {
+    if (isOpen && mentor) {
+      setSelectedMentor(mentor);
+    }
+  }, [isOpen, mentor, setSelectedMentor]);
 
   if (!isOpen || !mentor) return null;
 
