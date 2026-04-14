@@ -9,7 +9,7 @@ services:
     plan: starter  # $7/month - upgrade to 'pro' ($25/month) for production
     runtime: image
     image:
-      url: docker.io/render/postgres:latest
+      url: postgres:16-alpine
     
   # Django Backend Web Service
   - type: web
