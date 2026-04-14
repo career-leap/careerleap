@@ -91,14 +91,14 @@ def create_session(request):
     if 'scheduledAt' in data:
         data['scheduled_at'] = data.pop('scheduledAt')
     
-    # Get mentor's hourly rate for price if not provided
-    if 'price' not in data or not data['price']:
-        from mentors.models import MentorProfile
-        try:
-            mentor_profile = MentorProfile.objects.get(user_id=data['mentor'])
-            data['price'] = mentor_profile.hourly_rate
-        except MentorProfile.DoesNotExist:
-            data['price'] = 0
+    # SECURITY: Always compute price server-side from mentor's profile
+    # Ignore any price sent by client to prevent manipulation
+    from mentors.models import MentorProfile
+    try:
+        mentor_profile = MentorProfile.objects.get(user_id=data['mentor'])
+        data['price'] = mentor_profile.hourly_rate
+    except MentorProfile.DoesNotExist:
+        data['price'] = 0
     
     serializer = SessionCreateSerializer(data=data)
     

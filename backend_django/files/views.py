@@ -31,9 +31,23 @@ def list_uploads(request):
     Query params:
     - category: Filter by category
     - my_uploads: 'true' to show only current user's uploads
+    - all_uploads: 'true' to show all uploads (admin only)
     - search: Search in filename and description
+    
+    By default, only shows public files and the user's own uploads.
     """
-    queryset = FileUpload.objects.all()
+    user = request.user
+    
+    # Security: Only show public files OR user's own files by default
+    # Admin can see all files with 'all_uploads=true'
+    show_all = request.query_params.get('all_uploads') == 'true'
+    if show_all and user.role == 'admin':
+        queryset = FileUpload.objects.all()
+    else:
+        # Regular users: public files OR their own uploads
+        queryset = FileUpload.objects.filter(
+            models.Q(is_public=True) | models.Q(user=user)
+        )
     
     # Filter by category
     category = request.query_params.get('category')
@@ -107,6 +121,14 @@ def get_upload_detail(request, upload_id):
             'success': False,
             'message': 'File not found'
         }, status=status.HTTP_404_NOT_FOUND)
+    
+    # Security: Only allow access to public files or user's own files (or admin)
+    user = request.user
+    if not upload.is_public and upload.user != user and user.role != 'admin':
+        return Response({
+            'success': False,
+            'message': 'Permission denied'
+        }, status=status.HTTP_403_FORBIDDEN)
     
     serializer = FileUploadSerializer(upload, context={'request': request})
     

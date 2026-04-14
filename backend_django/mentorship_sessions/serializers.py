@@ -33,4 +33,5 @@ class SessionCreateSerializer(serializers.ModelSerializer):
 class SessionUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Session
-        fields = ['status', 'notes', 'meeting_link', 'payment_status']
+        # SECURITY: Removed 'payment_status' - clients cannot mark sessions as paid
+        fields = ['status', 'notes', 'meeting_link']

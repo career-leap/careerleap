@@ -10,7 +10,8 @@ MAX_FILE_SIZE = 50 * 1024 * 1024
 # Allowed MIME types
 ALLOWED_MIME_TYPES = {
     # Images
-    'image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml',
+    'image/jpeg', 'image/png', 'image/gif', 'image/webp',
+    # Note: Removed 'image/svg+xml' - potential XSS via embedded scripts
     # Documents
     'application/pdf', 'application/msword',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -19,9 +20,10 @@ ALLOWED_MIME_TYPES = {
     'application/vnd.ms-powerpoint',
     'application/vnd.openxmlformats-officedocument.presentationml.presentation',
     'text/plain', 'text/csv',
-    # Code
-    'text/javascript', 'application/json', 'text/html', 'text/css',
+    # Code - Safe code files only
+    'application/json', 'text/css',
     'text/x-python', 'application/x-python-code',
+    # Note: Removed 'text/javascript' and 'text/html' - XSS vulnerabilities
     # Archives
     'application/zip', 'application/x-zip-compressed',
 }
@@ -145,9 +147,7 @@ class FileUploadCreateSerializer(serializers.ModelSerializer):
             'application/vnd.openxmlformats-officedocument.spreadsheetml': 'spreadsheet',
             'application/vnd.ms-powerpoint': 'presentation',
             'application/vnd.openxmlformats-officedocument.presentationml': 'presentation',
-            'text/javascript': 'code',
             'application/json': 'code',
-            'text/html': 'code',
             'text/css': 'code',
             'text/x-python': 'code',
         }

@@ -1,0 +1,97 @@
+# Render Blueprint for CareerLeap
+# This file defines the infrastructure for deploying CareerLeap on Render
+# To deploy: Connect your GitHub repo to Render and use this blueprint
+
+services:
+  # PostgreSQL Database
+  - type: postgres
+    name: careerleap-db
+    plan: starter  # $7/month - upgrade to 'pro' ($25/month) for production
+    ipAllowList: []  # Only accessible from Render services
+    
+  # Django Backend Web Service
+  - type: web
+    name: careerleap-backend
+    runtime: python
+    plan: starter  # $7/month - upgrade to 'standard' ($25/month) for more resources
+    region: oregon  # Change to your preferred region
+    buildCommand: "./backend_django/build.sh"
+    startCommand: "cd backend_django && gunicorn backend_django.wsgi:application --bind 0.0.0.0:$PORT --workers 2"
+    envVars:
+      # Database URL - automatically injected by Render
+      - key: DATABASE_URL
+        fromDatabase:
+          name: careerleap-db
+          property: connectionString
+      
+      # Security settings
+      - key: SECRET_KEY
+        generateValue: true  # Auto-generate a secure secret key
+      - key: DEBUG
+        value: "False"
+      
+      # CORS and hosts - update after first deploy with your actual frontend URL
+      - key: ALLOWED_HOSTS
+        value: "careerleap-backend.onrender.com"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://careerleap-frontend.onrender.com"
+      - key: FRONTEND_URL
+        value: "https://careerleap-frontend.onrender.com"
+      
+      # JWT Settings
+      - key: JWT_ACCESS_TOKEN_LIFETIME_MINUTES
+        value: "60"
+      - key: JWT_REFRESH_TOKEN_LIFETIME_DAYS
+        value: "7"
+      - key: JWT_COOKIE_SECURE
+        value: "True"
+      
+      # Production security headers
+      - key: SECURE_SSL_REDIRECT
+        value: "True"
+      - key: SESSION_COOKIE_SECURE
+        value: "True"
+      - key: CSRF_COOKIE_SECURE
+        value: "True"
+      
+      # Python version
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      
+      # Optional: Create superuser on first deploy
+      # Uncomment and set these if you want auto superuser creation
+      # - key: DJANGO_SUPERUSER_EMAIL
+      #   value: "admin@yourdomain.com"
+      # - key: DJANGO_SUPERUSER_PASSWORD
+      #   value: "your-secure-password"  # Change this!
+    
+    # Health check endpoint
+    healthCheckPath: /api/auth/login/  # Lightweight endpoint for health checks
+    
+  # React Frontend Static Site
+  - type: static
+    name: careerleap-frontend
+    plan: starter  # Free for static sites
+    buildCommand: "npm ci && npm run build"
+    publishDir: dist
+    envVars:
+      # API URL pointing to the backend service
+      - key: VITE_API_URL
+        value: "https://careerleap-backend.onrender.com/api"
+    
+    # Redirect rules for React Router
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://careerleap-backend.onrender.com/api/*
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+# Note: AWS S3 for media storage is optional but recommended
+# To enable S3 file storage, add these environment variables to the backend service:
+# - AWS_ACCESS_KEY_ID
+# - AWS_SECRET_ACCESS_KEY  
+# - AWS_STORAGE_BUCKET_NAME
+# - AWS_S3_REGION_NAME (default: us-east-1)
+# Without S3, uploaded files will be lost when the service restarts (ephemeral filesystem)
