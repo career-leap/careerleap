@@ -4,7 +4,6 @@
 
 services:
   # PostgreSQL Database (Managed Service)
-  # 'pserv' with 'runtime: image' for managed PostgreSQL
   - type: pserv
     name: careerleap-db
     plan: starter  # $7/month - upgrade to 'pro' ($25/month) for production
@@ -21,11 +20,10 @@ services:
     buildCommand: "./backend_django/build.sh"
     startCommand: "cd backend_django && gunicorn backend_django.wsgi:application --bind 0.0.0.0:$PORT --workers 2"
     envVars:
-      # Database URL - automatically injected by Render
-      - key: DATABASE_URL
-        fromService:
-          name: careerleap-db
-          property: connectionString
+      # NOTE: DATABASE_URL must be set manually after database creation
+      # Go to careerleap-db dashboard → Copy Internal Database URL
+      # Then add it as DATABASE_URL in this service's Environment section
+      # Format: postgres://username:password@host:port/database
       
       # Security settings
       - key: SECRET_KEY
@@ -62,7 +60,7 @@ services:
         value: "3.11.0"
     
     # Health check endpoint
-    healthCheckPath: /api/auth/login/  # Lightweight endpoint for health checks
+    healthCheckPath: /api/auth/login/
     
   # React Frontend Static Site
   - type: web
@@ -79,11 +77,9 @@ services:
     buildCommand: "npm ci && npm run build"
     staticPublishPath: dist
     envVars:
-      # API URL pointing to the backend service
       - key: VITE_API_URL
         value: "https://careerleap-backend.onrender.com/api"
     
-    # Redirect rules for React Router (SPA)
     routes:
       - type: rewrite
         source: /api/*
@@ -91,11 +87,3 @@ services:
       - type: rewrite
         source: /*
         destination: /index.html
-
-# Note: AWS S3 for media storage is optional but recommended
-# To enable S3 file storage, add these environment variables to the backend service:
-# - AWS_ACCESS_KEY_ID
-# - AWS_SECRET_ACCESS_KEY  
-# - AWS_STORAGE_BUCKET_NAME
-# - AWS_S3_REGION_NAME (default: us-east-1)
-# Without S3, uploaded files will be lost when the service restarts (ephemeral filesystem)
