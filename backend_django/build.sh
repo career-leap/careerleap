@@ -4,6 +4,9 @@ set -o errexit
 
 echo "🚀 Building CareerLeap backend..."
 
+# Change to backend_django directory where requirements.txt is located
+cd backend_django
+
 # Install dependencies
 echo "📦 Installing Python dependencies..."
 pip install -r requirements.txt
