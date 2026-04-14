@@ -4,10 +4,10 @@
 
 services:
   # PostgreSQL Database
-  - type: postgres
+  # Note: 'pserv' = managed PostgreSQL service on Render
+  - type: pserv
     name: careerleap-db
     plan: starter  # $7/month - upgrade to 'pro' ($25/month) for production
-    ipAllowList: []  # Only accessible from Render services
     
   # Django Backend Web Service
   - type: web
