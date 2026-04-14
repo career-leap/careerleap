@@ -3,11 +3,14 @@
 # To deploy: Connect your GitHub repo to Render and use this blueprint
 
 services:
-  # PostgreSQL Database
-  # Note: 'pserv' = managed PostgreSQL service on Render
+  # PostgreSQL Database (Managed Service)
+  # 'pserv' with 'runtime: image' for managed PostgreSQL
   - type: pserv
     name: careerleap-db
     plan: starter  # $7/month - upgrade to 'pro' ($25/month) for production
+    runtime: image
+    image:
+      url: docker.io/render/postgres:latest
     
   # Django Backend Web Service
   - type: web
@@ -20,7 +23,7 @@ services:
     envVars:
       # Database URL - automatically injected by Render
       - key: DATABASE_URL
-        fromDatabase:
+        fromService:
           name: careerleap-db
           property: connectionString
       
@@ -62,7 +65,6 @@ services:
     healthCheckPath: /api/auth/login/  # Lightweight endpoint for health checks
     
   # React Frontend Static Site
-  # Note: Using 'web' type with 'static' runtime for static sites
   - type: web
     name: careerleap-frontend
     runtime: static
