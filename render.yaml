@@ -57,29 +57,31 @@ services:
       # Python version
       - key: PYTHON_VERSION
         value: "3.11.0"
-      
-      # Optional: Create superuser on first deploy
-      # Uncomment and set these if you want auto superuser creation
-      # - key: DJANGO_SUPERUSER_EMAIL
-      #   value: "admin@yourdomain.com"
-      # - key: DJANGO_SUPERUSER_PASSWORD
-      #   value: "your-secure-password"  # Change this!
     
     # Health check endpoint
     healthCheckPath: /api/auth/login/  # Lightweight endpoint for health checks
     
   # React Frontend Static Site
-  - type: static
+  # Note: Using 'web' type with 'static' runtime for static sites
+  - type: web
     name: careerleap-frontend
-    plan: starter  # Free for static sites
+    runtime: static
+    buildFilter:
+      paths:
+        - src/**
+        - public/**
+        - package*.json
+        - vite.config.js
+        - tailwind.config.js
+        - index.html
     buildCommand: "npm ci && npm run build"
-    publishDir: dist
+    staticPublishPath: dist
     envVars:
       # API URL pointing to the backend service
       - key: VITE_API_URL
         value: "https://careerleap-backend.onrender.com/api"
     
-    # Redirect rules for React Router
+    # Redirect rules for React Router (SPA)
     routes:
       - type: rewrite
         source: /api/*
