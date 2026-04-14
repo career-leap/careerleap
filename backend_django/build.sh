@@ -8,18 +8,21 @@ echo "🚀 Building CareerLeap backend..."
 echo "📦 Installing Python dependencies..."
 pip install -r requirements.txt
 
-# Collect static files
+# Collect static files (this doesn't need database)
 echo "📁 Collecting static files..."
 python manage.py collectstatic --no-input
 
-# Run database migrations
-echo "🗄️ Running database migrations..."
-python manage.py migrate
+# Note: Migrations are skipped during build because DATABASE_URL is not yet configured
+# Run migrations manually after setting DATABASE_URL environment variable:
+#   cd backend_django && python manage.py migrate
+# Or use the shell in Render Dashboard
 
 # Create superuser if environment variables are provided (optional)
-if [ -n "$DJANGO_SUPERUSER_EMAIL" ] && [ -n "$DJANGO_SUPERUSER_PASSWORD" ]; then
-    echo "👤 Creating superuser..."
-    python manage.py createsuperuser --noinput --email "$DJANGO_SUPERUSER_EMAIL" 2>/dev/null || echo "Superuser already exists or skipped"
-fi
+# This will also be done manually after database setup
 
 echo "✅ Build completed successfully!"
+echo ""
+echo "⚠️  IMPORTANT: After setting DATABASE_URL environment variable:"
+echo "   1. Go to the service shell in Render Dashboard"
+echo "   2. Run: cd backend_django && python manage.py migrate"
+echo "   3. (Optional) Create superuser: python manage.py createsuperuser"
