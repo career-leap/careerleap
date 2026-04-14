@@ -1,65 +1,44 @@
 # Render Blueprint for CareerLeap
 # This file defines the infrastructure for deploying CareerLeap on Render
-# To deploy: Connect your GitHub repo to Render and use this blueprint
+# Note: The database must be created separately first, then add DATABASE_URL manually
 
 services:
-  # PostgreSQL Database (Managed Service)
-  - type: pserv
-    name: careerleap-db
-    plan: starter  # $7/month - upgrade to 'pro' ($25/month) for production
-    runtime: image
-    image:
-      url: postgres:16-alpine
-    
   # Django Backend Web Service
   - type: web
     name: careerleap-backend
     runtime: python
-    plan: starter  # $7/month - upgrade to 'standard' ($25/month) for more resources
-    region: oregon  # Change to your preferred region
+    plan: starter  # $7/month
+    region: oregon
     buildCommand: "./backend_django/build.sh"
     startCommand: "cd backend_django && gunicorn backend_django.wsgi:application --bind 0.0.0.0:$PORT --workers 2"
     envVars:
-      # NOTE: DATABASE_URL must be set manually after database creation
-      # Go to careerleap-db dashboard → Copy Internal Database URL
-      # Then add it as DATABASE_URL in this service's Environment section
+      # IMPORTANT: Set DATABASE_URL manually after creating PostgreSQL
       # Format: postgres://username:password@host:port/database
       
-      # Security settings
       - key: SECRET_KEY
-        generateValue: true  # Auto-generate a secure secret key
+        generateValue: true
       - key: DEBUG
         value: "False"
-      
-      # CORS and hosts - update after first deploy with your actual frontend URL
       - key: ALLOWED_HOSTS
         value: "careerleap-backend.onrender.com"
       - key: CORS_ALLOWED_ORIGINS
         value: "https://careerleap-frontend.onrender.com"
       - key: FRONTEND_URL
         value: "https://careerleap-frontend.onrender.com"
-      
-      # JWT Settings
       - key: JWT_ACCESS_TOKEN_LIFETIME_MINUTES
         value: "60"
       - key: JWT_REFRESH_TOKEN_LIFETIME_DAYS
         value: "7"
       - key: JWT_COOKIE_SECURE
         value: "True"
-      
-      # Production security headers
       - key: SECURE_SSL_REDIRECT
         value: "True"
       - key: SESSION_COOKIE_SECURE
         value: "True"
       - key: CSRF_COOKIE_SECURE
         value: "True"
-      
-      # Python version
       - key: PYTHON_VERSION
         value: "3.11.0"
-    
-    # Health check endpoint
     healthCheckPath: /api/auth/login/
     
   # React Frontend Static Site
@@ -79,7 +58,6 @@ services:
     envVars:
       - key: VITE_API_URL
         value: "https://careerleap-backend.onrender.com/api"
-    
     routes:
       - type: rewrite
         source: /api/*
