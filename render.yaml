@@ -39,7 +39,7 @@ services:
         value: "True"
       - key: PYTHON_VERSION
         value: "3.11.0"
-    healthCheckPath: /api/auth/login/
+    healthCheckPath: /admin/login/
     
   # React Frontend Static Site
   - type: web
