@@ -29,13 +29,7 @@ export default defineConfig({
   build: {
     // Generate source maps for debugging (disable in high-security environments)
     sourcemap: process.env.NODE_ENV !== 'production',
-    // Minify output
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
+    // Minify output using esbuild (built into Vite, no extra deps required)
+    minify: 'esbuild',
   },
 })
