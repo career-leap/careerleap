@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, NavLink, Navigate } from 'react
 import { Menu, X } from 'lucide-react';
 import { useAuthStore } from './store/authStore';
 import ThemeToggle from './components/ThemeToggle';
+import CookieConsent, { useCookieConsent } from './components/CookieConsent';
 import Home from './pages/Home';
 import About from './pages/About';
 import Mentors from './pages/Mentors';
@@ -119,6 +120,7 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { checkAuth } = useAuthStore();
+  const { openSettings } = useCookieConsent();
 
   useEffect(() => {
     checkAuth();
@@ -215,10 +217,18 @@ function App() {
               </ul>
             </div>
           </div>
-          <div className="max-w-7xl mx-auto pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
-            © 2026 CareerLeap. All rights reserved.
+          <div className="max-w-7xl mx-auto pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-gray-500 text-sm">
+            <span>© 2026 CareerLeap. All rights reserved.</span>
+            <button
+              onClick={openSettings}
+              className="hover:text-white transition-colors underline underline-offset-2"
+            >
+              Cookie-Einstellungen
+            </button>
           </div>
         </footer>
+
+        <CookieConsent />
       </div>
     </Router>
   );
