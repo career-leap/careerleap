@@ -20,11 +20,11 @@ services:
       - key: DEBUG
         value: "False"
       - key: ALLOWED_HOSTS
-        value: "careerleap-backend.onrender.com"
+        value: "careerleap-backend.onrender.com,career-leap.academy,www.career-leap.academy"
       - key: CORS_ALLOWED_ORIGINS
-        value: "https://careerleap-frontend.onrender.com"
+        value: "https://careerleap-frontend.onrender.com,https://career-leap.academy,https://www.career-leap.academy"
       - key: FRONTEND_URL
-        value: "https://careerleap-frontend.onrender.com"
+        value: "https://career-leap.academy"
       - key: JWT_ACCESS_TOKEN_LIFETIME_MINUTES
         value: "60"
       - key: JWT_REFRESH_TOKEN_LIFETIME_DAYS
@@ -57,7 +57,7 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
-        value: "https://careerleap-backend.onrender.com/api"
+        value: "/api"
     routes:
       - type: rewrite
         source: /api/*

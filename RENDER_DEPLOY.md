@@ -296,14 +296,66 @@ Monitor the deployment in Render Dashboard.
 
 ---
 
-## ✨ Custom Domain (Optional)
+## ✨ Custom Domain Setup
 
-1. Buy a domain (e.g., Namecheap, Cloudflare, GoDaddy)
-2. In Render Dashboard:
-   - Frontend service → Settings → Custom Domain
-   - Backend service → Settings → Custom Domain
-3. Add DNS records as instructed by Render
-4. SSL certificates are automatically managed
+### 1. Add Domain in Render
+
+1. In Render Dashboard → Frontend service → **Settings** → **Custom Domain**
+2. Add your root domain (e.g., `career-leap.academy`) and www subdomain (e.g., `www.career-leap.academy`)
+3. Render will provide DNS records to add at your registrar
+
+### 2. Configure DNS at Your Registrar
+
+**For Namecheap (using BasicDNS):**
+1. Switch nameservers to **Namecheap BasicDNS**
+2. Go to **Advanced DNS** tab
+3. Add these records:
+
+| Type | Host | Value |
+|------|------|-------|
+| CNAME Record | `www` | `careerleap-frontend.onrender.com` |
+| A Record | `@` | `216.24.57.1` |
+
+4. Wait a few minutes, then click **Retry Verification** in Render
+
+**Note:** If your nameservers point to another provider (e.g., Vercel), add the DNS records there instead.
+
+### 3. Update Environment Variables After Verification
+
+Once verification succeeds, update your `render.yaml` (or Render Dashboard Environment) to include your custom domain:
+
+**Backend service:**
+- `ALLOWED_HOSTS`: `careerleap-backend.onrender.com,career-leap.academy,www.career-leap.academy`
+- `CORS_ALLOWED_ORIGINS`: `https://careerleap-frontend.onrender.com,https://career-leap.academy,https://www.career-leap.academy`
+- `FRONTEND_URL`: `https://career-leap.academy`
+
+**Frontend service:**
+- `VITE_API_URL`: `/api` (uses Render's rewrite proxy — avoids CORS)
+
+### 4. Redeploy
+
+Commit and push your changes. Render will auto-deploy:
+
+```bash
+git add .
+git commit -m "Update custom domain config"
+git push origin main
+```
+
+### 5. Verify Everything Works
+
+- Visit `https://career-leap.academy` — should load your app
+- Test registration/login
+- Test password reset (emails should now contain links to your custom domain)
+- Check browser console for any CORS errors
+
+### 6. Optional: Redirect www to Root (or vice versa)
+
+For SEO consistency, pick one canonical domain and redirect the other. In Namecheap Advanced DNS, add a **URL Redirect Record**:
+- Type: `URL Redirect Record`
+- Host: `www`
+- Value: `https://career-leap.academy`
+- (Or do the opposite if you prefer `www`)
 
 ---
 
