@@ -84,7 +84,10 @@ export default function Login() {
         </form>
 
         <p className="text-center mt-6 text-sm text-gray-500 dark:text-gray-400">
-          Access is by invitation only. Contact your administrator if you need an account.
+          Access is by invitation only. Please reach out to us at{' '}
+          <a href="mailto:info@career-leap.academy" className="text-indigo-600 dark:text-indigo-400 hover:underline">
+            info@career-leap.academy
+          </a>
         </p>
       </div>
     </div>
