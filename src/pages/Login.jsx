@@ -83,9 +83,8 @@ export default function Login() {
           </button>
         </form>
 
-        <p className="text-center mt-6 text-gray-600 dark:text-gray-400">
-          Don't have an account?{' '}
-          <Link to="/register" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">Create one</Link>
+        <p className="text-center mt-6 text-sm text-gray-500 dark:text-gray-400">
+          Access is by invitation only. Contact your administrator if you need an account.
         </p>
       </div>
     </div>
