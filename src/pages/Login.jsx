@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
+import { trackAction } from '../lib/metrics';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
 export default function Login() {
@@ -13,6 +14,7 @@ export default function Login() {
     e.preventDefault();
     const result = await login(formData.email, formData.password);
     if (result.success) {
+      trackAction('login', { method: 'email' });
       navigate('/');
     }
   };

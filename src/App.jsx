@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, NavLink, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, NavLink, Navigate, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { useAuthStore } from './store/authStore';
 import ThemeToggle from './components/ThemeToggle';
 import CookieConsent, { useCookieConsent } from './components/CookieConsent';
+import { trackPageView } from './lib/metrics';
 import Home from './pages/Home';
 import About from './pages/About';
 import Mentors from './pages/Mentors';
@@ -116,6 +117,17 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
   );
 }
 
+// Track page views on route changes
+function PageViewTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    trackPageView(location.pathname);
+  }, [location]);
+
+  return null;
+}
+
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { checkAuth } = useAuthStore();
@@ -128,6 +140,7 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
+        <PageViewTracker />
         <Navigation mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
         
         <main className="pt-16">

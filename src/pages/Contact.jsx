@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Loader2 } from 'lucide-react';
 import api from '../lib/api';
+import { trackAction } from '../lib/metrics';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -22,6 +23,7 @@ export default function Contact() {
       if (response.data.success) {
         setStatus({ type: 'success', message: response.data.message });
         setFormData({ name: '', email: '', subject: '', message: '' });
+        trackAction('contact_form_submit', { subject: formData.subject });
       } else {
         setStatus({ type: 'error', message: response.data.message || 'Failed to send message' });
       }

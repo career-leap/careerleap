@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
+import { trackAction } from '../lib/metrics';
 import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
 export default function Register() {
@@ -19,6 +20,7 @@ export default function Register() {
     e.preventDefault();
     const result = await register(formData);
     if (result.success) {
+      trackAction('register', { role: formData.role });
       navigate('/');
     }
   };

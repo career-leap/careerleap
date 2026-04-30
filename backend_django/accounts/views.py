@@ -1,5 +1,6 @@
 import secrets
 import hashlib
+import logging
 from datetime import datetime, timedelta
 from django.core.cache import cache
 from django.core.mail import send_mail
@@ -14,6 +15,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
 from django_ratelimit.decorators import ratelimit
 from .serializers import UserSerializer, UserCreateSerializer, LoginSerializer, UserUpdateSerializer
+
+logger = logging.getLogger(__name__)
 
 User = get_user_model()
 
@@ -565,6 +568,7 @@ This message was sent from the CareerLeap website contact form.
             'message': 'Your message has been sent successfully. We will get back to you soon.'
         })
     except Exception as e:
+        logger.error(f"Contact form email failed to send: {e}")
         return Response({
             'success': False,
             'message': 'Failed to send message. Please try again later.'

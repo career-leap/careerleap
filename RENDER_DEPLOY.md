@@ -76,6 +76,50 @@ Visit: `https://careerleap-backend.onrender.com/admin/`
 
 ---
 
+## 📧 Email Configuration (Required for Contact Form & Password Reset)
+
+By default, emails are sent to the console and are **not actually delivered**. To ensure the contact form sends real emails to `info@career-leap.academy` and password reset emails reach users, you must configure an SMTP provider.
+
+### Recommended Providers
+
+| Provider | SMTP Host | Notes |
+|----------|-----------|-------|
+| **SendGrid** | `smtp.sendgrid.net` | Free tier: 100 emails/day. Use `apikey` as username. |
+| **Brevo** | `smtp-relay.brevo.com` | Free tier: 300 emails/day. |
+| **Mailgun** | `smtp.mailgun.org` | Pay-as-you-go, very reliable. |
+| **Gmail** | `smtp.gmail.com` | Use an App Password (not your regular password). |
+
+### Setup Steps (SendGrid Example)
+
+1. **Create a SendGrid account** at https://sendgrid.com
+2. **Create a Sender Identity** (Single Sender or Domain Authentication)
+3. **Generate an API Key** with "Mail Send" permissions
+4. **Add environment variables in Render Dashboard**:
+   - Go to your **backend service** → **Environment** → **Add Environment Variable**
+   - Add:
+     ```
+     EMAIL_HOST_PASSWORD=SG.xxxxxxxxxx  # your SendGrid API key
+     ```
+   - The other SMTP settings are already in `render.yaml`:
+     ```
+     EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+     EMAIL_HOST=smtp.sendgrid.net
+     EMAIL_PORT=587
+     EMAIL_USE_TLS=True
+     EMAIL_HOST_USER=apikey
+     DEFAULT_FROM_EMAIL=noreply@career-leap.academy
+     ```
+
+5. **Redeploy** the backend service for changes to take effect.
+
+### Verify Email Delivery
+
+1. **Test the contact form** on your live site and check `info@career-leap.academy`
+2. **Check Render logs** if emails fail: Dashboard → Backend Service → Logs
+3. **Check spam/junk folders** if emails don't arrive in the inbox
+
+---
+
 ## 💰 Cost Breakdown
 
 ### Minimum Viable (Start Here)
@@ -198,6 +242,7 @@ Before going live, verify:
 - [x] `SECRET_KEY` is secure and unique
 - [x] CORS configured properly
 - [x] HTTPS enforced
+- [ ] Email/SMTP configured for contact form & password reset
 
 ---
 
