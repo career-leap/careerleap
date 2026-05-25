@@ -86,3 +86,7 @@ coverage.xml
 # Project documentation (for AI agents only)
 AGENTS.md
 RENDER_DEPLOY_PLAN.md
+JOURNEY_FORM_EVALUATION.md
+CONTRIBUTING.notion.md
+*.docx
+notes.txt

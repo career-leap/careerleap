@@ -96,6 +96,7 @@ INSTALLED_APPS = [
     'mentorship_sessions',
     'files',
     'metrics',
+    'leads',
 ]
 
 MIDDLEWARE = [

@@ -13,6 +13,7 @@ urlpatterns = [
     path('api/sessions/', include('mentorship_sessions.urls')),
     path('api/files/', include('files.urls')),
     path('api/metrics/', include('metrics.urls')),
+    path('api/leads/', include('leads.urls')),
 ]
 
 if settings.DEBUG:
