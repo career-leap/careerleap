@@ -78,45 +78,54 @@ Visit: `https://careerleap-backend.onrender.com/admin/`
 
 ## 📧 Email Configuration (Required for Contact Form & Password Reset)
 
-By default, emails are sent to the console and are **not actually delivered**. To ensure the contact form sends real emails to `info@career-leap.academy` and password reset emails reach users, you must configure an SMTP provider.
+By default, emails are sent to the console and are **not actually delivered**. To ensure the contact form and customer journey form send real emails to `info@career-leap.academy` and password reset emails reach users, you must configure an SMTP provider.
 
-### Recommended Providers
+### Recommended Provider: Resend
 
-| Provider | SMTP Host | Notes |
-|----------|-----------|-------|
-| **SendGrid** | `smtp.sendgrid.net` | Free tier: 100 emails/day. Use `apikey` as username. |
-| **Brevo** | `smtp-relay.brevo.com` | Free tier: 300 emails/day. |
-| **Mailgun** | `smtp.mailgun.org` | Pay-as-you-go, very reliable. |
-| **Gmail** | `smtp.gmail.com` | Use an App Password (not your regular password). |
+We use **[Resend](https://resend.com)** because it's developer-friendly, has a generous free tier, and supports sending from your own domain.
 
-### Setup Steps (SendGrid Example)
+| Provider | SMTP Host | Free Tier |
+|----------|-----------|-----------|
+| **Resend** | `smtp.resend.com` | 3,000 emails/month |
 
-1. **Create a SendGrid account** at https://sendgrid.com
-2. **Create a Sender Identity** (Single Sender or Domain Authentication)
-3. **Generate an API Key** with "Mail Send" permissions
+### Setup Steps (Resend)
+
+1. **Create a Resend account** at https://resend.com
+2. **Add and verify your domain** (`career-leap.academy`):
+   - Go to **Domains** → **Add Domain**
+   - Enter `career-leap.academy`
+   - Add the DNS records (SPF, DKIM, DMARC) at your domain registrar
+   - Wait for verification status to show "Verified"
+3. **Generate an API Key**:
+   - Go to **API Keys** → **Create API Key**
+   - Name it: `CareerLeap-Production`
+   - Permission: **Sending access**
+   - Copy the key (starts with `re_`)
 4. **Add environment variables in Render Dashboard**:
    - Go to your **backend service** → **Environment** → **Add Environment Variable**
    - Add:
      ```
-     EMAIL_HOST_PASSWORD=SG.xxxxxxxxxx  # your SendGrid API key
+     RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  # your Resend API key
      ```
    - The other SMTP settings are already in `render.yaml`:
      ```
      EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
-     EMAIL_HOST=smtp.sendgrid.net
+     EMAIL_HOST=smtp.resend.com
      EMAIL_PORT=587
      EMAIL_USE_TLS=True
-     EMAIL_HOST_USER=apikey
-     DEFAULT_FROM_EMAIL=noreply@career-leap.academy
+     EMAIL_HOST_USER=resend
+     DEFAULT_FROM_EMAIL=info@career-leap.academy
      ```
 
 5. **Redeploy** the backend service for changes to take effect.
 
 ### Verify Email Delivery
 
-1. **Test the contact form** on your live site and check `info@career-leap.academy`
-2. **Check Render logs** if emails fail: Dashboard → Backend Service → Logs
-3. **Check spam/junk folders** if emails don't arrive in the inbox
+1. **Test the contact form** or customer journey form on your live site
+2. Check `info@career-leap.academy` for the internal lead notification
+3. Submit with your own email to test the auto-reply
+4. **Check Render logs** if emails fail: Dashboard → Backend Service → Logs
+5. **Check spam/junk folders** if emails don't arrive in the inbox
 
 ---
 

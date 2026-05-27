@@ -39,20 +39,20 @@ services:
         value: "True"
       - key: PYTHON_VERSION
         value: "3.11.0"
-      # Email configuration - set these in Render dashboard for real email delivery
+      # Email configuration — Resend (https://resend.com)
       - key: EMAIL_BACKEND
         value: "django.core.mail.backends.smtp.EmailBackend"
       - key: EMAIL_HOST
-        value: "smtp.sendgrid.net"
+        value: "smtp.resend.com"
       - key: EMAIL_PORT
         value: "587"
       - key: EMAIL_USE_TLS
         value: "True"
       - key: EMAIL_HOST_USER
-        value: "apikey"
-      # EMAIL_HOST_PASSWORD: Set this manually in Render dashboard with your SMTP API key
+        value: "resend"
+      # RESEND_API_KEY: Set this manually in Render dashboard after creating your Resend account
       - key: DEFAULT_FROM_EMAIL
-        value: "noreply@career-leap.academy"
+        value: "info@career-leap.academy"
     healthCheckPath: /admin/login/
     
   # React Frontend Static Site
