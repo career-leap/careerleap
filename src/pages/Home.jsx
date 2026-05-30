@@ -245,13 +245,14 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white mb-4">How It Works</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400">Start your mentorship journey in four simple steps.</p>
+            <p className="text-lg text-gray-600 dark:text-gray-400">Join the career simulation platform</p>
           </div>
-          <div className="grid md:grid-cols-4 gap-8">
-            <Step number="1" title="Create Profile" description="Tell us about your career goals and what you're looking for." />
-            <Step number="2" title="Find a Mentor" description="Browse our curated list of mentors and filter by expertise." />
-            <Step number="3" title="Book a Session" description="Schedule your first meeting and start getting guidance." />
-            <Step number="4" title="Grow Together" description="Build a lasting relationship and accelerate your career." />
+          <div className="grid md:grid-cols-5 gap-8">
+            <Step number="1" title="Apply" description="Submit your application and tell us about your career goals." />
+            <Step number="2" title="Selection" description="Complete our assessment to ensure the right program fit." />
+            <Step number="3" title="Join Cohort" description="Get placed in a curated simulation cohort with peers." />
+            <Step number="4" title="Simulation Work" description="Work on real-world projects with expert mentorship." />
+            <Step number="5" title="Interview Readiness" description="Practice interviews and get feedback to land your role." />
           </div>
         </div>
       </section>
