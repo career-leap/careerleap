@@ -248,15 +248,11 @@ export default function Home() {
             <p className="text-lg text-gray-600 dark:text-gray-400">Join the career simulation platform</p>
           </div>
           <div className="grid md:grid-cols-5 gap-8">
-            
-            <Step number="1" title="Apply" description="" />
-            <Step number="2" title="Selection" description="" />
-            <Step number="3" title="Join Cohort" description="" />
-            <Step number="4" title="Simulation Work" description="" />
-            <Step number="5" title="Interview Readiness" description="" />
-
-
-                        
+            <Step number="1" title="Apply" description="Submit your application and tell us about your career goals." />
+            <Step number="2" title="Selection" description="Complete our assessment to ensure the right program fit." />
+            <Step number="3" title="Join Cohort" description="Get placed in a curated simulation cohort with peers." />
+            <Step number="4" title="Simulation Work" description="Work on real-world projects with expert mentorship." />
+            <Step number="5" title="Interview Readiness" description="Practice interviews and get feedback to land your role." />
           </div>
         </div>
       </section>

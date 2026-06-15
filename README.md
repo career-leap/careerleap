@@ -26,7 +26,7 @@ CareerLeap bridges the gap between academic education and workplace execution. W
 
 | Layer | Technology |
 |-------|------------|
-| **Frontend** | React 18, Vite 5, Tailwind CSS 4, Zustand |
+| **Frontend** | React 18, Vite 7, Tailwind CSS 4, Zustand |
 | **Backend** | Django 4.2, Django REST Framework, JWT |
 | **Database** | PostgreSQL 16 |
 | **Container** | Docker, Docker Compose |
