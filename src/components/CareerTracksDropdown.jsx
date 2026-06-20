@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
 const TRACK_OPTIONS = [
@@ -26,24 +27,6 @@ const TRACK_OPTIONS = [
     path: '/career-tracks/career-acceleration-support',
     badge: 'Upcoming',
     badgeColor: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'
-  },
-  { 
-    label: 'Mentor / Expert Support', 
-    path: '/career-tracks/mentor-expert-support',
-    badge: null,
-    badgeColor: ''
-  },
-  { 
-    label: 'Partnership / Collaboration', 
-    path: '/career-tracks/partnership-collaboration',
-    badge: null,
-    badgeColor: ''
-  },
-  { 
-    label: 'Help Me Choose', 
-    path: '/career-tracks/help-me-choose',
-    badge: null,
-    badgeColor: ''
   },
 ];
 
@@ -82,34 +65,42 @@ export default function CareerTracksDropdown({ mobile = false, onItemClick }) {
             className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
           />
         </button>
-        {isOpen && (
-          <div className="pl-4 flex flex-col gap-2 border-l-2 border-gray-200 dark:border-gray-700 ml-1">
-            {TRACK_OPTIONS.map((track) => (
-              <NavLink
-                key={track.path}
-                to={track.path}
-                onClick={() => {
-                  setIsOpen(false);
-                  onItemClick?.();
-                }}
-                className={({ isActive }) => 
-                  `flex items-center justify-between py-1 text-sm ${
-                    isActive 
-                      ? 'text-indigo-600 dark:text-indigo-400 font-medium' 
-                      : 'text-gray-600 dark:text-gray-400'
-                  }`
-                }
-              >
-                <span>{track.label}</span>
-                {track.badge && (
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${track.badgeColor}`}>
-                    {track.badge}
-                  </span>
-                )}
-              </NavLink>
-            ))}
-          </div>
-        )}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div 
+              className="pl-4 flex flex-col gap-2 border-l-2 border-gray-200 dark:border-gray-700 ml-1 overflow-hidden"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2, ease: 'easeInOut' }}
+            >
+              {TRACK_OPTIONS.map((track) => (
+                <NavLink
+                  key={track.path}
+                  to={track.path}
+                  onClick={() => {
+                    setIsOpen(false);
+                    onItemClick?.();
+                  }}
+                  className={({ isActive }) => 
+                    `flex items-center justify-between py-1 text-sm ${
+                      isActive 
+                        ? 'text-indigo-600 dark:text-indigo-400 font-medium' 
+                        : 'text-gray-600 dark:text-gray-400'
+                    }`
+                  }
+                >
+                  <span>{track.label}</span>
+                  {track.badge && (
+                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${track.badgeColor}`}>
+                      {track.badge}
+                    </span>
+                  )}
+                </NavLink>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     );
   }
@@ -118,8 +109,6 @@ export default function CareerTracksDropdown({ mobile = false, onItemClick }) {
     <div 
       className="relative"
       ref={dropdownRef}
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -136,30 +125,38 @@ export default function CareerTracksDropdown({ mobile = false, onItemClick }) {
         />
       </button>
 
-      {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-72 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 py-2 z-50">
-          {TRACK_OPTIONS.map((track) => (
-            <NavLink
-              key={track.path}
-              to={track.path}
-              className={({ isActive }) => 
-                `flex items-center justify-between px-4 py-3 text-sm transition-colors ${
-                  isActive 
-                    ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 font-medium' 
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-800'
-                }`
-              }
-            >
-              <span>{track.label}</span>
-              {track.badge && (
-                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${track.badgeColor}`}>
-                  {track.badge}
-                </span>
-              )}
-            </NavLink>
-          ))}
-        </div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            className="absolute top-full left-0 mt-2 w-72 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 py-2 z-50 origin-top-left"
+            initial={{ opacity: 0, scale: 0.95, y: -8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -8 }}
+            transition={{ duration: 0.15, ease: 'easeOut' }}
+          >
+            {TRACK_OPTIONS.map((track) => (
+              <NavLink
+                key={track.path}
+                to={track.path}
+                className={({ isActive }) => 
+                  `flex items-center justify-between px-4 py-3 text-sm transition-colors ${
+                    isActive 
+                      ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 font-medium' 
+                      : 'text-gray-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-800'
+                  }`
+                }
+              >
+                <span>{track.label}</span>
+                {track.badge && (
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${track.badgeColor}`}>
+                    {track.badge}
+                  </span>
+                )}
+              </NavLink>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

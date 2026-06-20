@@ -164,7 +164,7 @@ export default function CareerTracks() {
               { icon: Users, label: 'Cohort Size', value: '5 Participants' },
               { icon: Monitor, label: 'Focus Area', value: 'Microsoft 365 IT Administration' },
               { icon: Clock, label: 'Format', value: 'Supervised Simulation' },
-              { icon: CheckCircle, label: 'Progress', value: '70% Complete' },
+              { icon: CheckCircle, label: 'Progress', value: '80% Complete' },
             ].map((stat, index) => (
               <motion.div
                 key={index}
@@ -193,12 +193,12 @@ export default function CareerTracks() {
           >
             <div className="flex justify-between text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">
               <span>Cohort progress</span>
-              <span>70%</span>
+              <span>80%</span>
             </div>
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
               <div 
                 className="bg-gradient-to-r from-indigo-600 to-purple-600 h-3 rounded-full transition-all duration-1000"
-                style={{ width: '70%' }}
+                style={{ width: '80%' }}
               />
             </div>
           </motion.div>
