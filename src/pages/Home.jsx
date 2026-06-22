@@ -33,17 +33,20 @@ export default function Home() {
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div className="relative z-10">
             <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight mb-6">
-              Practice the Role. Prove You're Ready.
+              {/* current change */}
+              {/* Practice the Role. Prove You're Ready. */}
+              Practice the Job Before You Get Hired
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-400 mb-4 max-w-lg">
-              CareerLeap is a structured career simulation platform that prepares international students and graduates in Germany for professional environments.
+              {/* CareerLeap is a structured career simulation platform that prepares international students and graduates in Germany for professional environments. */}
+              CareerLeap is a career acceleration platform that helps students and graduates in Germany gain practical experience through guided career simulations based on real workplace tasks.            
             </p>
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-4 max-w-lg">
+            {/* <p className="text-xl text-gray-600 dark:text-gray-400 mb-4 max-w-lg">
               We bridge the gap between academic education and workplace execution through supervised, role-aligned simulation cohorts.
-            </p>
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-lg">
+            </p> */}
+            {/* <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-lg">
               Professional readiness—built through structured simulation.
-            </p>
+            </p> */}
             <div className="flex flex-wrap gap-4 mb-12">
               <Link to="/contact" className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all">
                 Apply for the Next Cohort
@@ -248,15 +251,11 @@ export default function Home() {
             <p className="text-lg text-gray-600 dark:text-gray-400">Join the career simulation platform</p>
           </div>
           <div className="grid md:grid-cols-5 gap-8">
-            
-            <Step number="1" title="Apply" description="" />
-            <Step number="2" title="Selection" description="" />
-            <Step number="3" title="Join Cohort" description="" />
-            <Step number="4" title="Simulation Work" description="" />
-            <Step number="5" title="Interview Readiness" description="" />
-
-
-                        
+            <Step number="1" title="Apply" description="Submit your application and tell us about your career goals." />
+            <Step number="2" title="Selection" description="Complete our assessment to ensure the right program fit." />
+            <Step number="3" title="Join Cohort" description="Get placed in a curated simulation cohort with peers." />
+            <Step number="4" title="Simulation Work" description="Work on real-world projects with expert mentorship." />
+            <Step number="5" title="Interview Readiness" description="Practice interviews and get feedback to land your role." />
           </div>
         </div>
       </section>
