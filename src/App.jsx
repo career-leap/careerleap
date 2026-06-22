@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, NavLink, Navigate, useLocation 
 import { Menu, X } from 'lucide-react';
 import { useAuthStore } from './store/authStore';
 import ThemeToggle from './components/ThemeToggle';
+import CareerTracksDropdown from './components/CareerTracksDropdown';
 import CookieConsent, { useCookieConsent } from './components/CookieConsent';
 import { trackPageView } from './lib/metrics';
 import Home from './pages/Home';
@@ -10,6 +11,13 @@ import About from './pages/About';
 import Mentors from './pages/Mentors';
 import HowItWorks from './pages/HowItWorks';
 import Pricing from './pages/Pricing';
+import ITSystemsAdministration from './pages/tracks/ITSystemsAdministration';
+import DataBICareerSimulation from './pages/tracks/DataBICareerSimulation';
+import BusinessOperationsAnalyst from './pages/tracks/BusinessOperationsAnalyst';
+import CareerAccelerationSupport from './pages/tracks/CareerAccelerationSupport';
+import HelpMeChoose from './pages/tracks/HelpMeChoose';
+import MentorExpertSupport from './pages/tracks/MentorExpertSupport';
+import PartnershipCollaboration from './pages/tracks/PartnershipCollaboration';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
@@ -43,6 +51,7 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
           <div className="hidden md:flex items-center gap-8">
             <NavLink to="/" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Home</NavLink>
             <NavLink to="/about" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>About</NavLink>
+            <CareerTracksDropdown />
             {isAuthenticated && (
               <>
                 <NavLink to="/mentors" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Mentors</NavLink>
@@ -93,6 +102,7 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
             <div className="flex flex-col gap-4">
               <NavLink to="/" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 dark:text-gray-300">Home</NavLink>
               <NavLink to="/about" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 dark:text-gray-300">About</NavLink>
+              <CareerTracksDropdown mobile onItemClick={() => setMobileMenuOpen(false)} />
               {isAuthenticated && (
                 <>
                   <NavLink to="/mentors" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 dark:text-gray-300">Mentors</NavLink>
@@ -148,6 +158,14 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route path="/career-tracks" element={<ITSystemsAdministration />} />
+            <Route path="/career-tracks/it-systems-administration" element={<ITSystemsAdministration />} />
+            <Route path="/career-tracks/data-bi-career-simulation" element={<DataBICareerSimulation />} />
+            <Route path="/career-tracks/business-operations-analyst" element={<BusinessOperationsAnalyst />} />
+            <Route path="/career-tracks/career-acceleration-support" element={<CareerAccelerationSupport />} />
+            <Route path="/career-tracks/help-me-choose" element={<HelpMeChoose />} />
+            <Route path="/career-tracks/mentor-expert-support" element={<MentorExpertSupport />} />
+            <Route path="/career-tracks/partnership-collaboration" element={<PartnershipCollaboration />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
@@ -207,7 +225,6 @@ function App() {
               <ul className="space-y-2 text-gray-400 text-sm">
                 <li><NavLink to="/mentors" className="hover:text-white transition-colors">Find a Mentor</NavLink></li>
                 <li><a href="#" className="hover:text-white transition-colors">Become a Mentor</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Courses</a></li>
               </ul>
             </div>
             <div>

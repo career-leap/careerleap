@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, BookOpen, MessageSquare, Target, Globe, Zap } from 'lucide-react';
+import { Users, BookOpen, MessageSquare, Target, Globe, Zap, Monitor, Clock, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative py-20 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-900 overflow-hidden transition-colors">
+      <section className="relative pt-16 pb-8 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-900 overflow-hidden transition-colors">
         <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/5 dark:bg-indigo-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -51,11 +51,97 @@ export default function Home() {
               <Link to="/contact" className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all">
                 Apply for the Next Cohort
               </Link>
-              <Link to="/contact" className="px-8 py-4 text-indigo-600 dark:text-indigo-400 border-2 border-indigo-600 dark:border-indigo-400 rounded-lg font-semibold text-lg hover:bg-indigo-600 hover:text-white transition-all">
+              <a 
+                href={import.meta.env.VITE_CALENDLY_URL || '#calendly-link-not-set'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-4 text-indigo-600 dark:text-indigo-400 border-2 border-indigo-600 dark:border-indigo-400 rounded-lg font-semibold text-lg hover:bg-indigo-600 hover:text-white transition-all"
+              >
                 Book an Info Session
-              </Link>
+              </a>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Pilot Cohort Section */}
+      <section className="pt-8 pb-16 px-4 bg-slate-50 dark:bg-gray-800 transition-colors overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          {/* Section Header */}
+          <motion.div 
+            className="text-center mb-10"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="inline-flex items-center gap-2 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-4 py-2 rounded-full text-sm font-semibold mb-3">
+              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              Pilot Cohort — Currently Running
+            </div>
+            <div className="max-w-xs mx-auto">
+              <div className="flex justify-between text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">
+                <span>Cohort progress</span>
+                <span>80%</span>
+              </div>
+              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden">
+                <div 
+                  className="bg-gradient-to-r from-indigo-600 to-purple-600 h-2.5 rounded-full transition-all duration-1000"
+                  style={{ width: '80%' }}
+                />
+              </div>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4">
+              IT Systems Administration
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+              A hands-on simulation cohort preparing participants for real workplace IT operations in Microsoft 365 environments.
+            </p>
+          </motion.div>
+
+          {/* Cohort Overview Cards */}
+          <div className="grid md:grid-cols-3 gap-6 mb-10">
+            {[
+              { icon: Users, label: 'Cohort Size', value: '5 Participants' },
+              { icon: Monitor, label: 'Focus Area', value: 'Microsoft 365 IT Administration' },
+              { icon: Clock, label: 'Format', value: 'Supervised Simulation' },
+            ].map((stat, index) => (
+              <motion.div
+                key={index}
+                className="bg-white dark:bg-gray-900 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 text-center"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center text-white mx-auto mb-4">
+                  <stat.icon size={24} />
+                </div>
+                <p className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold mb-1">{stat.label}</p>
+                <p className="text-xl font-bold text-slate-900 dark:text-white">{stat.value}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Learn More CTA */}
+          <motion.div 
+            className="text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <p className="text-gray-600 dark:text-gray-400 mb-4 max-w-2xl mx-auto">
+              See the full curriculum, deliverables, and outcomes for this simulation track.
+            </p>
+            <Link 
+              to="/career-tracks/it-systems-administration"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all"
+            >
+              View Track Details
+              <ArrowRight size={20} />
+            </Link>
+          </motion.div>
         </div>
       </section>
 
