@@ -28,6 +28,7 @@ import FileUpload from './pages/FileUpload';
 import Impressum from './pages/Impressum';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import CookiePolicy from './pages/CookiePolicy';
+import InfoSession from "./pages/InfoSession"; //eunice changes here
 
 // Protected route wrapper
 function ProtectedRoute({ children }) {
@@ -171,6 +172,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/infosession" element={<InfoSession />} /> 
+            {/* //eunice changes here */}
             <Route 
               path="/mentors" 
               element={

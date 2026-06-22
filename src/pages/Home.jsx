@@ -34,31 +34,27 @@ export default function Home() {
           <div className="relative z-10">
             <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight mb-6">
               {/* current change */}
-              {/* Practice the Role. Prove You're Ready. */}
               Practice the Job Before You Get Hired
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-400 mb-4 max-w-lg">
-              {/* CareerLeap is a structured career simulation platform that prepares international students and graduates in Germany for professional environments. */}
               CareerLeap is a career acceleration platform that helps students and graduates in Germany gain practical experience through guided career simulations based on real workplace tasks.            
             </p>
-            {/* <p className="text-xl text-gray-600 dark:text-gray-400 mb-4 max-w-lg">
-              We bridge the gap between academic education and workplace execution through supervised, role-aligned simulation cohorts.
-            </p> */}
-            {/* <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-lg">
-              Professional readiness—built through structured simulation.
-            </p> */}
             <div className="flex flex-wrap gap-4 mb-12">
               <Link to="/contact" className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all">
                 Apply for the Next Cohort
               </Link>
-              <a 
+              {/* <a 
                 href={import.meta.env.VITE_CALENDLY_URL || '#calendly-link-not-set'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-4 text-indigo-600 dark:text-indigo-400 border-2 border-indigo-600 dark:border-indigo-400 rounded-lg font-semibold text-lg hover:bg-indigo-600 hover:text-white transition-all"
               >
                 Book an Info Session
-              </a>
+              </a> */}
+              
+              <Link to="/InfoSession" className="px-8 py-4 text-indigo-600 dark:text-indigo-400 border-2 border-indigo-600 dark:border-indigo-400 rounded-lg font-semibold text-lg hover:bg-indigo-600 hover:text-white transition-all">
+                Book an Info Session
+              </Link>
             </div>
           </div>
         </div>
