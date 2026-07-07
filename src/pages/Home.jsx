@@ -75,7 +75,7 @@ export default function Home() {
             <div className="max-w-xs mx-auto">
               <div className="flex justify-between text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">
                 <span>Cohort progress</span>
-                <span>80%</span>
+                <span>100%</span>
               </div>
               <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden">
                 <div 
