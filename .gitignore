@@ -50,9 +50,13 @@ wheels/
 *.sqlite3
 *.sqlite
 *.db
+# Environment files - NEVER commit real secrets
 .env
+.env.docker
 .env.local
 .env.production
+backend_django/.env
+backend_django/.env.docker
 media/
 staticfiles/
 
