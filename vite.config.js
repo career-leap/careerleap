@@ -27,8 +27,9 @@ export default defineConfig({
     },
   },
   build: {
-    // Generate source maps for debugging (disable in high-security environments)
-    sourcemap: process.env.NODE_ENV !== 'production',
+    // Source maps are disabled by default in production to reduce bundle size
+    // and avoid leaking source code. Set GENERATE_SOURCEMAP=true to override.
+    sourcemap: process.env.GENERATE_SOURCEMAP === 'true',
     // Minify output using esbuild (built into Vite, no extra deps required)
     minify: 'esbuild',
   },

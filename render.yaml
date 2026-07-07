@@ -1,13 +1,20 @@
 # Render Blueprint for CareerLeap
 # This file defines the infrastructure for deploying CareerLeap on Render
 
-services:
-  # PostgreSQL Database
-  - type: pserv
-    name: careerleap-db
-    runtime: postgres
+# Managed PostgreSQL database
+databases:
+  - name: careerleap-db
     plan: basic-256mb
     region: oregon
+    ipAllowList: []
+
+services:
+  # Render Key Value (Redis-compatible cache) - free tier
+  - type: keyvalue
+    name: careerleap-redis
+    plan: free
+    region: oregon
+    maxmemoryPolicy: allkeys-lru
     ipAllowList: []
 
   # Django Backend Web Service
@@ -22,6 +29,11 @@ services:
       - key: DATABASE_URL
         fromDatabase:
           name: careerleap-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: careerleap-redis
+          type: keyvalue
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
@@ -62,7 +74,7 @@ services:
       - key: DEFAULT_FROM_EMAIL
         value: "info@career-leap.academy"
     healthCheckPath: /admin/login/
-    
+
   # React Frontend Static Site
   - type: web
     name: careerleap-frontend
@@ -75,6 +87,7 @@ services:
         - vite.config.js
         - tailwind.config.js
         - index.html
+        - .env.production
     buildCommand: "npm ci && npm run build"
     staticPublishPath: dist
     envVars:

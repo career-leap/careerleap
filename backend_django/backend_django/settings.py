@@ -239,16 +239,25 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'info@career-leap.acad
 FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:5177')
 
 # =============================================================================
-# CACHE SETTINGS (for password reset tokens)
+# CACHE SETTINGS
 # =============================================================================
-# Using local memory cache for development
-# For production, use Redis or Memcached
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake',
+# Use Render Key Value (Redis) in production if REDIS_URL is set.
+# Falls back to local memory cache for local development.
+REDIS_URL = os.environ.get('REDIS_URL')
+if REDIS_URL:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': REDIS_URL,
+        }
     }
-}
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        }
+    }
 
 # Django REST Framework
 REST_FRAMEWORK = {
