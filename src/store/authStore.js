@@ -13,13 +13,16 @@ export const useAuthStore = create((set, get) => ({
     try {
       const response = await api.post('/auth/register/', userData);
       
-      const { user, accessToken } = response.data;
+      const { user, accessToken, refreshToken } = response.data;
       
       if (!user || !accessToken) {
         throw new Error('Invalid response from server');
       }
       
       localStorage.setItem('accessToken', accessToken);
+      if (refreshToken) {
+        localStorage.setItem('refreshToken', refreshToken);
+      }
       set({ user, isAuthenticated: true, isLoading: false });
       
       return { success: true };
@@ -51,13 +54,16 @@ export const useAuthStore = create((set, get) => ({
     try {
       const response = await api.post('/auth/login/', { email, password });
       
-      const { user, accessToken } = response.data;
+      const { user, accessToken, refreshToken } = response.data;
       
       if (!user || !accessToken) {
         throw new Error('Invalid response from server');
       }
       
       localStorage.setItem('accessToken', accessToken);
+      if (refreshToken) {
+        localStorage.setItem('refreshToken', refreshToken);
+      }
       set({ user, isAuthenticated: true, isLoading: false });
       
       return { success: true };
@@ -79,13 +85,40 @@ export const useAuthStore = create((set, get) => ({
 
   // Logout
   logout: async () => {
+    const refreshToken = localStorage.getItem('refreshToken');
     try {
-      await api.post('/auth/logout/');
+      await api.post('/auth/logout/', refreshToken ? { refresh: refreshToken } : {});
     } catch (e) {
-      // Ignore error
+      // Ignore error - still clear local storage
     }
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     set({ user: null, isAuthenticated: false });
+  },
+
+  // Refresh access token using refresh token
+  refreshAccessToken: async () => {
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (!refreshToken) return false;
+
+    try {
+      const response = await api.post('/auth/refresh/', { refresh: refreshToken });
+      const { accessToken, refreshToken: newRefreshToken } = response.data;
+
+      if (accessToken) {
+        localStorage.setItem('accessToken', accessToken);
+        if (newRefreshToken) {
+          localStorage.setItem('refreshToken', newRefreshToken);
+        }
+        return true;
+      }
+      return false;
+    } catch (error) {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      set({ user: null, isAuthenticated: false });
+      return false;
+    }
   },
 
   // Check if user is logged in (on app start)

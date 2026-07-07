@@ -7,11 +7,13 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
-from rest_framework import status, generics
+from rest_framework import status, generics, serializers
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError
+from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 from django.contrib.auth import get_user_model
 from django_ratelimit.decorators import ratelimit
 from .serializers import UserSerializer, UserCreateSerializer, LoginSerializer, UserUpdateSerializer
@@ -171,7 +173,8 @@ def register(request):
         'success': True,
         'message': 'User registered successfully',
         'user': UserSerializer(user).data,
-        'accessToken': tokens['accessToken']
+        'accessToken': tokens['accessToken'],
+        'refreshToken': tokens['refreshToken']
     }, status=status.HTTP_201_CREATED)
 
 
@@ -217,12 +220,25 @@ def login(request):
     
     tokens = get_tokens_for_user(user)
     
-    return Response({
+    response = Response({
         'success': True,
         'message': 'Login successful',
         'user': UserSerializer(user).data,
-        'accessToken': tokens['accessToken']
+        'accessToken': tokens['accessToken'],
+        'refreshToken': tokens['refreshToken']
     })
+
+    # Also set refresh token as httpOnly cookie for future cookie-based flows
+    response.set_cookie(
+        'refreshToken',
+        tokens['refreshToken'],
+        httponly=True,
+        secure=settings.SESSION_COOKIE_SECURE,
+        samesite='Lax',
+        max_age=7 * 24 * 60 * 60  # 7 days
+    )
+
+    return response
 
 
 @api_view(['GET'])
@@ -262,53 +278,82 @@ def update_profile(request):
 
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def logout(request):
-    """Logout user"""
-    return Response({
+    """Logout user and blacklist the refresh token"""
+    refresh_token = request.data.get('refresh') or request.COOKIES.get('refreshToken')
+
+    if refresh_token:
+        try:
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+        except TokenError:
+            pass  # token was already invalid or expired
+
+    response = Response({
         'success': True,
         'message': 'Logged out successfully'
     })
 
+    response.delete_cookie('refreshToken')
+    return response
 
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def refresh_token(request):
-    """Refresh access token"""
-    refresh_token = request.data.get('refresh') or request.COOKIES.get('refreshToken')
-    
-    if not refresh_token:
-        return Response({
-            'success': False,
-            'message': 'Refresh token required'
-        }, status=status.HTTP_401_UNAUTHORIZED)
-    
-    try:
-        refresh = RefreshToken(refresh_token)
-        user_id = refresh.payload.get('user_id')
-        
+
+class CookieTokenRefreshSerializer(TokenRefreshSerializer):
+    """Accept refresh token from request body or httpOnly cookie."""
+    refresh = serializers.CharField(required=False)
+
+    def validate(self, attrs):
+        request = self.context['request']
+        refresh_token = attrs.get('refresh') or request.COOKIES.get('refreshToken')
+
+        if not refresh_token:
+            raise serializers.ValidationError({
+                'refresh': 'Refresh token is required.'
+            })
+
+        attrs['refresh'] = refresh_token
+        return super().validate(attrs)
+
+
+class CookieTokenRefreshView(TokenRefreshView):
+    """Refresh access token and rotate the refresh token.
+
+    Uses rest_framework_simplejwt's rotation/blacklist logic so old refresh
+    tokens cannot be reused after a successful refresh.
+    """
+    serializer_class = CookieTokenRefreshSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+
         try:
-            user = User.objects.get(id=user_id)
-            if not user.is_active:
-                raise Exception('User not active')
-        except User.DoesNotExist:
+            serializer.is_valid(raise_exception=True)
+        except serializers.ValidationError:
             return Response({
                 'success': False,
-                'message': 'User not found'
+                'message': 'Invalid or expired refresh token'
             }, status=status.HTTP_401_UNAUTHORIZED)
-        
-        access_token = str(refresh.access_token)
-        
-        return Response({
+
+        response = Response({
             'success': True,
-            'accessToken': access_token
+            'accessToken': serializer.validated_data['access'],
         })
-    
-    except Exception:
-        return Response({
-            'success': False,
-            'message': 'Invalid refresh token'
-        }, status=status.HTTP_401_UNAUTHORIZED)
+
+        # If rotation produced a new refresh token, return it and set cookie
+        if 'refresh' in serializer.validated_data:
+            new_refresh = serializer.validated_data['refresh']
+            response.data['refreshToken'] = new_refresh
+            response.set_cookie(
+                'refreshToken',
+                new_refresh,
+                httponly=True,
+                secure=settings.SESSION_COOKIE_SECURE,
+                samesite='Lax',
+                max_age=7 * 24 * 60 * 60  # 7 days
+            )
+
+        return response
 
 
 # =============================================================================
