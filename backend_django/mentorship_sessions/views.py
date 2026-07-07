@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.core.mail import send_mail
 from django.conf import settings
 from django_ratelimit.decorators import ratelimit
+from django.db import transaction
 from datetime import datetime, timedelta
 from .models import Session
 from .serializers import SessionSerializer, SessionCreateSerializer, SessionUpdateSerializer
@@ -151,22 +152,52 @@ def create_session(request):
         mentor_profile = MentorProfile.objects.get(user_id=data['mentor'])
         data['price'] = mentor_profile.hourly_rate
     except MentorProfile.DoesNotExist:
-        data['price'] = 0
-    
+        return Response({
+            'success': False,
+            'message': 'Selected mentor does not exist'
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+    # Prevent self-booking
+    if str(data.get('mentor')) == str(request.user.id):
+        return Response({
+            'success': False,
+            'message': 'You cannot book a session with yourself'
+        }, status=status.HTTP_400_BAD_REQUEST)
+
     serializer = SessionCreateSerializer(data=data)
-    
+
     if not serializer.is_valid():
         return Response({
             'success': False,
             'message': 'Validation failed',
             'errors': serializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)
-    
-    # Create session with current user as mentee
-    session = Session.objects.create(
-        mentee=request.user,
-        **serializer.validated_data
-    )
+
+    mentor = serializer.validated_data['mentor']
+    scheduled_at = serializer.validated_data['scheduled_at']
+
+    # Atomic creation + select_for_update prevents race-condition double-booking
+    try:
+        with transaction.atomic():
+            # Lock the mentor's existing active sessions for this slot
+            existing = Session.objects.select_for_update().filter(
+                mentor=mentor,
+                scheduled_at=scheduled_at,
+                status__in=['pending', 'confirmed']
+            ).first()
+
+            if existing:
+                raise ValueError('This time slot is already booked')
+
+            session = Session.objects.create(
+                mentee=request.user,
+                **serializer.validated_data
+            )
+    except ValueError as e:
+        return Response({
+            'success': False,
+            'message': str(e)
+        }, status=status.HTTP_409_CONFLICT)
     
     # Send email notification to admin
     try:

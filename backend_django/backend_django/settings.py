@@ -235,6 +235,16 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 # Default from email
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'info@career-leap.academy')
 
+# =============================================================================
+# OPTIONAL CLAMAV VIRUS SCANNER CONFIGURATION
+# =============================================================================
+# Set CLAMAV_HOST to enable virus scanning on file uploads.
+# Example for a local ClamAV daemon: localhost
+# Example for Render private service: careerleap-clamav
+CLAMAV_HOST = os.environ.get('CLAMAV_HOST')
+CLAMAV_PORT = int(os.environ.get('CLAMAV_PORT', '3310'))
+CLAMAV_TIMEOUT = int(os.environ.get('CLAMAV_TIMEOUT', '30'))
+
 # Frontend URL for password reset links
 FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:5177')
 

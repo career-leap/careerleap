@@ -60,6 +60,13 @@ class Session(models.Model):
             models.Index(fields=['mentor', 'status', 'scheduled_at']),
             models.Index(fields=['mentee', '-created_at']),
         ]
+        constraints = [
+            models.UniqueConstraint(
+                fields=['mentor', 'scheduled_at'],
+                name='unique_active_session_slot',
+                condition=models.Q(status__in=['pending', 'confirmed']),
+            ),
+        ]
     
     def __str__(self):
         return f"Session: {self.mentee.get_full_name()} with {self.mentor.get_full_name()}"

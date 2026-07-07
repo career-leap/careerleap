@@ -15,6 +15,7 @@ from .serializers import (
     FileUploadCreateSerializer,
     FileUploadListSerializer
 )
+from .utils import scan_upload_for_viruses
 
 
 class StandardResultsSetPagination(PageNumberPagination):
@@ -102,6 +103,15 @@ def upload_file(request):
             'success': False,
             'message': 'Rate limit exceeded. Please try again later.'
         }, status=status.HTTP_429_TOO_MANY_REQUESTS)
+
+    uploaded_file = request.FILES.get('file')
+    if uploaded_file:
+        scan_result = scan_upload_for_viruses(uploaded_file)
+        if not scan_result['safe']:
+            return Response({
+                'success': False,
+                'message': f'Upload rejected: {scan_result["message"]}'
+            }, status=status.HTTP_400_BAD_REQUEST)
 
     serializer = FileUploadCreateSerializer(
         data=request.data,
