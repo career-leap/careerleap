@@ -169,13 +169,24 @@ def register(request):
     user = serializer.save()
     tokens = get_tokens_for_user(user)
     
-    return Response({
+    response = Response({
         'success': True,
         'message': 'User registered successfully',
         'user': UserSerializer(user).data,
         'accessToken': tokens['accessToken'],
-        'refreshToken': tokens['refreshToken']
-    }, status=status.HTTP_201_CREATED)
+    })
+
+    # Set refresh token as httpOnly cookie (not returned in body)
+    response.set_cookie(
+        'refreshToken',
+        tokens['refreshToken'],
+        httponly=True,
+        secure=settings.SESSION_COOKIE_SECURE,
+        samesite='Lax',
+        max_age=7 * 24 * 60 * 60  # 7 days
+    )
+
+    return response
 
 
 @api_view(['POST'])
@@ -225,10 +236,9 @@ def login(request):
         'message': 'Login successful',
         'user': UserSerializer(user).data,
         'accessToken': tokens['accessToken'],
-        'refreshToken': tokens['refreshToken']
     })
 
-    # Also set refresh token as httpOnly cookie for future cookie-based flows
+    # Set refresh token as httpOnly cookie (not returned in body)
     response.set_cookie(
         'refreshToken',
         tokens['refreshToken'],
@@ -280,8 +290,8 @@ def update_profile(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def logout(request):
-    """Logout user and blacklist the refresh token"""
-    refresh_token = request.data.get('refresh') or request.COOKIES.get('refreshToken')
+    """Logout user and blacklist the refresh token from the httpOnly cookie."""
+    refresh_token = request.COOKIES.get('refreshToken')
 
     if refresh_token:
         try:
@@ -300,12 +310,12 @@ def logout(request):
 
 
 class CookieTokenRefreshSerializer(TokenRefreshSerializer):
-    """Accept refresh token from request body or httpOnly cookie."""
+    """Accept refresh token only from httpOnly cookie."""
     refresh = serializers.CharField(required=False)
 
     def validate(self, attrs):
         request = self.context['request']
-        refresh_token = attrs.get('refresh') or request.COOKIES.get('refreshToken')
+        refresh_token = request.COOKIES.get('refreshToken')
 
         if not refresh_token:
             raise serializers.ValidationError({
@@ -340,13 +350,11 @@ class CookieTokenRefreshView(TokenRefreshView):
             'accessToken': serializer.validated_data['access'],
         })
 
-        # If rotation produced a new refresh token, return it and set cookie
+        # If rotation produced a new refresh token, set it as httpOnly cookie
         if 'refresh' in serializer.validated_data:
-            new_refresh = serializer.validated_data['refresh']
-            response.data['refreshToken'] = new_refresh
             response.set_cookie(
                 'refreshToken',
-                new_refresh,
+                serializer.validated_data['refresh'],
                 httponly=True,
                 secure=settings.SESSION_COOKIE_SECURE,
                 samesite='Lax',

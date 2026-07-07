@@ -54,7 +54,6 @@ api.interceptors.response.use(
       // Avoid retrying the refresh request itself
       if (originalRequest.url === '/auth/refresh/') {
         localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
         if (!window.location.pathname.includes('/login')) {
           window.location.href = '/login';
         }
@@ -76,31 +75,20 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       isRefreshing = true;
 
-      const refreshToken = localStorage.getItem('refreshToken');
-      if (!refreshToken) {
-        localStorage.removeItem('accessToken');
-        if (!window.location.pathname.includes('/login')) {
-          window.location.href = '/login';
-        }
-        return Promise.reject(error);
-      }
-
       try {
+        // Refresh token is sent automatically as an httpOnly cookie
         const response = await axios.post(
           `${API_URL}/auth/refresh/`,
-          { refresh: refreshToken },
+          {},
           { withCredentials: true }
         );
 
-        const { accessToken, refreshToken: newRefreshToken } = response.data;
+        const { accessToken } = response.data;
         if (!accessToken) {
           throw new Error('No access token in refresh response');
         }
 
         localStorage.setItem('accessToken', accessToken);
-        if (newRefreshToken) {
-          localStorage.setItem('refreshToken', newRefreshToken);
-        }
 
         api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
@@ -110,7 +98,6 @@ api.interceptors.response.use(
       } catch (refreshError) {
         processQueue(refreshError, null);
         localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
         if (!window.location.pathname.includes('/login')) {
           window.location.href = '/login';
         }

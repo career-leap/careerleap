@@ -13,16 +13,14 @@ export const useAuthStore = create((set, get) => ({
     try {
       const response = await api.post('/auth/register/', userData);
       
-      const { user, accessToken, refreshToken } = response.data;
+      const { user, accessToken } = response.data;
       
       if (!user || !accessToken) {
         throw new Error('Invalid response from server');
       }
       
+      // Refresh token is stored in an httpOnly cookie by the backend
       localStorage.setItem('accessToken', accessToken);
-      if (refreshToken) {
-        localStorage.setItem('refreshToken', refreshToken);
-      }
       set({ user, isAuthenticated: true, isLoading: false });
       
       return { success: true };
@@ -54,16 +52,14 @@ export const useAuthStore = create((set, get) => ({
     try {
       const response = await api.post('/auth/login/', { email, password });
       
-      const { user, accessToken, refreshToken } = response.data;
+      const { user, accessToken } = response.data;
       
       if (!user || !accessToken) {
         throw new Error('Invalid response from server');
       }
       
+      // Refresh token is stored in an httpOnly cookie by the backend
       localStorage.setItem('accessToken', accessToken);
-      if (refreshToken) {
-        localStorage.setItem('refreshToken', refreshToken);
-      }
       set({ user, isAuthenticated: true, isLoading: false });
       
       return { success: true };
@@ -85,37 +81,30 @@ export const useAuthStore = create((set, get) => ({
 
   // Logout
   logout: async () => {
-    const refreshToken = localStorage.getItem('refreshToken');
     try {
-      await api.post('/auth/logout/', refreshToken ? { refresh: refreshToken } : {});
+      // Refresh token is sent automatically as an httpOnly cookie
+      await api.post('/auth/logout/');
     } catch (e) {
       // Ignore error - still clear local storage
     }
     localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
     set({ user: null, isAuthenticated: false });
   },
 
-  // Refresh access token using refresh token
+  // Refresh access token using the httpOnly cookie
   refreshAccessToken: async () => {
-    const refreshToken = localStorage.getItem('refreshToken');
-    if (!refreshToken) return false;
-
     try {
-      const response = await api.post('/auth/refresh/', { refresh: refreshToken });
-      const { accessToken, refreshToken: newRefreshToken } = response.data;
+      // Refresh token is sent automatically as an httpOnly cookie
+      const response = await api.post('/auth/refresh/');
+      const { accessToken } = response.data;
 
       if (accessToken) {
         localStorage.setItem('accessToken', accessToken);
-        if (newRefreshToken) {
-          localStorage.setItem('refreshToken', newRefreshToken);
-        }
         return true;
       }
       return false;
     } catch (error) {
       localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
       set({ user: null, isAuthenticated: false });
       return false;
     }
