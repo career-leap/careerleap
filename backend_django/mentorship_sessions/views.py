@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.conf import settings
+from django_ratelimit.decorators import ratelimit
 from datetime import datetime, timedelta
 from .models import Session
 from .serializers import SessionSerializer, SessionCreateSerializer, SessionUpdateSerializer
@@ -13,10 +14,49 @@ from .serializers import SessionSerializer, SessionCreateSerializer, SessionUpda
 User = get_user_model()
 
 
+def _validate_status_transition(current_status, new_status, is_mentor, is_mentee):
+    """Return {'valid': bool, 'message': str} for a requested status change."""
+    allowed_statuses = {'pending', 'confirmed', 'completed', 'cancelled'}
+
+    if new_status not in allowed_statuses:
+        return {'valid': False, 'message': f'Invalid status "{new_status}".'}
+
+    # Terminal statuses cannot be changed to anything else
+    if current_status in ('completed', 'cancelled'):
+        return {
+            'valid': False,
+            'message': f'Cannot change status of a {current_status} session.'
+        }
+
+    # Mentor can confirm pending sessions and complete confirmed sessions
+    if is_mentor:
+        if (current_status, new_status) in (('pending', 'confirmed'), ('confirmed', 'completed')):
+            return {'valid': True, 'message': ''}
+
+    # Both mentor and mentee can cancel pending or confirmed sessions
+    if new_status == 'cancelled' and current_status in ('pending', 'confirmed'):
+        return {'valid': True, 'message': ''}
+
+    return {
+        'valid': False,
+        'message': (
+            f'Cannot transition from "{current_status}" to "{new_status}" '
+            f'as {"mentor" if is_mentor else "mentee"}.'
+        )
+    }
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='60/m', method=['GET'])
 def session_list(request):
     """Get user's sessions (as mentee or mentor)"""
+    if getattr(request, 'limited', False):
+        return Response({
+            'success': False,
+            'message': 'Rate limit exceeded. Please try again later.'
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
+
     user = request.user
     
     # Get sessions where user is either mentee or mentor (select_related to avoid N+1)
@@ -33,8 +73,15 @@ def session_list(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='60/m', method=['GET'])
 def session_availability(request):
     """Get available time slots for a mentor on a specific date"""
+    if getattr(request, 'limited', False):
+        return Response({
+            'success': False,
+            'message': 'Rate limit exceeded. Please try again later.'
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
+
     mentor_id = request.query_params.get('mentorId')
     date_str = request.query_params.get('date')
     
@@ -81,8 +128,14 @@ def session_availability(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='10/m', method=['POST'])
 def create_session(request):
     """Create a new session (booking)"""
+    if getattr(request, 'limited', False):
+        return Response({
+            'success': False,
+            'message': 'Rate limit exceeded. Please try again later.'
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
     data = request.data.copy()
     
     # Handle both camelCase and snake_case
@@ -160,8 +213,15 @@ This is an automated notification from CareerLeap.
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='60/m', method=['GET'])
 def session_detail(request, session_id):
     """Get session details"""
+    if getattr(request, 'limited', False):
+        return Response({
+            'success': False,
+            'message': 'Rate limit exceeded. Please try again later.'
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
+
     try:
         session = Session.objects.select_related('mentee', 'mentor').get(id=session_id)
         
@@ -188,24 +248,61 @@ def session_detail(request, session_id):
 
 @api_view(['PUT', 'PATCH'])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='20/m', method=['PUT', 'PATCH'])
 def update_session(request, session_id):
-    """Update session details"""
+    """Update session details with role-based status transitions."""
+    if getattr(request, 'limited', False):
+        return Response({
+            'success': False,
+            'message': 'Rate limit exceeded. Please try again later.'
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
+
     try:
         session = Session.objects.select_related('mentee', 'mentor').get(id=session_id)
-        
+
         # Check if user is part of this session
         if session.mentee != request.user and session.mentor != request.user:
             return Response({
                 'success': False,
                 'message': 'Unauthorized'
             }, status=status.HTTP_403_FORBIDDEN)
-        
+
+        is_mentor = session.mentor == request.user
+        is_mentee = session.mentee == request.user
+        data = request.data.copy()
+
+        # Status transition rules
+        new_status = data.get('status')
+        if new_status:
+            valid_transition = _validate_status_transition(
+                session.status, new_status, is_mentor, is_mentee
+            )
+            if not valid_transition['valid']:
+                return Response({
+                    'success': False,
+                    'message': valid_transition['message']
+                }, status=status.HTTP_403_FORBIDDEN)
+
+        # Only mentors can set/update meeting links
+        if 'meeting_link' in data and not is_mentor:
+            return Response({
+                'success': False,
+                'message': 'Only the mentor can update the meeting link.'
+            }, status=status.HTTP_403_FORBIDDEN)
+
+        # Do not allow updates to terminal sessions
+        if session.status in ('completed', 'cancelled'):
+            return Response({
+                'success': False,
+                'message': 'Cannot update a completed or cancelled session.'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
         serializer = SessionUpdateSerializer(
             session,
-            data=request.data,
+            data=data,
             partial=True
         )
-        
+
         if serializer.is_valid():
             serializer.save()
             return Response({
@@ -213,13 +310,13 @@ def update_session(request, session_id):
                 'message': 'Session updated successfully',
                 'data': SessionSerializer(session).data
             })
-        
+
         return Response({
             'success': False,
             'message': 'Validation failed',
             'errors': serializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)
-    
+
     except Session.DoesNotExist:
         return Response({
             'success': False,
@@ -229,27 +326,41 @@ def update_session(request, session_id):
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='10/m', method=['DELETE'])
 def cancel_session(request, session_id):
     """Cancel a session"""
+    if getattr(request, 'limited', False):
+        return Response({
+            'success': False,
+            'message': 'Rate limit exceeded. Please try again later.'
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
+
     try:
         session = Session.objects.select_related('mentee', 'mentor').get(id=session_id)
-        
+
         # Check if user is part of this session
         if session.mentee != request.user and session.mentor != request.user:
             return Response({
                 'success': False,
                 'message': 'Unauthorized'
             }, status=status.HTTP_403_FORBIDDEN)
-        
+
+        # Only pending or confirmed sessions can be cancelled
+        if session.status not in ('pending', 'confirmed'):
+            return Response({
+                'success': False,
+                'message': f'Cannot cancel a session with status "{session.status}".'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
         # Update status to cancelled
         session.status = 'cancelled'
         session.save()
-        
+
         return Response({
             'success': True,
             'message': 'Session cancelled successfully'
         })
-    
+
     except Session.DoesNotExist:
         return Response({
             'success': False,
@@ -259,8 +370,15 @@ def cancel_session(request, session_id):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='60/m', method=['GET'])
 def my_sessions(request):
     """Get current user's sessions"""
+    if getattr(request, 'limited', False):
+        return Response({
+            'success': False,
+            'message': 'Rate limit exceeded. Please try again later.'
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
+
     user = request.user
     
     sessions = Session.objects.filter(mentee=user) | Session.objects.filter(mentor=user)

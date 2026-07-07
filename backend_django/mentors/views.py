@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from django.db.models import Avg, Min, Max
+from django_ratelimit.decorators import ratelimit
 from .models import MentorProfile
 from .serializers import MentorProfileSerializer, MentorProfileUpdateSerializer
 
@@ -12,8 +13,14 @@ User = get_user_model()
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='60/m', method=['GET'])
 def mentor_list(request):
     """Get list of available mentors with filtering and pagination"""
+    if getattr(request, 'limited', False):
+        return Response({
+            'success': False,
+            'message': 'Rate limit exceeded. Please try again later.'
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
     # Get query parameters
     page = int(request.query_params.get('page', 1))
     limit = int(request.query_params.get('limit', 9))
@@ -76,8 +83,14 @@ def mentor_list(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='60/m', method=['GET'])
 def mentor_filters(request):
     """Get available filter options for mentors"""
+    if getattr(request, 'limited', False):
+        return Response({
+            'success': False,
+            'message': 'Rate limit exceeded. Please try again later.'
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
     # Get unique industries from users who are mentors
     industries = User.objects.filter(
         role='mentor',
@@ -106,8 +119,15 @@ def mentor_filters(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='60/m', method=['GET'])
 def mentor_detail(request, mentor_id):
     """Get mentor details"""
+    if getattr(request, 'limited', False):
+        return Response({
+            'success': False,
+            'message': 'Rate limit exceeded. Please try again later.'
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
+
     try:
         mentor = MentorProfile.objects.select_related('user').get(id=mentor_id)
         serializer = MentorProfileSerializer(mentor)
@@ -125,8 +145,15 @@ def mentor_detail(request, mentor_id):
 
 @api_view(['PUT', 'PATCH'])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='20/m', method=['PUT', 'PATCH'])
 def update_mentor_profile(request):
     """Update mentor's own profile"""
+    if getattr(request, 'limited', False):
+        return Response({
+            'success': False,
+            'message': 'Rate limit exceeded. Please try again later.'
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
+
     try:
         mentor_profile = MentorProfile.objects.select_related('user').get(user=request.user)
     except MentorProfile.DoesNotExist:

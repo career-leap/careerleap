@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
+from django_ratelimit.decorators import ratelimit
 
 from .models import FileUpload
 from .serializers import (
@@ -25,9 +26,12 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='60/m', method=['GET'])
 def list_uploads(request):
     """
     List file uploads with optional filtering.
+
+    Rate limited to 60 requests per minute per user.
     Query params:
     - category: Filter by category
     - my_uploads: 'true' to show only current user's uploads
@@ -40,6 +44,12 @@ def list_uploads(request):
     
     # Security: Only show public files OR user's own files by default
     # Admin can see all files with 'all_uploads=true'
+    if getattr(request, 'limited', False):
+        return Response({
+            'success': False,
+            'message': 'Rate limit exceeded. Please try again later.'
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
+
     show_all = request.query_params.get('all_uploads') == 'true'
     if show_all and user.role == 'admin':
         queryset = FileUpload.objects.all().select_related('user')
@@ -84,8 +94,15 @@ def list_uploads(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='10/m', method=['POST'])
 def upload_file(request):
     """Upload a new file"""
+    if getattr(request, 'limited', False):
+        return Response({
+            'success': False,
+            'message': 'Rate limit exceeded. Please try again later.'
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
+
     serializer = FileUploadCreateSerializer(
         data=request.data,
         context={'request': request}
@@ -112,8 +129,15 @@ def upload_file(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='60/m', method=['GET'])
 def get_upload_detail(request, upload_id):
     """Get detailed information about a specific upload"""
+    if getattr(request, 'limited', False):
+        return Response({
+            'success': False,
+            'message': 'Rate limit exceeded. Please try again later.'
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
+
     try:
         upload = FileUpload.objects.select_related('user').get(id=upload_id)
     except FileUpload.DoesNotExist:
@@ -140,8 +164,15 @@ def get_upload_detail(request, upload_id):
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='20/m', method=['DELETE'])
 def delete_upload(request, upload_id):
     """Delete an upload (only owner or admin can delete)"""
+    if getattr(request, 'limited', False):
+        return Response({
+            'success': False,
+            'message': 'Rate limit exceeded. Please try again later.'
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
+
     try:
         upload = FileUpload.objects.select_related('user').get(id=upload_id)
     except FileUpload.DoesNotExist:
