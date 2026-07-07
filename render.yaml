@@ -73,7 +73,7 @@ services:
       # RESEND_API_KEY: Set this manually in Render dashboard after creating your Resend account
       - key: DEFAULT_FROM_EMAIL
         value: "info@career-leap.academy"
-    healthCheckPath: /admin/login/
+    healthCheckPath: /health/
 
   # React Frontend Static Site
   - type: web

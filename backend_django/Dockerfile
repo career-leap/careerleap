@@ -22,15 +22,21 @@ COPY requirements.txt .
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
-# Copy entrypoint script
+# Copy entrypoint script and make it executable
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
-# Copy project
-COPY . .
+# Create non-root user for running the application
+RUN groupadd -r appuser && \
+    useradd -r -g appuser -d /app -s /sbin/nologin appuser
 
-# Create media directory
-RUN mkdir -p /app/media
+# Copy project and ensure appuser owns everything
+COPY . .
+RUN mkdir -p /app/media /app/staticfiles && \
+    chown -R appuser:appuser /app /docker-entrypoint.sh
+
+# Switch to non-root user
+USER appuser
 
 # Expose port
 EXPOSE 8000
