@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import CalendlyButton from './CalendlyButton';
 import {
   Loader2,
   CheckCircle,
@@ -241,6 +242,11 @@ export default function JourneyFormMockup() {
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             We&apos;ve received your submission and will review your information carefully. Our team will contact you soon with the best next step based on your goals.
           </p>
+          <div className="mb-6">
+            <CalendlyButton variant="primary">
+              Or book a free info session now
+            </CalendlyButton>
+          </div>
           <p className="text-sm text-gray-500 dark:text-gray-500">
             For urgent questions, you can also reach us at{' '}
             <a href="mailto:info@career-leap.academy" className="text-indigo-600 dark:text-indigo-400 hover:underline">

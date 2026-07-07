@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, MessageCircle, Calendar, Target } from 'lucide-react';
+import CalendlyButton from '../../components/CalendlyButton';
 
 const OptionCard = ({ icon: Icon, title, description, to, primary = false }) => (
   <motion.div
@@ -52,13 +53,10 @@ export default function HelpMeChoose() {
             <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
               CareerLeap offers multiple paths depending on your goals, experience, and timeline. Book a quick call and we will help you choose the right simulation or support option.
             </p>
-            <Link 
-              to="/contact" 
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all"
-            >
+            <CalendlyButton variant="primary" showIcon={false} className="text-lg">
               Book an Info Session
               <ArrowRight size={20} />
-            </Link>
+            </CalendlyButton>
           </motion.div>
         </div>
       </section>

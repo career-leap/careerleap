@@ -2,6 +2,7 @@ import React from 'react';
 import { Users, BookOpen, MessageSquare, Target, Globe, Zap, Monitor, Clock, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import CalendlyButton from '../components/CalendlyButton';
 
 const FeatureCard = ({ icon: Icon, title, description }) => (
   <div className="p-8 bg-slate-50 dark:bg-gray-800 rounded-2xl hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-gray-900/50 transition-all duration-300">
@@ -48,14 +49,9 @@ export default function Home() {
               <Link to="/contact" className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all">
                 Apply for the Next Cohort
               </Link>
-              <a 
-                href={import.meta.env.VITE_CALENDLY_URL || '#calendly-link-not-set'}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-8 py-4 text-indigo-600 dark:text-indigo-400 border-2 border-indigo-600 dark:border-indigo-400 rounded-lg font-semibold text-lg hover:bg-indigo-600 hover:text-white transition-all"
-              >
+              <CalendlyButton variant="outline" className="text-lg" showIcon={false}>
                 Book an Info Session
-              </a>
+              </CalendlyButton>
             </div>
           </div>
         </div>
