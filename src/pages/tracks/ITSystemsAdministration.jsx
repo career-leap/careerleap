@@ -149,7 +149,7 @@ export default function CareerTracks() {
               to="/contact" 
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all"
             >
-              Apply for This Track
+              Join the Next Cohort
               <ArrowRight size={20} />
             </Link>
           </motion.div>
