@@ -23,8 +23,8 @@ def mentor_list(request):
     max_rate = request.query_params.get('maxRate')
     sort_by = request.query_params.get('sortBy', 'rating')
     
-    # Base queryset
-    mentors = MentorProfile.objects.filter(is_available=True)
+    # Base queryset (select_related user to avoid N+1)
+    mentors = MentorProfile.objects.filter(is_available=True).select_related('user')
     
     # Apply filters
     if search:
@@ -109,7 +109,7 @@ def mentor_filters(request):
 def mentor_detail(request, mentor_id):
     """Get mentor details"""
     try:
-        mentor = MentorProfile.objects.get(id=mentor_id)
+        mentor = MentorProfile.objects.select_related('user').get(id=mentor_id)
         serializer = MentorProfileSerializer(mentor)
         
         return Response({
@@ -128,7 +128,7 @@ def mentor_detail(request, mentor_id):
 def update_mentor_profile(request):
     """Update mentor's own profile"""
     try:
-        mentor_profile = MentorProfile.objects.get(user=request.user)
+        mentor_profile = MentorProfile.objects.select_related('user').get(user=request.user)
     except MentorProfile.DoesNotExist:
         return Response({
             'success': False,

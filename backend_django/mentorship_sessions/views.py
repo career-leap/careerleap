@@ -19,9 +19,9 @@ def session_list(request):
     """Get user's sessions (as mentee or mentor)"""
     user = request.user
     
-    # Get sessions where user is either mentee or mentor
+    # Get sessions where user is either mentee or mentor (select_related to avoid N+1)
     sessions = Session.objects.filter(mentee=user) | Session.objects.filter(mentor=user)
-    sessions = sessions.order_by('-created_at')
+    sessions = sessions.select_related('mentee', 'mentor').order_by('-created_at')
     
     serializer = SessionSerializer(sessions, many=True)
     
@@ -163,7 +163,7 @@ This is an automated notification from CareerLeap.
 def session_detail(request, session_id):
     """Get session details"""
     try:
-        session = Session.objects.get(id=session_id)
+        session = Session.objects.select_related('mentee', 'mentor').get(id=session_id)
         
         # Check if user is part of this session
         if session.mentee != request.user and session.mentor != request.user:
@@ -191,7 +191,7 @@ def session_detail(request, session_id):
 def update_session(request, session_id):
     """Update session details"""
     try:
-        session = Session.objects.get(id=session_id)
+        session = Session.objects.select_related('mentee', 'mentor').get(id=session_id)
         
         # Check if user is part of this session
         if session.mentee != request.user and session.mentor != request.user:
@@ -232,7 +232,7 @@ def update_session(request, session_id):
 def cancel_session(request, session_id):
     """Cancel a session"""
     try:
-        session = Session.objects.get(id=session_id)
+        session = Session.objects.select_related('mentee', 'mentor').get(id=session_id)
         
         # Check if user is part of this session
         if session.mentee != request.user and session.mentor != request.user:
@@ -264,7 +264,7 @@ def my_sessions(request):
     user = request.user
     
     sessions = Session.objects.filter(mentee=user) | Session.objects.filter(mentor=user)
-    sessions = sessions.order_by('-created_at')
+    sessions = sessions.select_related('mentee', 'mentor').order_by('-created_at')
     
     serializer = SessionSerializer(sessions, many=True)
     

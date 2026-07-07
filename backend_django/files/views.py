@@ -42,12 +42,12 @@ def list_uploads(request):
     # Admin can see all files with 'all_uploads=true'
     show_all = request.query_params.get('all_uploads') == 'true'
     if show_all and user.role == 'admin':
-        queryset = FileUpload.objects.all()
+        queryset = FileUpload.objects.all().select_related('user')
     else:
         # Regular users: public files OR their own uploads
         queryset = FileUpload.objects.filter(
             models.Q(is_public=True) | models.Q(user=user)
-        )
+        ).select_related('user')
     
     # Filter by category
     category = request.query_params.get('category')
@@ -115,7 +115,7 @@ def upload_file(request):
 def get_upload_detail(request, upload_id):
     """Get detailed information about a specific upload"""
     try:
-        upload = FileUpload.objects.get(id=upload_id)
+        upload = FileUpload.objects.select_related('user').get(id=upload_id)
     except FileUpload.DoesNotExist:
         return Response({
             'success': False,
@@ -143,7 +143,7 @@ def get_upload_detail(request, upload_id):
 def delete_upload(request, upload_id):
     """Delete an upload (only owner or admin can delete)"""
     try:
-        upload = FileUpload.objects.get(id=upload_id)
+        upload = FileUpload.objects.select_related('user').get(id=upload_id)
     except FileUpload.DoesNotExist:
         return Response({
             'success': False,

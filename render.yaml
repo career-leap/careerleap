@@ -1,8 +1,15 @@
 # Render Blueprint for CareerLeap
 # This file defines the infrastructure for deploying CareerLeap on Render
-# Note: The database must be created separately first, then add DATABASE_URL manually
 
 services:
+  # PostgreSQL Database
+  - type: pserv
+    name: careerleap-db
+    runtime: postgres
+    plan: basic-256mb
+    region: oregon
+    ipAllowList: []
+
   # Django Backend Web Service
   - type: web
     name: careerleap-backend
@@ -10,11 +17,12 @@ services:
     plan: starter
     region: oregon
     buildCommand: "./backend_django/build.sh"
-    startCommand: "cd backend_django && gunicorn backend_django.wsgi:application --bind 0.0.0.0:$PORT --workers 2"
+    startCommand: "cd backend_django && gunicorn backend_django.wsgi:application --bind 0.0.0.0:$PORT --workers 1"
     envVars:
-      # IMPORTANT: Set DATABASE_URL manually after creating PostgreSQL
-      # Format: postgres://username:password@host:port/database
-      
+      - key: DATABASE_URL
+        fromDatabase:
+          name: careerleap-db
+          property: connectionString
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
