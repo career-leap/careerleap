@@ -13,15 +13,17 @@ class MentorProfile(models.Model):
     hourly_rate = models.DecimalField(
         max_digits=10, 
         decimal_places=2, 
-        default=0.00
+        default=0.00,
+        db_index=True
     )
     expertise = models.JSONField(default=list, blank=True)
-    is_available = models.BooleanField(default=True)
+    is_available = models.BooleanField(default=True, db_index=True)
     total_sessions = models.IntegerField(default=0)
     average_rating = models.DecimalField(
         max_digits=2, 
         decimal_places=1, 
-        default=0.0
+        default=0.0,
+        db_index=True
     )
     bio = models.TextField(blank=True, null=True)
     

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, NavLink, Navigate, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { useAuthStore } from './store/authStore';
@@ -6,28 +6,41 @@ import ThemeToggle from './components/ThemeToggle';
 import CareerTracksDropdown from './components/CareerTracksDropdown';
 import CookieConsent, { useCookieConsent } from './components/CookieConsent';
 import { trackPageView } from './lib/metrics';
+
+// Eagerly load only the landing page for fast first paint;
+// lazy-load all other route-level pages to reduce initial bundle size.
 import Home from './pages/Home';
-import About from './pages/About';
-import Mentors from './pages/Mentors';
-import HowItWorks from './pages/HowItWorks';
-import Pricing from './pages/Pricing';
-import ITSystemsAdministration from './pages/tracks/ITSystemsAdministration';
-import DataBICareerSimulation from './pages/tracks/DataBICareerSimulation';
-import BusinessOperationsAnalyst from './pages/tracks/BusinessOperationsAnalyst';
-import CareerAccelerationSupport from './pages/tracks/CareerAccelerationSupport';
-import HelpMeChoose from './pages/tracks/HelpMeChoose';
-import MentorExpertSupport from './pages/tracks/MentorExpertSupport';
-import PartnershipCollaboration from './pages/tracks/PartnershipCollaboration';
-import Contact from './pages/Contact';
-import Login from './pages/Login';
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
-import Profile from './pages/Profile';
-import MySessions from './pages/MySessions';
-import FileUpload from './pages/FileUpload';
-import Impressum from './pages/Impressum';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import CookiePolicy from './pages/CookiePolicy';
+
+const About = lazy(() => import('./pages/About'));
+const Mentors = lazy(() => import('./pages/Mentors'));
+const HowItWorks = lazy(() => import('./pages/HowItWorks'));
+const Pricing = lazy(() => import('./pages/Pricing'));
+const ITSystemsAdministration = lazy(() => import('./pages/tracks/ITSystemsAdministration'));
+const DataBICareerSimulation = lazy(() => import('./pages/tracks/DataBICareerSimulation'));
+const BusinessOperationsAnalyst = lazy(() => import('./pages/tracks/BusinessOperationsAnalyst'));
+const CareerAccelerationSupport = lazy(() => import('./pages/tracks/CareerAccelerationSupport'));
+const HelpMeChoose = lazy(() => import('./pages/tracks/HelpMeChoose'));
+const MentorExpertSupport = lazy(() => import('./pages/tracks/MentorExpertSupport'));
+const PartnershipCollaboration = lazy(() => import('./pages/tracks/PartnershipCollaboration'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Login = lazy(() => import('./pages/Login'));
+const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword'));
+const Profile = lazy(() => import('./pages/Profile'));
+const MySessions = lazy(() => import('./pages/MySessions'));
+const FileUpload = lazy(() => import('./pages/FileUpload'));
+const Impressum = lazy(() => import('./pages/Impressum'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const CookiePolicy = lazy(() => import('./pages/CookiePolicy'));
+
+// Simple fallback shown while lazy-loaded chunks download
+function PageLoader() {
+  return (
+    <div className="min-h-[50vh] flex items-center justify-center">
+      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600 dark:border-indigo-400" />
+    </div>
+  );
+}
 
 // Protected route wrapper
 function ProtectedRoute({ children }) {
@@ -44,7 +57,10 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <NavLink to="/" className="flex items-center gap-2 text-2xl font-extrabold text-indigo-600">
-            <img src="/image.png" alt="CareerLeap Logo" className="h-9 w-auto object-contain" />
+            <picture>
+              <source srcSet="/image.webp" type="image/webp" />
+              <img src="/image.png" alt="CareerLeap Logo" className="h-9 w-auto object-contain" />
+            </picture>
             CareerLeap
           </NavLink>
 
@@ -154,66 +170,71 @@ function App() {
         <Navigation mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
         
         <main className="pt-16">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/how-it-works" element={<HowItWorks />} />
-            <Route path="/career-tracks" element={<ITSystemsAdministration />} />
-            <Route path="/career-tracks/it-systems-administration" element={<ITSystemsAdministration />} />
-            <Route path="/career-tracks/data-bi-career-simulation" element={<DataBICareerSimulation />} />
-            <Route path="/career-tracks/business-operations-analyst" element={<BusinessOperationsAnalyst />} />
-            <Route path="/career-tracks/career-acceleration-support" element={<CareerAccelerationSupport />} />
-            <Route path="/career-tracks/help-me-choose" element={<HelpMeChoose />} />
-            <Route path="/career-tracks/mentor-expert-support" element={<MentorExpertSupport />} />
-            <Route path="/career-tracks/partnership-collaboration" element={<PartnershipCollaboration />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route 
-              path="/mentors" 
-              element={
-                <ProtectedRoute>
-                  <Mentors />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/profile" 
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/my-sessions" 
-              element={
-                <ProtectedRoute>
-                  <MySessions />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/files" 
-              element={
-                <ProtectedRoute>
-                  <FileUpload />
-                </ProtectedRoute>
-              } 
-            />
-            <Route path="/impressum" element={<Impressum />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="/cookies" element={<CookiePolicy />} />
-          </Routes>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/how-it-works" element={<HowItWorks />} />
+              <Route path="/career-tracks" element={<ITSystemsAdministration />} />
+              <Route path="/career-tracks/it-systems-administration" element={<ITSystemsAdministration />} />
+              <Route path="/career-tracks/data-bi-career-simulation" element={<DataBICareerSimulation />} />
+              <Route path="/career-tracks/business-operations-analyst" element={<BusinessOperationsAnalyst />} />
+              <Route path="/career-tracks/career-acceleration-support" element={<CareerAccelerationSupport />} />
+              <Route path="/career-tracks/help-me-choose" element={<HelpMeChoose />} />
+              <Route path="/career-tracks/mentor-expert-support" element={<MentorExpertSupport />} />
+              <Route path="/career-tracks/partnership-collaboration" element={<PartnershipCollaboration />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route 
+                path="/mentors" 
+                element={
+                  <ProtectedRoute>
+                    <Mentors />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/profile" 
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/my-sessions" 
+                element={
+                  <ProtectedRoute>
+                    <MySessions />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/files" 
+                element={
+                  <ProtectedRoute>
+                    <FileUpload />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route path="/impressum" element={<Impressum />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/cookies" element={<CookiePolicy />} />
+            </Routes>
+          </Suspense>
         </main>
 
         <footer className="bg-slate-900 dark:bg-black text-white py-16 px-4 transition-colors">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-2 text-2xl font-extrabold text-white mb-4">
-                <img src="/image.png" alt="CareerLeap Logo" className="h-9 w-auto object-contain" />
+                <picture>
+              <source srcSet="/image.webp" type="image/webp" />
+              <img src="/image.png" alt="CareerLeap Logo" className="h-9 w-auto object-contain" />
+            </picture>
                 CareerLeap
               </div>
               <p className="text-gray-400 text-sm">

@@ -18,7 +18,8 @@ class FileUpload(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='file_uploads'
+        related_name='file_uploads',
+        db_index=True
     )
     
     # Original file info
@@ -43,11 +44,11 @@ class FileUpload(models.Model):
     )
     
     # Status
-    is_public = models.BooleanField(default=False)
+    is_public = models.BooleanField(default=False, db_index=True)
     download_count = models.PositiveIntegerField(default=0)
     
     # Timestamps
-    uploaded_at = models.DateTimeField(auto_now_add=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
@@ -55,6 +56,7 @@ class FileUpload(models.Model):
         indexes = [
             models.Index(fields=['user', '-uploaded_at']),
             models.Index(fields=['category']),
+            models.Index(fields=['is_public', '-uploaded_at']),
         ]
     
     def __str__(self):

@@ -151,6 +151,10 @@ else:
         }
     }
 
+# Persistent database connections reduce per-request connection overhead.
+# 10 minutes is a reasonable default for low-to-moderate traffic.
+DATABASES['default']['CONN_MAX_AGE'] = 600
+
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {

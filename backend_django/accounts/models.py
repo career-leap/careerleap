@@ -16,18 +16,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='mentee')
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='mentee', db_index=True)
     
     # Profile fields
     bio = models.TextField(blank=True, null=True)
-    industry = models.CharField(max_length=255, blank=True, null=True)
+    industry = models.CharField(max_length=255, blank=True, null=True, db_index=True)
     years_of_experience = models.IntegerField(blank=True, null=True)
     location = models.CharField(max_length=255, blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profiles/', blank=True, null=True)
     
     # Status fields
     is_verified = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True, db_index=True)
     is_staff = models.BooleanField(default=False)
     last_login_at = models.DateTimeField(blank=True, null=True)
     

@@ -21,19 +21,22 @@ class Session(models.Model):
     mentee = models.ForeignKey(
         User, 
         on_delete=models.CASCADE, 
-        related_name='mentee_sessions'
+        related_name='mentee_sessions',
+        db_index=True
     )
     mentor = models.ForeignKey(
         User, 
         on_delete=models.CASCADE, 
-        related_name='mentor_sessions'
+        related_name='mentor_sessions',
+        db_index=True
     )
-    scheduled_at = models.DateTimeField()
+    scheduled_at = models.DateTimeField(db_index=True)
     duration = models.IntegerField(default=60)  # in minutes
     status = models.CharField(
         max_length=20, 
         choices=STATUS_CHOICES, 
-        default='pending'
+        default='pending',
+        db_index=True
     )
     topic = models.CharField(max_length=255, blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
@@ -52,6 +55,11 @@ class Session(models.Model):
     class Meta:
         db_table = 'sessions'
         ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['mentor', 'scheduled_at']),
+            models.Index(fields=['mentor', 'status', 'scheduled_at']),
+            models.Index(fields=['mentee', '-created_at']),
+        ]
     
     def __str__(self):
         return f"Session: {self.mentee.get_full_name()} with {self.mentor.get_full_name()}"
