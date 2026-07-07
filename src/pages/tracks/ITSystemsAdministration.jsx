@@ -132,9 +132,9 @@ export default function CareerTracks() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-4 py-2 rounded-full text-sm font-semibold mb-6">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              Currently Running — Pilot Cohort
+            <div className="inline-flex items-center gap-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+              <span className="w-2 h-2 bg-green-500 rounded-full" />
+              Completed — Pilot Cohort
             </div>
             <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6 leading-tight">
               IT Systems Administration
@@ -164,7 +164,7 @@ export default function CareerTracks() {
               { icon: Users, label: 'Cohort Size', value: '5 Participants' },
               { icon: Monitor, label: 'Focus Area', value: 'Microsoft 365 IT Administration' },
               { icon: Clock, label: 'Format', value: 'Supervised Simulation' },
-              { icon: CheckCircle, label: 'Progress', value: '80% Complete' },
+              { icon: CheckCircle, label: 'Progress', value: '100% Complete' },
             ].map((stat, index) => (
               <motion.div
                 key={index}
@@ -193,12 +193,12 @@ export default function CareerTracks() {
           >
             <div className="flex justify-between text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">
               <span>Cohort progress</span>
-              <span>80%</span>
+              <span>100%</span>
             </div>
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
               <div 
                 className="bg-gradient-to-r from-indigo-600 to-purple-600 h-3 rounded-full transition-all duration-1000"
-                style={{ width: '80%' }}
+                style={{ width: '100%' }}
               />
             </div>
           </motion.div>

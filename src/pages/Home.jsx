@@ -69,8 +69,8 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <div className="inline-flex items-center gap-2 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-4 py-2 rounded-full text-sm font-semibold mb-3">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              Pilot Cohort — Currently Running
+              <span className="w-2 h-2 bg-green-500 rounded-full" />
+              Pilot Cohort — Completed
             </div>
             <div className="max-w-xs mx-auto">
               <div className="flex justify-between text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">
@@ -80,7 +80,7 @@ export default function Home() {
               <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden">
                 <div 
                   className="bg-gradient-to-r from-indigo-600 to-purple-600 h-2.5 rounded-full transition-all duration-1000"
-                  style={{ width: '80%' }}
+                  style={{ width: '100%' }}
                 />
               </div>
             </div>
