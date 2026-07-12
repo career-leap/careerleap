@@ -94,7 +94,7 @@ services:
       - key: VITE_API_URL
         value: "/api"
       - key: VITE_CALENDLY_URL
-        value: "https://calendly.com/your-calendar-link"
+        value: "https://calendly.com/careerleap-careerleap/30min"
     routes:
       - type: rewrite
         source: /api/*
