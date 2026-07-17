@@ -9,7 +9,8 @@ import { trackPageView } from './lib/metrics';
 
 // Eagerly load only the landing page for fast first paint;
 // lazy-load all other route-level pages to reduce initial bundle size.
-import Home from './pages/Home';
+// PREVIEW: using HomeV2 for internal review. Swap back to Home before production.
+import Home from './pages/HomeV2';
 
 const About = lazy(() => import('./pages/About'));
 const Mentors = lazy(() => import('./pages/Mentors'));
@@ -37,7 +38,7 @@ const CookiePolicy = lazy(() => import('./pages/CookiePolicy'));
 function PageLoader() {
   return (
     <div className="min-h-[50vh] flex items-center justify-center">
-      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600 dark:border-indigo-400" />
+      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-teal-600 dark:border-teal-400" />
     </div>
   );
 }
@@ -56,7 +57,7 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
     <nav className="fixed top-0 left-0 right-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md z-50 border-b border-gray-200 dark:border-gray-700 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <NavLink to="/" className="flex items-center gap-2 text-2xl font-extrabold text-indigo-600">
+          <NavLink to="/" className="flex items-center gap-2 text-2xl font-extrabold text-teal-600">
             <picture>
               <source srcSet="/image.webp" type="image/webp" />
               <img src="/image.png" alt="CareerLeap Logo" className="h-9 w-auto object-contain" />
@@ -65,15 +66,16 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
           </NavLink>
 
           <div className="hidden md:flex items-center gap-8">
-            <NavLink to="/" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Home</NavLink>
-            <NavLink to="/about" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>About</NavLink>
+            <NavLink to="/" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-teal-600 dark:text-teal-400' : 'text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400'}`}>Home</NavLink>
+            <NavLink to="/how-it-works" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-teal-600 dark:text-teal-400' : 'text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400'}`}>How it works</NavLink>
+            <NavLink to="/about" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-teal-600 dark:text-teal-400' : 'text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400'}`}>Why CareerLeap</NavLink>
             <CareerTracksDropdown />
             {isAuthenticated && (
               <>
-                <NavLink to="/mentors" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Mentors</NavLink>
-                <NavLink to="/my-sessions" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>My Sessions</NavLink>
-                <NavLink to="/files" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Files</NavLink>
-                <NavLink to="/profile" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Profile</NavLink>
+                <NavLink to="/mentors" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-teal-600 dark:text-teal-400' : 'text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400'}`}>Mentors</NavLink>
+                <NavLink to="/my-sessions" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-teal-600 dark:text-teal-400' : 'text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400'}`}>My Sessions</NavLink>
+                <NavLink to="/files" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-teal-600 dark:text-teal-400' : 'text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400'}`}>Files</NavLink>
+                <NavLink to="/profile" className={({isActive}) => `font-medium transition-colors ${isActive ? 'text-teal-600 dark:text-teal-400' : 'text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400'}`}>Profile</NavLink>
               </>
             )}
           </div>
@@ -92,10 +94,10 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
               </>
             ) : (
               <>
-                <NavLink to="/login" className="px-4 py-2 text-indigo-600 dark:text-indigo-400 border-2 border-indigo-600 dark:border-indigo-400 rounded-lg font-semibold hover:bg-indigo-600 hover:text-white transition-all">
+                <NavLink to="/login" className="px-4 py-2 text-teal-600 dark:text-teal-400 border-2 border-teal-600 dark:border-teal-400 rounded-lg font-semibold hover:bg-teal-600 hover:text-white transition-all">
                   Log In
                 </NavLink>
-                <NavLink to="/contact" className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
+                <NavLink to="/contact" className="px-4 py-2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-lg font-semibold hover:shadow-lg transition-all">
                   Get Started
                 </NavLink>
               </>
@@ -105,7 +107,7 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
           <div className="flex items-center gap-2 md:hidden">
             <ThemeToggle />
             <button 
-              className="p-2 text-indigo-600 dark:text-indigo-400"
+              className="p-2 text-teal-600 dark:text-teal-400"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -117,7 +119,8 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
           <div className="md:hidden py-4 border-t border-gray-200 dark:border-gray-700">
             <div className="flex flex-col gap-4">
               <NavLink to="/" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 dark:text-gray-300">Home</NavLink>
-              <NavLink to="/about" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 dark:text-gray-300">About</NavLink>
+              <NavLink to="/how-it-works" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 dark:text-gray-300">How it works</NavLink>
+              <NavLink to="/about" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 dark:text-gray-300">Why CareerLeap</NavLink>
               <CareerTracksDropdown mobile onItemClick={() => setMobileMenuOpen(false)} />
               {isAuthenticated && (
                 <>
@@ -131,8 +134,8 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
                 <button onClick={() => { logout(); setMobileMenuOpen(false); }} className="text-red-600 dark:text-red-400">Logout</button>
               ) : (
                 <>
-                  <NavLink to="/login" onClick={() => setMobileMenuOpen(false)} className="text-indigo-600 dark:text-indigo-400">Login</NavLink>
-                  <NavLink to="/contact" onClick={() => setMobileMenuOpen(false)} className="text-indigo-600 dark:text-indigo-400">Get Started</NavLink>
+                  <NavLink to="/login" onClick={() => setMobileMenuOpen(false)} className="text-teal-600 dark:text-teal-400">Login</NavLink>
+                  <NavLink to="/contact" onClick={() => setMobileMenuOpen(false)} className="text-teal-600 dark:text-teal-400">Get Started</NavLink>
                 </>
               )}
             </div>
@@ -227,7 +230,7 @@ function App() {
           </Suspense>
         </main>
 
-        <footer className="bg-slate-900 dark:bg-black text-white py-16 px-4 transition-colors">
+        <footer className="bg-teal-900 dark:bg-teal-950 text-white py-16 px-4 transition-colors">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-2 text-2xl font-extrabold text-white mb-4">
@@ -238,20 +241,20 @@ function App() {
                 CareerLeap
               </div>
               <p className="text-gray-400 text-sm">
-                Connecting ambitious professionals with industry experts for personalized career guidance.
+                Germany's career simulation platform for international professionals entering IT, Data, and Operations roles.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Platform</h4>
+              <h4 className="font-semibold mb-4">Programmes</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
-                <li><NavLink to="/mentors" className="hover:text-white transition-colors">Find a Mentor</NavLink></li>
-                <li><a href="#" className="hover:text-white transition-colors">Become a Mentor</a></li>
+                <li><NavLink to="/career-tracks" className="hover:text-white transition-colors">Career Tracks</NavLink></li>
+                <li><NavLink to="/contact" className="hover:text-white transition-colors">Join as a Team Lead</NavLink></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
-                <li><NavLink to="/about" className="hover:text-white transition-colors">About Us</NavLink></li>
+                <li><NavLink to="/about" className="hover:text-white transition-colors">Why CareerLeap</NavLink></li>
                 <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
               </ul>

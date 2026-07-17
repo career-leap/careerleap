@@ -35,7 +35,7 @@ const getFileIcon = (type) => {
 // Get category color
 const getCategoryColor = (category) => {
   const colors = {
-    image: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
+    image: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
     document: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
     spreadsheet: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
     presentation: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400',
@@ -82,20 +82,20 @@ const formatDate = (isoString) => {
 
 // Upload Progress Component
 const UploadProgress = ({ progress, filename }) => (
-  <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-indigo-100 dark:border-indigo-900/30">
+  <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-teal-100 dark:border-teal-900/30">
     <div className="flex items-center gap-3 mb-4">
-      <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg flex items-center justify-center">
-        <Upload className="w-5 h-5 text-indigo-600 dark:text-indigo-400 animate-pulse" />
+      <div className="w-10 h-10 bg-teal-100 dark:bg-teal-900/30 rounded-lg flex items-center justify-center">
+        <Upload className="w-5 h-5 text-teal-600 dark:text-teal-400 animate-pulse" />
       </div>
       <div className="flex-1 min-w-0">
         <p className="font-medium text-slate-900 dark:text-white truncate">{filename}</p>
         <p className="text-sm text-gray-500 dark:text-gray-400">Uploading...</p>
       </div>
-      <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">{progress}%</span>
+      <span className="text-lg font-bold text-teal-600 dark:text-teal-400">{progress}%</span>
     </div>
     <div className="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
       <motion.div 
-        className="h-full bg-gradient-to-r from-indigo-500 to-purple-500"
+        className="h-full bg-gradient-to-r from-teal-500 to-cyan-500"
         initial={{ width: 0 }}
         animate={{ width: `${progress}%` }}
         transition={{ duration: 0.3 }}
@@ -122,8 +122,8 @@ const UploadCard = ({ upload, onDelete, onDownload, currentUserId }) => {
     >
       <div className="flex items-start gap-4">
         {/* File Icon */}
-        <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center shrink-0">
-          <FileIcon size={24} className="text-indigo-600 dark:text-indigo-400" />
+        <div className="w-12 h-12 bg-teal-50 dark:bg-teal-900/30 rounded-xl flex items-center justify-center shrink-0">
+          <FileIcon size={24} className="text-teal-600 dark:text-teal-400" />
         </div>
 
         {/* File Info */}
@@ -147,7 +147,7 @@ const UploadCard = ({ upload, onDelete, onDownload, currentUserId }) => {
             <div className="flex items-center gap-1">
               <button
                 onClick={() => onDownload(upload.id, upload.original_filename)}
-                className="p-2 text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
+                className="p-2 text-gray-400 hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-900/20 rounded-lg transition-colors"
                 title="Download file"
               >
                 <Download size={18} />
@@ -169,12 +169,12 @@ const UploadCard = ({ upload, onDelete, onDownload, currentUserId }) => {
             <div className="flex flex-wrap items-center gap-4 text-sm">
               {/* Date & Time */}
               <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
-                <Calendar size={14} className="text-indigo-500" />
+                <Calendar size={14} className="text-teal-500" />
                 <span title={formattedDate.full}>{formattedDate.date}</span>
               </div>
               
               <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
-                <Clock size={14} className="text-indigo-500" />
+                <Clock size={14} className="text-teal-500" />
                 <span>{formattedDate.time}</span>
               </div>
 
@@ -189,7 +189,7 @@ const UploadCard = ({ upload, onDelete, onDownload, currentUserId }) => {
 
             {/* Uploader Info */}
             <div className="flex items-center gap-2 mt-3">
-              <div className="w-6 h-6 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white text-xs font-medium">
+              <div className="w-6 h-6 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-full flex items-center justify-center text-white text-xs font-medium">
                 {upload.user_name?.charAt(0).toUpperCase() || '?'}
               </div>
               <span className="text-sm text-gray-600 dark:text-gray-400">
@@ -199,7 +199,7 @@ const UploadCard = ({ upload, onDelete, onDownload, currentUserId }) => {
                 {upload.user_role}
               </span>
               {isOwner && (
-                <span className="text-xs px-2 py-0.5 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 rounded-full">
+                <span className="text-xs px-2 py-0.5 bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 rounded-full">
                   You
                 </span>
               )}
@@ -385,7 +385,7 @@ export default function FileUpload() {
             <button
               onClick={loadData}
               disabled={isLoading}
-              className="p-2 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors disabled:opacity-50"
+              className="p-2 text-gray-500 hover:text-teal-600 hover:bg-teal-50 dark:hover:bg-teal-900/20 rounded-lg transition-colors disabled:opacity-50"
               title="Refresh"
             >
               <RefreshCw size={20} className={isLoading ? 'animate-spin' : ''} />
@@ -416,7 +416,7 @@ export default function FileUpload() {
             title="My Uploads" 
             value={myUploads} 
             icon={User} 
-            color="bg-gradient-to-br from-purple-500 to-purple-600"
+            color="bg-gradient-to-br from-amber-500 to-cyan-600"
           />
           <StatsCard 
             title="My Storage" 
@@ -437,7 +437,7 @@ export default function FileUpload() {
           <div
             className={`relative border-2 border-dashed rounded-2xl p-8 text-center transition-all ${
               dragActive 
-                ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20' 
+                ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20' 
                 : 'border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-600'
             }`}
             onDragEnter={handleDrag}
@@ -456,14 +456,14 @@ export default function FileUpload() {
             <div className="flex flex-col items-center gap-4">
               <div className={`w-16 h-16 rounded-full flex items-center justify-center transition-colors ${
                 dragActive 
-                  ? 'bg-indigo-100 dark:bg-indigo-900/40' 
+                  ? 'bg-teal-100 dark:bg-teal-900/40' 
                   : 'bg-gray-100 dark:bg-gray-700'
               }`}>
                 <Upload 
                   size={32} 
                   className={`transition-colors ${
                     dragActive 
-                      ? 'text-indigo-600 dark:text-indigo-400' 
+                      ? 'text-teal-600 dark:text-teal-400' 
                       : 'text-gray-500 dark:text-gray-400'
                   }`} 
                 />
@@ -477,7 +477,7 @@ export default function FileUpload() {
                   or{' '}
                   <button
                     onClick={() => inputRef.current?.click()}
-                    className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline"
+                    className="text-teal-600 dark:text-teal-400 font-medium hover:underline"
                   >
                     browse to upload
                   </button>
@@ -554,7 +554,7 @@ export default function FileUpload() {
               placeholder="Search files..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
             />
           </div>
 
@@ -564,7 +564,7 @@ export default function FileUpload() {
             <select
               value={filterCategory}
               onChange={(e) => setFilterCategory(e.target.value)}
-              className="pl-10 pr-8 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent appearance-none cursor-pointer"
+              className="pl-10 pr-8 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:border-transparent appearance-none cursor-pointer"
             >
               <option value="all">All Categories</option>
               <option value="document">Documents</option>
@@ -582,7 +582,7 @@ export default function FileUpload() {
               type="checkbox"
               checked={showMyUploadsOnly}
               onChange={(e) => setShowMyUploadsOnly(e.target.checked)}
-              className="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500"
+              className="w-4 h-4 text-teal-600 rounded focus:ring-teal-500"
             />
             <span className="text-sm text-gray-700 dark:text-gray-300">My uploads only</span>
           </label>
@@ -605,7 +605,7 @@ export default function FileUpload() {
 
           {isLoading && uploads.length === 0 ? (
             <div className="text-center py-16">
-              <Loader2 className="w-10 h-10 text-indigo-600 dark:text-indigo-400 animate-spin mx-auto mb-4" />
+              <Loader2 className="w-10 h-10 text-teal-600 dark:text-teal-400 animate-spin mx-auto mb-4" />
               <p className="text-gray-500 dark:text-gray-400">Loading uploads...</p>
             </div>
           ) : filteredUploads.length === 0 ? (

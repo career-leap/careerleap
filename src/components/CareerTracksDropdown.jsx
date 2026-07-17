@@ -57,7 +57,7 @@ export default function CareerTracksDropdown({ mobile = false, onItemClick }) {
       <div className="flex flex-col gap-2">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`flex items-center justify-between text-left ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-700 dark:text-gray-300'}`}
+          className={`flex items-center justify-between text-left ${isActive ? 'text-teal-600 dark:text-teal-400' : 'text-gray-700 dark:text-gray-300'}`}
         >
           <span>Career Tracks</span>
           <ChevronDown 
@@ -85,7 +85,7 @@ export default function CareerTracksDropdown({ mobile = false, onItemClick }) {
                   className={({ isActive }) => 
                     `flex items-center justify-between py-1 text-sm ${
                       isActive 
-                        ? 'text-indigo-600 dark:text-indigo-400 font-medium' 
+                        ? 'text-teal-600 dark:text-teal-400 font-medium' 
                         : 'text-gray-600 dark:text-gray-400'
                     }`
                   }
@@ -114,8 +114,8 @@ export default function CareerTracksDropdown({ mobile = false, onItemClick }) {
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center gap-1 font-medium transition-colors ${
           isActive 
-            ? 'text-indigo-600 dark:text-indigo-400' 
-            : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'
+            ? 'text-teal-600 dark:text-teal-400' 
+            : 'text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400'
         }`}
       >
         Career Tracks
@@ -141,7 +141,7 @@ export default function CareerTracksDropdown({ mobile = false, onItemClick }) {
                 className={({ isActive }) => 
                   `flex items-center justify-between px-4 py-3 text-sm transition-colors ${
                     isActive 
-                      ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 font-medium' 
+                      ? 'bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400 font-medium' 
                       : 'text-gray-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-800'
                   }`
                 }

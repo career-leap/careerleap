@@ -51,7 +51,7 @@ export default function Impressum() {
                   href="https://career-leap.academy" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-indigo-600 dark:text-indigo-400 hover:underline"
+                  className="text-teal-600 dark:text-teal-400 hover:underline"
                 >
                   https://career-leap.academy
                 </a>

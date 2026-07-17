@@ -58,7 +58,7 @@ export default function Mentors() {
               <input
                 type="text"
                 placeholder="Search by name..."
-                className="w-full pl-10 pr-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 transition-colors"
+                className="w-full pl-10 pr-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 transition-colors"
                 value={selectedFilters.search}
                 onChange={(e) => setFilter('search', e.target.value)}
               />
@@ -66,7 +66,7 @@ export default function Mentors() {
 
             {/* Sort */}
             <select
-              className="px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
+              className="px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
               value={selectedFilters.sortBy}
               onChange={(e) => setFilter('sortBy', e.target.value)}
             >
@@ -81,7 +81,7 @@ export default function Mentors() {
               onClick={() => setShowFilters(!showFilters)}
               className={`flex items-center gap-2 px-4 py-3 rounded-lg font-medium transition-colors ${
                 showFilters 
-                  ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400' 
+                  ? 'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400' 
                   : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
               }`}
             >
@@ -150,7 +150,7 @@ export default function Mentors() {
         {/* Loading State */}
         {loading && (
           <div className="flex justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
           </div>
         )}
 
@@ -176,7 +176,7 @@ export default function Mentors() {
                 <p className="text-gray-500 dark:text-gray-400 text-lg">No mentors found matching your criteria.</p>
                 <button
                   onClick={clearFilters}
-                  className="mt-4 text-indigo-600 dark:text-indigo-400 font-medium hover:underline"
+                  className="mt-4 text-teal-600 dark:text-teal-400 font-medium hover:underline"
                 >
                   Clear all filters
                 </button>

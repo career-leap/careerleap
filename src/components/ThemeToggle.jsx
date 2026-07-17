@@ -31,7 +31,7 @@ export default function ThemeToggle() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-2 rounded-lg text-gray-600 hover:text-indigo-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-indigo-400 dark:hover:bg-gray-800 transition-colors"
+        className="p-2 rounded-lg text-gray-600 hover:text-teal-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-teal-400 dark:hover:bg-gray-800 transition-colors"
         aria-label="Toggle theme"
       >
         <Icon size={20} />
@@ -48,7 +48,7 @@ export default function ThemeToggle() {
               }}
               className={`w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors ${
                 theme === value
-                  ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30'
+                  ? 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/30'
                   : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
               }`}
             >

@@ -249,7 +249,7 @@ export default function JourneyFormMockup() {
           </div>
           <p className="text-sm text-gray-500 dark:text-gray-500">
             For urgent questions, you can also reach us at{' '}
-            <a href="mailto:info@career-leap.academy" className="text-indigo-600 dark:text-indigo-400 hover:underline">
+            <a href="mailto:info@career-leap.academy" className="text-teal-600 dark:text-teal-400 hover:underline">
               info@career-leap.academy
             </a>
           </p>
@@ -283,7 +283,7 @@ export default function JourneyFormMockup() {
                 <div key={section.id} className="flex flex-col items-center flex-1">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
                     isActive
-                      ? 'bg-indigo-600 text-white ring-4 ring-indigo-100 dark:ring-indigo-900/40'
+                      ? 'bg-teal-600 text-white ring-4 ring-teal-100 dark:ring-teal-900/40'
                       : isCompleted
                         ? 'bg-green-500 text-white'
                         : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
@@ -291,7 +291,7 @@ export default function JourneyFormMockup() {
                     {isCompleted ? <CheckCircle size={18} /> : <Icon size={18} />}
                   </div>
                   <span className={`text-xs font-medium mt-2 hidden sm:block ${
-                    isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'
+                    isActive ? 'text-teal-600 dark:text-teal-400' : 'text-gray-500 dark:text-gray-400'
                   }`}>
                     {section.label}
                   </span>
@@ -301,7 +301,7 @@ export default function JourneyFormMockup() {
           </div>
           <div className="relative mt-4 h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
             <motion.div
-              className="absolute top-0 left-0 h-full bg-indigo-600 rounded-full"
+              className="absolute top-0 left-0 h-full bg-teal-600 rounded-full"
               initial={false}
               animate={{ width: `${((currentSection + 1) / SECTIONS.length) * 100}%` }}
               transition={{ duration: 0.3 }}
@@ -340,7 +340,7 @@ export default function JourneyFormMockup() {
                   className="space-y-6"
                 >
                   <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                    <User size={22} className="text-indigo-600 dark:text-indigo-400" />
+                    <User size={22} className="text-teal-600 dark:text-teal-400" />
                     About You
                   </h2>
 
@@ -355,7 +355,7 @@ export default function JourneyFormMockup() {
                       onChange={e => handleChange('full_name', e.target.value)}
                       placeholder="Your full name"
                       className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 ${
-                        errors.full_name ? 'border-red-300 dark:border-red-500' : 'border-gray-200 dark:border-gray-600 focus:border-indigo-600 dark:focus:border-indigo-500'
+                        errors.full_name ? 'border-red-300 dark:border-red-500' : 'border-gray-200 dark:border-gray-600 focus:border-teal-600 dark:focus:border-teal-500'
                       }`}
                     />
                     {errors.full_name && <p className="text-red-500 text-sm mt-1">{errors.full_name}</p>}
@@ -374,7 +374,7 @@ export default function JourneyFormMockup() {
                         onChange={e => handleChange('email', e.target.value)}
                         placeholder="yourname@email.com"
                         className={`w-full pl-11 pr-4 py-3 border-2 rounded-lg focus:outline-none transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 ${
-                          errors.email ? 'border-red-300 dark:border-red-500' : 'border-gray-200 dark:border-gray-600 focus:border-indigo-600 dark:focus:border-indigo-500'
+                          errors.email ? 'border-red-300 dark:border-red-500' : 'border-gray-200 dark:border-gray-600 focus:border-teal-600 dark:focus:border-teal-500'
                         }`}
                       />
                     </div>
@@ -393,7 +393,7 @@ export default function JourneyFormMockup() {
                         value={formData.phone}
                         onChange={e => handleChange('phone', e.target.value)}
                         placeholder="Optional, but recommended for faster follow-up"
-                        className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg focus:border-indigo-600 dark:focus:border-indigo-500 focus:outline-none transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400"
+                        className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg focus:border-teal-600 dark:focus:border-teal-500 focus:outline-none transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400"
                       />
                     </div>
                   </div>
@@ -409,7 +409,7 @@ export default function JourneyFormMockup() {
                         value={formData.location}
                         onChange={e => handleChange('location', e.target.value)}
                         className={`w-full pl-11 pr-4 py-3 border-2 rounded-lg focus:outline-none transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white appearance-none ${
-                          errors.location ? 'border-red-300 dark:border-red-500' : 'border-gray-200 dark:border-gray-600 focus:border-indigo-600 dark:focus:border-indigo-500'
+                          errors.location ? 'border-red-300 dark:border-red-500' : 'border-gray-200 dark:border-gray-600 focus:border-teal-600 dark:focus:border-teal-500'
                         }`}
                       >
                         <option value="">Select your location</option>
@@ -431,7 +431,7 @@ export default function JourneyFormMockup() {
                   className="space-y-6"
                 >
                   <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                    <Briefcase size={22} className="text-indigo-600 dark:text-indigo-400" />
+                    <Briefcase size={22} className="text-teal-600 dark:text-teal-400" />
                     Your Career Situation
                   </h2>
 
@@ -446,7 +446,7 @@ export default function JourneyFormMockup() {
                         value={formData.career_stage}
                         onChange={e => handleChange('career_stage', e.target.value)}
                         className={`w-full pl-11 pr-4 py-3 border-2 rounded-lg focus:outline-none transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white appearance-none ${
-                          errors.career_stage ? 'border-red-300 dark:border-red-500' : 'border-gray-200 dark:border-gray-600 focus:border-indigo-600 dark:focus:border-indigo-500'
+                          errors.career_stage ? 'border-red-300 dark:border-red-500' : 'border-gray-200 dark:border-gray-600 focus:border-teal-600 dark:focus:border-teal-500'
                         }`}
                       >
                         <option value="">Select your career stage</option>
@@ -468,7 +468,7 @@ export default function JourneyFormMockup() {
                           key={goal}
                           className={`flex items-start gap-3 p-3 rounded-lg border-2 cursor-pointer transition-all ${
                             formData.current_goal.includes(goal)
-                              ? 'border-indigo-600 dark:border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
+                              ? 'border-teal-600 dark:border-teal-500 bg-teal-50 dark:bg-teal-900/20'
                               : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500'
                           }`}
                         >
@@ -476,7 +476,7 @@ export default function JourneyFormMockup() {
                             type="checkbox"
                             checked={formData.current_goal.includes(goal)}
                             onChange={() => toggleGoal(goal)}
-                            className="mt-0.5 w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500"
+                            className="mt-0.5 w-5 h-5 text-teal-600 rounded border-gray-300 focus:ring-teal-500"
                           />
                           <span className="text-sm text-gray-700 dark:text-gray-300">{goal}</span>
                         </label>
@@ -496,7 +496,7 @@ export default function JourneyFormMockup() {
                         value={formData.track_interest}
                         onChange={e => handleChange('track_interest', e.target.value)}
                         className={`w-full pl-11 pr-4 py-3 border-2 rounded-lg focus:outline-none transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white appearance-none ${
-                          errors.track_interest ? 'border-red-300 dark:border-red-500' : 'border-gray-200 dark:border-gray-600 focus:border-indigo-600 dark:focus:border-indigo-500'
+                          errors.track_interest ? 'border-red-300 dark:border-red-500' : 'border-gray-200 dark:border-gray-600 focus:border-teal-600 dark:focus:border-teal-500'
                         }`}
                       >
                         <option value="">Select a track</option>
@@ -517,7 +517,7 @@ export default function JourneyFormMockup() {
                         value={formData.career_priority}
                         onChange={e => handleChange('career_priority', e.target.value)}
                         className={`w-full pl-11 pr-4 py-3 border-2 rounded-lg focus:outline-none transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white appearance-none ${
-                          errors.career_priority ? 'border-red-300 dark:border-red-500' : 'border-gray-200 dark:border-gray-600 focus:border-indigo-600 dark:focus:border-indigo-500'
+                          errors.career_priority ? 'border-red-300 dark:border-red-500' : 'border-gray-200 dark:border-gray-600 focus:border-teal-600 dark:focus:border-teal-500'
                         }`}
                       >
                         <option value="">Select your priority</option>
@@ -539,7 +539,7 @@ export default function JourneyFormMockup() {
                   className="space-y-6"
                 >
                   <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                    <Rocket size={22} className="text-indigo-600 dark:text-indigo-400" />
+                    <Rocket size={22} className="text-teal-600 dark:text-teal-400" />
                     Next Step
                   </h2>
 
@@ -554,7 +554,7 @@ export default function JourneyFormMockup() {
                         value={formData.start_timeline}
                         onChange={e => handleChange('start_timeline', e.target.value)}
                         className={`w-full pl-11 pr-4 py-3 border-2 rounded-lg focus:outline-none transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white appearance-none ${
-                          errors.start_timeline ? 'border-red-300 dark:border-red-500' : 'border-gray-200 dark:border-gray-600 focus:border-indigo-600 dark:focus:border-indigo-500'
+                          errors.start_timeline ? 'border-red-300 dark:border-red-500' : 'border-gray-200 dark:border-gray-600 focus:border-teal-600 dark:focus:border-teal-500'
                         }`}
                       >
                         <option value="">Select timeline</option>
@@ -575,7 +575,7 @@ export default function JourneyFormMockup() {
                           key={opt}
                           className={`flex items-center gap-2 px-4 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${
                             formData.info_call_availability === opt
-                              ? 'border-indigo-600 dark:border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300'
+                              ? 'border-teal-600 dark:border-teal-500 bg-teal-50 dark:bg-teal-900/20 text-teal-700 dark:text-teal-300'
                               : 'border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500'
                           }`}
                         >
@@ -585,7 +585,7 @@ export default function JourneyFormMockup() {
                             value={opt}
                             checked={formData.info_call_availability === opt}
                             onChange={e => handleChange('info_call_availability', e.target.value)}
-                            className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                            className="w-4 h-4 text-teal-600 border-gray-300 focus:ring-teal-500"
                           />
                           <span className="text-sm font-medium">{opt}</span>
                         </label>
@@ -605,7 +605,7 @@ export default function JourneyFormMockup() {
                         value={formData.preferred_contact_method}
                         onChange={e => handleChange('preferred_contact_method', e.target.value)}
                         className={`w-full pl-11 pr-4 py-3 border-2 rounded-lg focus:outline-none transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white appearance-none ${
-                          errors.preferred_contact_method ? 'border-red-300 dark:border-red-500' : 'border-gray-200 dark:border-gray-600 focus:border-indigo-600 dark:focus:border-indigo-500'
+                          errors.preferred_contact_method ? 'border-red-300 dark:border-red-500' : 'border-gray-200 dark:border-gray-600 focus:border-teal-600 dark:focus:border-teal-500'
                         }`}
                       >
                         <option value="">Select contact method</option>
@@ -625,7 +625,7 @@ export default function JourneyFormMockup() {
                       <select
                         value={formData.source_channel}
                         onChange={e => handleChange('source_channel', e.target.value)}
-                        className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg focus:border-indigo-600 dark:focus:border-indigo-500 focus:outline-none transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white appearance-none"
+                        className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg focus:border-teal-600 dark:focus:border-teal-500 focus:outline-none transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white appearance-none"
                       >
                         <option value="">Select source (optional)</option>
                         {SOURCE_OPTIONS.map(opt => <option key={opt} value={opt}>{opt}</option>)}
@@ -643,7 +643,7 @@ export default function JourneyFormMockup() {
                       onChange={e => handleChange('message', e.target.value)}
                       placeholder="Example: I recently graduated and want to enter IT support, data analytics, or business analysis in Germany, but I need practical experience, portfolio projects, and guidance."
                       rows={4}
-                      className="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg focus:border-indigo-600 dark:focus:border-indigo-500 focus:outline-none transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 resize-y"
+                      className="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg focus:border-teal-600 dark:focus:border-teal-500 focus:outline-none transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 resize-y"
                     />
                   </div>
 
@@ -654,11 +654,11 @@ export default function JourneyFormMockup() {
                         type="checkbox"
                         checked={formData.gdpr_consent}
                         onChange={e => handleChange('gdpr_consent', e.target.checked)}
-                        className={`mt-0.5 w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 ${errors.gdpr_consent ? 'border-red-500' : ''}`}
+                        className={`mt-0.5 w-5 h-5 rounded border-gray-300 text-teal-600 focus:ring-teal-500 ${errors.gdpr_consent ? 'border-red-500' : ''}`}
                       />
                       <span className="text-sm text-gray-700 dark:text-gray-300">
                         I agree that CareerLeap Academy may contact me regarding my inquiry and process my data according to the{' '}
-                        <a href="/privacy" className="text-indigo-600 dark:text-indigo-400 hover:underline font-medium">
+                        <a href="/privacy" className="text-teal-600 dark:text-teal-400 hover:underline font-medium">
                           Privacy Policy
                         </a>.
                         <span className="text-red-500 ml-1">*</span>
@@ -674,7 +674,7 @@ export default function JourneyFormMockup() {
                         type="checkbox"
                         checked={formData.marketing_consent}
                         onChange={e => handleChange('marketing_consent', e.target.checked)}
-                        className="mt-0.5 w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        className="mt-0.5 w-5 h-5 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
                       />
                       <span className="text-sm text-gray-700 dark:text-gray-300">
                         I would like to receive occasional updates about CareerLeap cohorts, events, and career resources.
@@ -701,7 +701,7 @@ export default function JourneyFormMockup() {
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="flex items-center gap-2 px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors shadow-md hover:shadow-lg"
+                  className="flex items-center gap-2 px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg transition-colors shadow-md hover:shadow-lg"
                 >
                   Continue
                   <ChevronRight size={18} />
@@ -710,7 +710,7 @@ export default function JourneyFormMockup() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-700 hover:to-cyan-700 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <>

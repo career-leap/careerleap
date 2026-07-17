@@ -72,7 +72,7 @@ export default function ResetPassword() {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center py-12 px-4 transition-colors">
         <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-8 text-center transition-colors">
-          <Loader2 className="w-10 h-10 text-indigo-600 dark:text-indigo-400 animate-spin mx-auto mb-4" />
+          <Loader2 className="w-10 h-10 text-teal-600 dark:text-teal-400 animate-spin mx-auto mb-4" />
           <p className="text-gray-600 dark:text-gray-400">Verifying reset link...</p>
         </div>
       </div>
@@ -98,7 +98,7 @@ export default function ResetPassword() {
           
           <Link
             to="/forgot-password"
-            className="inline-flex items-center justify-center w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+            className="inline-flex items-center justify-center w-full bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors"
           >
             Request New Link
           </Link>
@@ -106,7 +106,7 @@ export default function ResetPassword() {
           <div className="mt-4">
             <Link
               to="/login"
-              className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline"
+              className="text-teal-600 dark:text-teal-400 font-medium hover:underline"
             >
               Back to Login
             </Link>
@@ -135,7 +135,7 @@ export default function ResetPassword() {
           
           <button
             onClick={() => navigate('/login')}
-            className="inline-flex items-center justify-center gap-2 w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+            className="inline-flex items-center justify-center gap-2 w-full bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors"
           >
             Sign In
             <ArrowRight size={18} />
@@ -175,7 +175,7 @@ export default function ResetPassword() {
                 required
                 minLength={8}
                 disabled={isLoading}
-                className="w-full pl-10 pr-12 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 transition-colors disabled:opacity-50"
+                className="w-full pl-10 pr-12 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 transition-colors disabled:opacity-50"
                 placeholder="••••••••"
                 value={formData.newPassword}
                 onChange={(e) => setFormData({...formData, newPassword: e.target.value})}
@@ -223,7 +223,7 @@ export default function ResetPassword() {
                 required
                 minLength={8}
                 disabled={isLoading}
-                className={`w-full pl-10 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 transition-colors disabled:opacity-50 ${
+                className={`w-full pl-10 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 transition-colors disabled:opacity-50 ${
                   formData.confirmPassword && formData.newPassword !== formData.confirmPassword
                     ? 'border-red-300 dark:border-red-600 focus:ring-red-500'
                     : 'border-gray-300 dark:border-gray-600'
@@ -275,7 +275,7 @@ export default function ResetPassword() {
               formData.newPassword.length < 8 || 
               formData.newPassword !== formData.confirmPassword
             }
-            className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+            className="w-full bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
           >
             {isLoading ? (
               <>
@@ -293,7 +293,7 @@ export default function ResetPassword() {
             Remember your password?{' '}
             <Link 
               to="/login" 
-              className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline"
+              className="text-teal-600 dark:text-teal-400 font-medium hover:underline"
             >
               Sign in
             </Link>

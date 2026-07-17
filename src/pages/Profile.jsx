@@ -50,15 +50,15 @@ export default function Profile() {
       <div className="max-w-4xl mx-auto">
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/50 overflow-hidden transition-colors">
           {/* Header */}
-          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-8 text-white">
+          <div className="bg-gradient-to-r from-teal-500 to-cyan-500 p-8 text-white">
             <div className="flex items-center gap-6">
-              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center text-3xl font-bold text-indigo-600">
+              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center text-3xl font-bold text-teal-600">
                 {user.firstName[0]}{user.lastName[0]}
               </div>
               <div>
                 <h1 className="text-3xl font-bold">{user.firstName} {user.lastName}</h1>
-                <p className="text-indigo-100 capitalize">{user.role}</p>
-                <p className="text-sm text-indigo-200 mt-1">{user.email}</p>
+                <p className="text-teal-100 capitalize">{user.role}</p>
+                <p className="text-sm text-teal-200 mt-1">{user.email}</p>
               </div>
             </div>
           </div>
@@ -78,7 +78,7 @@ export default function Profile() {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">First Name</label>
                     <input
                       type="text"
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
                       value={formData.firstName}
                       onChange={(e) => setFormData({...formData, firstName: e.target.value})}
                     />
@@ -87,7 +87,7 @@ export default function Profile() {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Last Name</label>
                     <input
                       type="text"
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
                       value={formData.lastName}
                       onChange={(e) => setFormData({...formData, lastName: e.target.value})}
                     />
@@ -98,7 +98,7 @@ export default function Profile() {
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Bio</label>
                   <textarea
                     rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
                     placeholder="Tell us about yourself..."
                     value={formData.bio}
                     onChange={(e) => setFormData({...formData, bio: e.target.value})}
@@ -110,7 +110,7 @@ export default function Profile() {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Industry</label>
                     <input
                       type="text"
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
                       placeholder="e.g., Technology"
                       value={formData.industry}
                       onChange={(e) => setFormData({...formData, industry: e.target.value})}
@@ -120,7 +120,7 @@ export default function Profile() {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Location</label>
                     <input
                       type="text"
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
                       placeholder="e.g., San Francisco"
                       value={formData.location}
                       onChange={(e) => setFormData({...formData, location: e.target.value})}
@@ -130,7 +130,7 @@ export default function Profile() {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Years of Experience</label>
                     <input
                       type="number"
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
                       value={formData.yearsOfExperience}
                       onChange={(e) => setFormData({...formData, yearsOfExperience: e.target.value})}
                     />
@@ -141,7 +141,7 @@ export default function Profile() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 disabled:opacity-50 transition-colors"
+                    className="bg-teal-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-teal-700 disabled:opacity-50 transition-colors"
                   >
                     {loading ? 'Saving...' : 'Save Changes'}
                   </button>
@@ -180,7 +180,7 @@ export default function Profile() {
 
                 <button
                   onClick={() => setEditing(true)}
-                  className="bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+                  className="bg-teal-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-teal-700 transition-colors"
                 >
                   Edit Profile
                 </button>

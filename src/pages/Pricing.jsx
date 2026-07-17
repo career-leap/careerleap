@@ -48,12 +48,12 @@ export default function Pricing() {
           <span className={`font-medium transition-colors ${!isAnnual ? 'text-slate-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}>Monthly</span>
           <button 
             onClick={() => setIsAnnual(!isAnnual)}
-            className={`w-16 h-8 rounded-full relative transition-colors ${isAnnual ? 'bg-indigo-600' : 'bg-gray-300 dark:bg-gray-600'}`}
+            className={`w-16 h-8 rounded-full relative transition-colors ${isAnnual ? 'bg-teal-600' : 'bg-gray-300 dark:bg-gray-600'}`}
           >
             <div className={`w-6 h-6 bg-white rounded-full absolute top-1 transition-all ${isAnnual ? 'left-9' : 'left-1'}`} />
           </button>
           <span className={`font-medium transition-colors ${isAnnual ? 'text-slate-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}>
-            Annual <span className="text-indigo-600 dark:text-indigo-400 font-bold">(Save 20%)</span>
+            Annual <span className="text-teal-600 dark:text-teal-400 font-bold">(Save 20%)</span>
           </span>
         </div>
       </section>
@@ -63,10 +63,10 @@ export default function Pricing() {
           {plans.map((plan, idx) => (
             <div 
               key={idx} 
-              className={`bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg dark:shadow-gray-900/50 transition-all hover:-translate-y-2 border border-gray-100 dark:border-gray-700 ${plan.featured ? 'border-2 border-indigo-600 dark:border-indigo-500 scale-105' : ''}`}
+              className={`bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg dark:shadow-gray-900/50 transition-all hover:-translate-y-2 border border-gray-100 dark:border-gray-700 ${plan.featured ? 'border-2 border-teal-600 dark:border-teal-500 scale-105' : ''}`}
             >
               {plan.featured && (
-                <div className="inline-block px-4 py-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full text-sm font-semibold mb-4 -mt-12">
+                <div className="inline-block px-4 py-1 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-full text-sm font-semibold mb-4 -mt-12">
                   Most Popular
                 </div>
               )}
@@ -90,8 +90,8 @@ export default function Pricing() {
                 to="/contact"
                 className={`block w-full py-3 rounded-lg font-semibold text-center transition-all ${
                   plan.buttonStyle === 'primary' 
-                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg' 
-                    : 'border-2 border-indigo-600 dark:border-indigo-500 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 dark:hover:text-white'
+                    ? 'bg-gradient-to-r from-teal-500 to-cyan-500 text-white hover:shadow-lg' 
+                    : 'border-2 border-teal-600 dark:border-teal-500 text-teal-600 dark:text-teal-400 hover:bg-teal-600 hover:text-white dark:hover:bg-teal-600 dark:hover:text-white'
                 }`}
               >
                 {plan.buttonText}

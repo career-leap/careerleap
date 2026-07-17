@@ -16,7 +16,7 @@ export default function MentorCard({ mentor }) {
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm dark:shadow-gray-900/50 hover:shadow-lg dark:hover:shadow-gray-900/50 transition-all p-6 border border-gray-100 dark:border-gray-700">
         {/* Header */}
         <div className="flex items-start gap-4 mb-4">
-          <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
+          <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-full flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
             {user.firstName?.[0]}{user.lastName?.[0]}
           </div>
           <div className="flex-1 min-w-0">
@@ -61,7 +61,7 @@ export default function MentorCard({ mentor }) {
         <div className="flex items-center justify-end pt-4 border-t border-gray-100 dark:border-gray-700">
           <button 
             onClick={() => setShowBooking(true)}
-            className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+            className="bg-teal-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-teal-700 transition-colors"
           >
             Book Session
           </button>

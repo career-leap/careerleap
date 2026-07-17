@@ -95,3 +95,6 @@ CONTRIBUTING.notion.md
 CODING_STANDARDS.md
 *.docx
 notes.txt
+
+# Generated explainer video assets
+video_output/

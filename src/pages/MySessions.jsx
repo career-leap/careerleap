@@ -40,7 +40,7 @@ export default function MySessions() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
       </div>
     );
   }
@@ -53,7 +53,7 @@ export default function MySessions() {
         {mySessions.length === 0 ? (
           <div className="bg-white dark:bg-gray-800 rounded-xl p-12 text-center shadow-sm dark:shadow-gray-900/50 transition-colors">
             <p className="text-gray-500 dark:text-gray-400 text-lg">No sessions booked yet.</p>
-            <a href="/mentors" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline mt-2 inline-block">
+            <a href="/mentors" className="text-teal-600 dark:text-teal-400 font-medium hover:underline mt-2 inline-block">
               Find a mentor
             </a>
           </div>
@@ -98,7 +98,7 @@ export default function MySessions() {
                         href={session.meetingLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 mt-3 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300"
+                        className="inline-flex items-center gap-2 mt-3 text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300"
                       >
                         <Video size={16} />
                         Join Meeting
@@ -107,7 +107,7 @@ export default function MySessions() {
                   </div>
 
                   <div className="text-right">
-                    <p className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">${session.price}</p>
+                    <p className="text-2xl font-bold text-teal-600 dark:text-teal-400">${session.price}</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">{session.paymentStatus}</p>
                   </div>
                 </div>

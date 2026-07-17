@@ -10,7 +10,7 @@ const CoreValueCard = ({ icon: Icon, title, description, index }) => (
     viewport={{ once: true }}
     transition={{ duration: 0.5, delay: index * 0.1 }}
   >
-    <div className="w-14 h-14 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center text-white mb-6">
+    <div className="w-14 h-14 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center text-white mb-6">
       <Icon size={28} />
     </div>
     <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{title}</h3>
@@ -26,8 +26,8 @@ const WhatWeDeliverItem = ({ title, index }) => (
     viewport={{ once: true }}
     transition={{ duration: 0.4, delay: index * 0.1 }}
   >
-    <div className="w-8 h-8 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg flex items-center justify-center shrink-0">
-      <Check size={18} className="text-indigo-600 dark:text-indigo-400" />
+    <div className="w-8 h-8 bg-teal-100 dark:bg-teal-900/30 rounded-lg flex items-center justify-center shrink-0">
+      <Check size={18} className="text-teal-600 dark:text-teal-400" />
     </div>
     <span className="text-slate-700 dark:text-gray-300 font-medium">{title}</span>
   </motion.div>
@@ -103,7 +103,7 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="w-12 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mx-auto mb-6" />
+            <div className="w-12 h-1 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full mx-auto mb-6" />
             <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6">
               Why CareerLeap Exists
             </h1>
@@ -125,7 +125,7 @@ export default function About() {
             </motion.div>
             
             <motion.div 
-              className="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl p-8 text-white"
+              className="bg-gradient-to-br from-teal-500 to-cyan-500 rounded-2xl p-8 text-white"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -150,7 +150,7 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <div className="w-12 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mb-6" />
+              <div className="w-12 h-1 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full mb-6" />
               <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-4">What We Do</h2>
               <p className="text-gray-600 dark:text-gray-400 mb-6">
                 CareerLeap builds controlled simulation environments that replicate workplace expectations.
@@ -205,8 +205,8 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <div className="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center mb-6">
-                <Target size={24} className="text-indigo-600 dark:text-indigo-400" />
+              <div className="w-12 h-12 bg-teal-100 dark:bg-teal-900/30 rounded-xl flex items-center justify-center mb-6">
+                <Target size={24} className="text-teal-600 dark:text-teal-400" />
               </div>
               <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-4">Mission</h2>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -222,8 +222,8 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center mb-6">
-                <TrendingUp size={24} className="text-purple-600 dark:text-purple-400" />
+              <div className="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center mb-6">
+                <TrendingUp size={24} className="text-amber-600 dark:text-amber-400" />
               </div>
               <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-4">Vision</h2>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -244,7 +244,7 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+            <div className="inline-flex items-center gap-2 bg-teal-50 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-4 py-2 rounded-full text-sm font-semibold mb-6">
               <Award size={16} />
               Core Values
             </div>

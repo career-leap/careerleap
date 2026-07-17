@@ -1,6 +1,5 @@
 # CareerLeap
 
-
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://reactjs.org/)
 [![Django](https://img.shields.io/badge/Django-4.2-092E20?logo=django)](https://www.djangoproject.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql)](https://www.postgresql.org/)
@@ -13,12 +12,15 @@
 CareerLeap bridges the gap between academic education and workplace execution. We help international talent transition from academic preparation to professional execution through controlled, execution-focused simulation cohorts.
 
 **Key Features:**
-- 🎓 Cohort-based career simulation programs
+- 🎓 Cohort-based career simulation programs with live and upcoming tracks
 - 👨‍🏫 Expert mentorship from industry professionals
+- 📅 Session booking and scheduling with availability management
 - 📁 File and assignment management system
-- 📅 Session booking and scheduling
-- 🔒 Secure authentication with role-based access
-- 🌙 Dark mode support
+- 📝 Customer journey lead form with scoring and classification
+- 📊 Privacy-first analytics and metrics tracking
+- 🍪 GDPR cookie consent management
+- 🔒 Secure authentication with JWT and role-based access
+- 🌙 Light/dark/system theme support
 
 ## 🏗️ Architecture
 
@@ -26,28 +28,42 @@ CareerLeap bridges the gap between academic education and workplace execution. W
 
 | Layer | Technology |
 |-------|------------|
-| **Frontend** | React 18, Vite 7, Tailwind CSS 4, Zustand |
-| **Backend** | Django 4.2, Django REST Framework, JWT |
+| **Frontend** | React 18, Vite 7, Tailwind CSS 4, Zustand, Framer Motion |
+| **Backend** | Django 4.2, Django REST Framework, JWT (simplejwt) |
 | **Database** | PostgreSQL 16 |
 | **Container** | Docker, Docker Compose |
-| **Auth** | JWT with refresh tokens, Rate limiting |
+| **Auth** | JWT with rotating refresh tokens, rate limiting |
+| **Email** | SMTP via Resend |
+| **Deployment** | Render Blueprint, Docker Compose (prod) |
 
 ### Project Structure
 
 ```
 careerleap/
-├── src/                    # React frontend
-│   ├── components/         # Reusable UI components
-│   ├── pages/             # Route-level pages
-│   ├── store/             # Zustand state stores
-│   └── lib/               # API client & utilities
-├── backend_django/        # Django backend
-│   ├── accounts/          # User authentication
-│   ├── mentors/           # Mentor profiles
-│   ├── mentorship_sessions/  # Session booking
-│   └── files/             # File uploads
-├── docker-compose.yml     # Full stack orchestration
-└── Dockerfile             # Frontend container
+├── src/                          # React frontend
+│   ├── components/               # Reusable UI components
+│   ├── pages/                    # Route-level pages
+│   │   └── tracks/               # Career track detail pages
+│   ├── store/                    # Zustand state stores
+│   ├── lib/                      # API client, metrics, utilities
+│   ├── App.jsx                   # Router and navigation
+│   └── main.jsx                  # Entry point
+├── backend_django/               # Django backend
+│   ├── accounts/                 # User authentication
+│   ├── mentors/                  # Mentor profiles
+│   ├── mentorship_sessions/      # Session booking
+│   ├── files/                    # File uploads
+│   ├── leads/                    # Customer journey lead capture
+│   ├── metrics/                  # Analytics events
+│   ├── backend_django/           # Project settings & middleware
+│   └── requirements.txt
+├── nginx/                        # Production nginx config
+├── docker-compose.yml            # Development orchestration
+├── docker-compose.prod.yml       # Production orchestration
+├── Dockerfile                    # Frontend container
+├── backend_django/Dockerfile     # Backend container
+├── render.yaml                   # Render Blueprint
+└── README.md                     # This file
 ```
 
 ## 🚀 Quick Start
@@ -103,19 +119,26 @@ See [Manual Setup Guide](#manual-setup) below for non-Docker development.
 
 ## 📖 Usage
 
+### For Prospective Participants
+
+1. Browse career tracks on the homepage or `/career-tracks`
+2. Click **"Apply for the Next Cohort"** or **"View Track Details"**
+3. Complete the customer journey form at `/contact`
+4. Book a free info session via the Calendly-linked button
+
 ### For Mentees
 
-1. Register an account at http://localhost:5177/register
-2. Complete your profile
-3. Browse available mentors
+1. Register an account at `/login`
+2. Complete your profile at `/profile`
+3. Browse available mentors at `/mentors`
 4. Book mentorship sessions
-5. Upload assignments and track progress
+5. Upload assignments and track progress at `/files`
 
 ### For Mentors
 
 1. Register as a mentor
-2. Set your availability and hourly rate
-3. Manage session requests
+2. Set your availability and hourly rate at `/profile`
+3. Manage session requests at `/my-sessions`
 4. Review mentee submissions
 
 ## 🔧 Configuration
@@ -130,7 +153,26 @@ Copy `.env.docker` to `.env` and customize:
 | `DEBUG` | Debug mode | `True` |
 | `ALLOWED_HOSTS` | Allowed hosts | `localhost,127.0.0.1` |
 | `CORS_ALLOWED_ORIGINS` | CORS origins | `http://localhost:5177` |
-| `JWT_ACCESS_TOKEN_LIFETIME_MINUTES` | Token expiry | `15` |
+| `DATABASE_URL` | PostgreSQL connection URL | — |
+| `JWT_ACCESS_TOKEN_LIFETIME_MINUTES` | Access token expiry | `15` |
+| `JWT_REFRESH_TOKEN_LIFETIME_DAYS` | Refresh token expiry | `7` |
+| `EMAIL_BACKEND` | Django email backend | `console` (dev) |
+| `EMAIL_HOST` | SMTP host | `smtp.resend.com` |
+| `EMAIL_PORT` | SMTP port | `587` |
+| `EMAIL_HOST_USER` | SMTP username | `resend` |
+| `EMAIL_HOST_PASSWORD` | SMTP/API password | — |
+| `DEFAULT_FROM_EMAIL` | Default sender | `info@career-leap.academy` |
+| `FRONTEND_URL` | Frontend URL for password reset links | `http://localhost:5177` |
+| `AWS_ACCESS_KEY_ID` | Optional S3 access key | — |
+| `AWS_SECRET_ACCESS_KEY` | Optional S3 secret key | — |
+| `AWS_STORAGE_BUCKET_NAME` | Optional S3 bucket | — |
+
+### Frontend Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `VITE_API_URL` | API base URL | `/api` |
+| `VITE_CALENDLY_URL` | Calendly booking link for info sessions | — |
 
 ### Database Credentials
 
@@ -150,8 +192,8 @@ Default credentials for local development:
 # Backend tests
 docker-compose exec backend python manage.py test
 
-# Frontend tests (if configured)
-npm test
+# Frontend build check
+npm run build
 ```
 
 ### Code Style
@@ -159,6 +201,7 @@ npm test
 - **JavaScript/React**: ES6+, functional components, async/await
 - **Python/Django**: PEP 8, type hints where applicable
 - **Git**: Conventional commits
+- See `CODING_STANDARDS.md` for detailed contribution guidelines (internal doc)
 
 ### Database Migrations
 
@@ -172,38 +215,64 @@ docker-compose exec backend python manage.py migrate
 
 ## 📝 API Documentation
 
-### Authentication Endpoints
+### Authentication Endpoints (`/api/auth/`)
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/auth/register/` | Register new user |
-| POST | `/api/auth/login/` | Login and get JWT |
-| GET | `/api/auth/me/` | Get current user |
-| POST | `/api/auth/forgot-password/` | Request password reset |
+| POST | `/register/` | Register new user |
+| POST | `/login/` | Login and get JWT |
+| GET | `/me/` | Get current user |
+| PUT/PATCH | `/profile/update/` | Update current user profile |
+| POST | `/refresh/` | Refresh access token |
+| POST | `/forgot-password/` | Request password reset |
+| POST | `/reset-password/` | Reset password with token |
+| POST | `/validate-reset-token/` | Validate password reset token |
+| POST | `/contact/` | Submit contact form |
 
-### Mentor Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/mentors/` | List mentors |
-| GET | `/api/mentors/<uuid>/` | Get mentor details |
-| PUT | `/api/mentors/profile/me/` | Update profile |
-
-### Session Endpoints
+### Mentor Endpoints (`/api/mentors/`)
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/sessions/my-sessions/` | List my sessions |
-| POST | `/api/sessions/create/` | Book new session |
-| GET | `/api/sessions/availability/` | Check availability |
+| GET | `/` | List mentors with filters/pagination |
+| GET | `/filters/` | Get available filter options |
+| GET | `/<uuid>/` | Get mentor details |
+| PUT | `/profile/me/` | Update mentor profile |
 
-### File Endpoints
+### Session Endpoints (`/api/sessions/`)
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/files/` | List uploads |
-| POST | `/api/files/upload/` | Upload file |
-| GET | `/api/files/<uuid>/download/` | Download file |
+| GET | `/` | List all sessions (admin) |
+| GET | `/my-sessions/` | List user's sessions |
+| GET | `/availability/` | Check mentor availability |
+| POST | `/create/` | Book new session |
+| GET | `/<uuid>/` | Get session details |
+| PUT | `/<uuid>/update/` | Update session |
+| DELETE | `/<uuid>/cancel/` | Cancel session |
+
+### File Endpoints (`/api/files/`)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/` | List uploads |
+| POST | `/upload/` | Upload file |
+| GET | `/categories/` | Get file categories |
+| GET | `/stats/` | Get upload statistics |
+| GET | `/<uuid>/` | Get file details |
+| DELETE | `/<uuid>/delete/` | Delete file |
+| GET | `/<uuid>/download/` | Download file |
+
+### Lead Endpoints (`/api/leads/`)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/journey/` | Submit customer journey form |
+
+### Metrics Endpoints (`/api/metrics/`)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/track/` | Track analytics event |
 
 ## 🚀 Deployment
 
@@ -213,16 +282,33 @@ docker-compose exec backend python manage.py migrate
 - [ ] Generate strong `SECRET_KEY`
 - [ ] Configure `ALLOWED_HOSTS` with your domain
 - [ ] Enable HTTPS (`SECURE_SSL_REDIRECT=True`)
-- [ ] Set up SMTP for emails
+- [ ] Set up SMTP credentials for Resend
 - [ ] Use production PostgreSQL instance
 - [ ] Configure CORS for your frontend domain
+- [ ] Set `VITE_CALENDLY_URL` for info session booking
+- [ ] Configure S3 or persistent storage for media files
+- [ ] Set secure cookie flags (`SESSION_COOKIE_SECURE=True`, `CSRF_COOKIE_SECURE=True`)
 
-### Production Deployment
+### Render Deployment
+
+The project includes a `render.yaml` Blueprint. On Render:
+
+1. Connect the GitHub repository
+2. Render creates the backend web service and static frontend site
+3. Set all required environment variables in the Render dashboard
+4. Deploy automatically on pushes to `main`
+
+### Docker Production Deployment
 
 ```bash
 # Using production compose file
 docker-compose -f docker-compose.prod.yml up -d
 ```
+
+Production compose includes:
+- PostgreSQL database
+- Django backend with Gunicorn
+- nginx reverse proxy serving static/media and proxying API requests
 
 ## 🤝 Contributing
 
@@ -230,16 +316,17 @@ We welcome contributions! Please follow these steps:
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
 ### Development Guidelines
 
-- Write clear, concise commit messages
-- Add tests for new features
+- Write clear, concise commit messages following conventional commits
+- Add backend tests for new features
 - Update documentation as needed
 - Follow the existing code style
+- Update `AGENTS.md` if you change architecture or workflows
 
 ## 📄 License
 

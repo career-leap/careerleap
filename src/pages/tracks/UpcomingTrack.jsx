@@ -32,7 +32,7 @@ export default function UpcomingTrack({
               {title}
             </h1>
             {subtitle && (
-              <p className="text-xl text-indigo-600 dark:text-indigo-400 font-semibold mb-4">
+              <p className="text-xl text-teal-600 dark:text-teal-400 font-semibold mb-4">
                 {subtitle}
               </p>
             )}
@@ -41,7 +41,7 @@ export default function UpcomingTrack({
             </p>
             <Link 
               to="/contact" 
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all"
             >
               Join the Waitlist
               <ArrowRight size={20} />
@@ -67,7 +67,7 @@ export default function UpcomingTrack({
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center text-white mx-auto mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center text-white mx-auto mb-4">
                   <stat.icon size={24} />
                 </div>
                 <p className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold mb-1">{stat.label}</p>
@@ -89,7 +89,7 @@ export default function UpcomingTrack({
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <div className="w-12 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mx-auto mb-6" />
+              <div className="w-12 h-1 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full mx-auto mb-6" />
               <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white mb-4">
                 What You Will Practise
               </h2>
@@ -108,7 +108,7 @@ export default function UpcomingTrack({
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.05 }}
                 >
-                  <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-lg mb-4">
+                  <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center text-white font-bold text-lg mb-4">
                     {index + 1}
                   </div>
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{skill.title}</h3>
@@ -137,7 +137,7 @@ export default function UpcomingTrack({
             </p>
             <Link 
               to="/contact" 
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all"
             >
               Join the Waitlist
               <ArrowRight size={20} />

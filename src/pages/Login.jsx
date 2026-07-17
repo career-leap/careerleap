@@ -38,7 +38,7 @@ export default function Login() {
               <input
                 type="email"
                 required
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 transition-colors"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 transition-colors"
                 placeholder="you@example.com"
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
@@ -51,7 +51,7 @@ export default function Login() {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
               <Link 
                 to="/forgot-password" 
-                className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
+                className="text-sm text-teal-600 dark:text-teal-400 hover:underline"
               >
                 Forgot password?
               </Link>
@@ -61,7 +61,7 @@ export default function Login() {
               <input
                 type={showPassword ? 'text' : 'password'}
                 required
-                className="w-full pl-10 pr-12 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 transition-colors"
+                className="w-full pl-10 pr-12 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 transition-colors"
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={(e) => setFormData({...formData, password: e.target.value})}
@@ -79,7 +79,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 disabled:opacity-50 transition-colors"
+            className="w-full bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 disabled:opacity-50 transition-colors"
           >
             {isLoading ? 'Signing in...' : 'Sign In'}
           </button>
@@ -87,7 +87,7 @@ export default function Login() {
 
         <p className="text-center mt-6 text-sm text-gray-500 dark:text-gray-400">
           Access is by invitation only. Please reach out to us at{' '}
-          <a href="mailto:info@career-leap.academy" className="text-indigo-600 dark:text-indigo-400 hover:underline">
+          <a href="mailto:info@career-leap.academy" className="text-teal-600 dark:text-teal-400 hover:underline">
             info@career-leap.academy
           </a>
         </p>

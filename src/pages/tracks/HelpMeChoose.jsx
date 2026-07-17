@@ -8,7 +8,7 @@ const OptionCard = ({ icon: Icon, title, description, to, primary = false }) => 
   <motion.div
     className={`rounded-2xl p-6 border transition-all duration-300 h-full ${
       primary 
-        ? 'bg-gradient-to-br from-indigo-600 to-purple-600 text-white border-transparent hover:shadow-lg' 
+        ? 'bg-gradient-to-br from-teal-500 to-cyan-500 text-white border-transparent hover:shadow-lg' 
         : 'bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-700 hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-gray-900/50'
     }`}
     initial={{ opacity: 0, y: 30 }}
@@ -16,14 +16,14 @@ const OptionCard = ({ icon: Icon, title, description, to, primary = false }) => 
     viewport={{ once: true }}
     transition={{ duration: 0.5 }}
   >
-    <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${primary ? 'bg-white/20' : 'bg-indigo-100 dark:bg-indigo-900/30'}`}>
-      <Icon size={24} className={primary ? 'text-white' : 'text-indigo-600 dark:text-indigo-400'} />
+    <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${primary ? 'bg-white/20' : 'bg-teal-100 dark:bg-teal-900/30'}`}>
+      <Icon size={24} className={primary ? 'text-white' : 'text-teal-600 dark:text-teal-400'} />
     </div>
     <h3 className={`text-xl font-bold mb-2 ${primary ? 'text-white' : 'text-slate-900 dark:text-white'}`}>{title}</h3>
     <p className={`text-sm leading-relaxed mb-4 ${primary ? 'text-white/90' : 'text-gray-600 dark:text-gray-400'}`}>{description}</p>
     <Link 
       to={to} 
-      className={`inline-flex items-center gap-1 text-sm font-semibold ${primary ? 'text-white hover:underline' : 'text-indigo-600 dark:text-indigo-400 hover:underline'}`}
+      className={`inline-flex items-center gap-1 text-sm font-semibold ${primary ? 'text-white hover:underline' : 'text-teal-600 dark:text-teal-400 hover:underline'}`}
     >
       Learn more <ArrowRight size={16} />
     </Link>
@@ -43,7 +43,7 @@ export default function HelpMeChoose() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+            <div className="inline-flex items-center gap-2 bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 px-4 py-2 rounded-full text-sm font-semibold mb-6">
               <Target size={16} />
               Find Your Path
             </div>
@@ -120,7 +120,7 @@ export default function HelpMeChoose() {
             </p>
             <Link 
               to="/contact" 
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all"
             >
               Get Personalised Guidance
               <ArrowRight size={20} />

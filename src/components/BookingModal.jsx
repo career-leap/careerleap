@@ -126,7 +126,7 @@ export default function BookingModal({ isOpen, onClose, mentor }) {
                   onClick={() => handleDateSelect(day.date)}
                   className={`p-3 rounded-lg text-center transition-colors ${
                     selectedDate === day.date
-                      ? 'bg-indigo-600 text-white'
+                      ? 'bg-teal-600 text-white'
                       : 'bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-900 dark:text-white'
                   }`}
                 >
@@ -146,7 +146,7 @@ export default function BookingModal({ isOpen, onClose, mentor }) {
             </h4>
             {loading ? (
               <div className="flex justify-center py-8">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
               </div>
             ) : availability.length === 0 ? (
               <p className="text-gray-500 dark:text-gray-400 text-center py-8">No available slots for this date.</p>
@@ -158,7 +158,7 @@ export default function BookingModal({ isOpen, onClose, mentor }) {
                     onClick={() => handleSlotSelect(slot)}
                     className={`p-3 rounded-lg text-center border transition-colors ${
                       selectedSlot?.time === slot.time
-                        ? 'bg-indigo-600 text-white border-indigo-600'
+                        ? 'bg-teal-600 text-white border-teal-600'
                         : 'bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white'
                     }`}
                   >
@@ -202,7 +202,7 @@ export default function BookingModal({ isOpen, onClose, mentor }) {
               </label>
               <textarea
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 transition-colors"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 transition-colors"
                 placeholder="e.g., Career transition advice, interview prep..."
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
@@ -219,7 +219,7 @@ export default function BookingModal({ isOpen, onClose, mentor }) {
               <button
                 onClick={handleBook}
                 disabled={loading}
-                className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition-colors"
+                className="flex-1 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50 transition-colors"
               >
                 {loading ? 'Booking...' : 'Confirm Booking'}
               </button>

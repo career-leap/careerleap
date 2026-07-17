@@ -47,7 +47,7 @@ export default function PrivacyPolicy() {
                   href="https://career-leap.academy" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-indigo-600 dark:text-indigo-400 hover:underline"
+                  className="text-teal-600 dark:text-teal-400 hover:underline"
                 >
                   https://career-leap.academy
                 </a>
@@ -216,7 +216,7 @@ export default function PrivacyPolicy() {
             <p className="text-gray-600 dark:text-gray-400">
               <a 
                 href="mailto:info@career-leap.academy"
-                className="text-indigo-600 dark:text-indigo-400 hover:underline"
+                className="text-teal-600 dark:text-teal-400 hover:underline"
               >
                 info@career-leap.academy
               </a>
@@ -247,7 +247,7 @@ export default function PrivacyPolicy() {
                 href="https://www.datenschutz-berlin.de" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-indigo-600 dark:text-indigo-400 hover:underline"
+                className="text-teal-600 dark:text-teal-400 hover:underline"
               >
                 https://www.datenschutz-berlin.de
               </a>

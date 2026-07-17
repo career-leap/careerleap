@@ -9,17 +9,17 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Jost', 'sans-serif'],
       },
       colors: {
         // Custom colors that work in both modes
         primary: {
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          500: '#6366f1', // indigo-500
-          600: '#4f46e5', // indigo-600
-          700: '#4338ca',
-          900: '#312e81',
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          500: '#00BABC', // teal-500 energetic accent
+          600: '#0d9488', // teal-600
+          700: '#0f766e',
+          900: '#134e4a',
         }
       },
       transitionProperty: {

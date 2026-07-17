@@ -105,8 +105,8 @@ function ConsentToggle({ label, description, enabled, locked, onChange }) {
         aria-checked={enabled}
         disabled={locked}
         onClick={() => !locked && onChange?.(!enabled)}
-        className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 ${
-          enabled ? 'bg-indigo-600' : 'bg-gray-300 dark:bg-gray-600'
+        className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 ${
+          enabled ? 'bg-teal-600' : 'bg-gray-300 dark:bg-gray-600'
         } ${locked ? 'cursor-not-allowed opacity-70' : ''}`}
       >
         <span
@@ -177,7 +177,7 @@ export default function CookieConsent() {
             {/* Banner content */}
             <div className="p-5 md:p-6">
               <div className="flex items-start gap-4">
-                <div className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">
+                <div className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
                   <Cookie size={20} />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -191,7 +191,7 @@ export default function CookieConsent() {
                     Weitere Informationen finden Sie in unserer{' '}
                     <a
                       href="/cookies"
-                      className="text-indigo-600 dark:text-indigo-400 hover:underline font-medium"
+                      className="text-teal-600 dark:text-teal-400 hover:underline font-medium"
                       onClick={(e) => {
                         e.preventDefault();
                         window.location.href = '/cookies';
@@ -263,7 +263,7 @@ export default function CookieConsent() {
                 {showSettings ? (
                   <button
                     onClick={() => saveCustom(localSettings)}
-                    className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors shadow-sm"
+                    className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 text-sm font-semibold text-white bg-teal-600 hover:bg-teal-700 rounded-xl transition-colors shadow-sm"
                   >
                     <Check size={16} />
                     Auswahl speichern
@@ -278,7 +278,7 @@ export default function CookieConsent() {
                     </button>
                     <button
                       onClick={acceptAll}
-                      className="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors shadow-sm"
+                      className="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white bg-teal-600 hover:bg-teal-700 rounded-xl transition-colors shadow-sm"
                     >
                       Alle akzeptieren
                     </button>

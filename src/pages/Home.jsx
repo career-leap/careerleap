@@ -6,7 +6,7 @@ import CalendlyButton from '../components/CalendlyButton';
 
 const FeatureCard = ({ icon: Icon, title, description }) => (
   <div className="p-8 bg-slate-50 dark:bg-gray-800 rounded-2xl hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-gray-900/50 transition-all duration-300">
-    <div className="w-14 h-14 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center text-white mb-6">
+    <div className="w-14 h-14 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center text-white mb-6">
       <Icon size={28} />
     </div>
     <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{title}</h3>
@@ -16,7 +16,7 @@ const FeatureCard = ({ icon: Icon, title, description }) => (
 
 const Step = ({ number, title, description }) => (
   <div className="text-center relative">
-    <div className="w-16 h-16 bg-gradient-to-br from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">
+    <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-cyan-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">
       {number}
     </div>
     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{title}</h3>
@@ -29,7 +29,7 @@ export default function Home() {
     <div>
       {/* Hero Section */}
       <section className="relative pt-16 pb-8 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-900 overflow-hidden transition-colors">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/5 dark:bg-indigo-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-teal-600/5 dark:bg-teal-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div className="relative z-10">
@@ -46,7 +46,7 @@ export default function Home() {
               Professional readiness—built through structured simulation.
             </p>
             <div className="flex flex-wrap gap-4 mb-12">
-              <Link to="/contact" className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all">
+              <Link to="/contact" className="px-8 py-4 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all">
                 Apply for the Next Cohort
               </Link>
               <CalendlyButton variant="outline" className="text-lg" showIcon={false}>
@@ -68,7 +68,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-4 py-2 rounded-full text-sm font-semibold mb-3">
+            <div className="inline-flex items-center gap-2 bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 px-4 py-2 rounded-full text-sm font-semibold mb-3">
               <span className="w-2 h-2 bg-green-500 rounded-full" />
               Pilot Cohort — Completed
             </div>
@@ -79,7 +79,7 @@ export default function Home() {
               </div>
               <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden">
                 <div 
-                  className="bg-gradient-to-r from-indigo-600 to-purple-600 h-2.5 rounded-full transition-all duration-1000"
+                  className="bg-gradient-to-r from-teal-500 to-cyan-500 h-2.5 rounded-full transition-all duration-1000"
                   style={{ width: '100%' }}
                 />
               </div>
@@ -107,7 +107,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center text-white mx-auto mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center text-white mx-auto mb-4">
                   <stat.icon size={24} />
                 </div>
                 <p className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold mb-1">{stat.label}</p>
@@ -129,7 +129,7 @@ export default function Home() {
             </p>
             <Link 
               to="/career-tracks/it-systems-administration"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all"
             >
               View Track Details
               <ArrowRight size={20} />
@@ -150,7 +150,7 @@ export default function Home() {
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               <motion.div 
-                className="w-12 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mb-6"
+                className="w-12 h-1 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full mb-6"
                 initial={{ width: 0 }}
                 whileInView={{ width: 48 }}
                 viewport={{ once: true }}
@@ -194,7 +194,7 @@ export default function Home() {
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             >
               <motion.p 
-                className="text-indigo-600 dark:text-indigo-400 text-sm font-semibold uppercase tracking-wider mb-6"
+                className="text-teal-600 dark:text-teal-400 text-sm font-semibold uppercase tracking-wider mb-6"
                 initial={{ opacity: 0, y: -20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -219,7 +219,7 @@ export default function Home() {
                     transition={{ duration: 0.5, delay: 0.5 + (index * 0.1) }}
                   >
                     <motion.div 
-                      className="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center text-white text-sm font-bold shrink-0"
+                      className="w-8 h-8 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center text-white text-sm font-bold shrink-0"
                       initial={{ scale: 0 }}
                       whileInView={{ scale: 1 }}
                       viewport={{ once: true }}
@@ -268,7 +268,7 @@ export default function Home() {
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-800 dark:to-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="w-12 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mx-auto mb-6" />
+            <div className="w-12 h-1 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full mx-auto mb-6" />
             <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white mb-4">The CareerLeap Model</h2>
             <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               CareerLeap operates through selective, cohort-based simulations designed to mirror professional expectations.
@@ -284,7 +284,7 @@ export default function Home() {
               { title: 'Interview preparation', desc: 'Based on real deliverables' }
             ].map((item, index) => (
               <div key={index} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow">
-                <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold text-lg mb-4">
+                <div className="w-10 h-10 bg-teal-100 dark:bg-teal-900/30 rounded-lg flex items-center justify-center text-teal-600 dark:text-teal-400 font-bold text-lg mb-4">
                   {index + 1}
                 </div>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{item.title}</h3>
@@ -293,7 +293,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 md:p-12 text-center text-white">
+          <div className="bg-gradient-to-r from-teal-500 to-cyan-500 rounded-2xl p-8 md:p-12 text-center text-white">
             <p className="text-xl md:text-2xl font-bold mb-4">The outcome is not a certificate.</p>
             <p className="text-xl md:text-2xl font-bold mb-6">The outcome is documented, interview-defendable professional readiness.</p>
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full">
@@ -343,7 +343,7 @@ export default function Home() {
       <section className="py-20 px-4 bg-white dark:bg-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <div className="w-12 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mx-auto mb-6" />
+            <div className="w-12 h-1 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full mx-auto mb-6" />
             <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white mb-4">Designed for International Talent in Germany</h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">CareerLeap is structured for:</p>
           </div>
@@ -362,7 +362,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-xl mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center text-white font-bold text-xl mb-4">
                   {index + 1}
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{item.title}</h3>
@@ -387,7 +387,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="w-12 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mb-6" />
+            <div className="w-12 h-1 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full mb-6" />
             <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-6">Institutional Alignment</h2>
             
             <div className="space-y-6">
@@ -395,7 +395,7 @@ export default function Home() {
                 CareerLeap complements university education and supports early-career integration.
               </p>
               
-              <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-xl p-6">
+              <div className="bg-teal-50 dark:bg-teal-900/20 rounded-xl p-6">
                 <p className="text-slate-900 dark:text-white font-semibold mb-2">Our long-term objective</p>
                 <p className="text-gray-600 dark:text-gray-400">
                   To collaborate with universities and employers seeking structured transition pathways for international talent.
@@ -407,7 +407,7 @@ export default function Home() {
       </section>
 
       {/* Take the Next Step - CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 relative overflow-hidden">
+      <section className="py-20 px-4 bg-gradient-to-r from-teal-500 to-cyan-500 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2" />
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl translate-y-1/2 translate-x-1/2" />
         
@@ -421,7 +421,7 @@ export default function Home() {
           <h2 className="text-4xl font-extrabold text-white mb-4">Take the Next Step</h2>
           <p className="text-xl text-white/90 mb-4">Move from academic preparation to professional execution.</p>
           <p className="text-lg text-white/80 mb-8">Applications for the upcoming cohort are now open.</p>
-          <Link to="/contact" className="inline-block px-8 py-4 bg-white text-indigo-600 rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all">
+          <Link to="/contact" className="inline-block px-8 py-4 bg-white text-teal-600 rounded-lg font-semibold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all">
             Apply for the Next Cohort
           </Link>
         </motion.div>

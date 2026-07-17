@@ -44,7 +44,7 @@ export default function ForgotPassword() {
           
           <Link
             to="/login"
-            className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-medium hover:underline"
+            className="inline-flex items-center gap-2 text-teal-600 dark:text-teal-400 font-medium hover:underline"
           >
             <ArrowLeft size={18} />
             Back to Login
@@ -91,7 +91,7 @@ export default function ForgotPassword() {
                 type="email"
                 required
                 disabled={isLoading}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 transition-colors disabled:opacity-50"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 transition-colors disabled:opacity-50"
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -102,7 +102,7 @@ export default function ForgotPassword() {
           <button
             type="submit"
             disabled={isLoading || !email.trim()}
-            className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+            className="w-full bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
           >
             {isLoading ? (
               <>
@@ -120,7 +120,7 @@ export default function ForgotPassword() {
             Remember your password?{' '}
             <Link 
               to="/login" 
-              className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline"
+              className="text-teal-600 dark:text-teal-400 font-medium hover:underline"
             >
               Sign in
             </Link>
