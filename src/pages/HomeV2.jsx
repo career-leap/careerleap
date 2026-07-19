@@ -1,6 +1,8 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import SchemaScript from '../components/SchemaScript';
 import {
   Users,
   Briefcase,
@@ -183,8 +185,39 @@ function CTABanner({
 }
 
 export default function HomeV2() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "CareerLeap",
+        "url": "https://career-leap.academy",
+        "logo": "https://career-leap.academy/image.png",
+        "description": "Germany's career simulation platform for international professionals entering IT, Data, and Operations roles.",
+        "sameAs": [
+          "https://career-leap.academy"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "name": "CareerLeap",
+        "url": "https://career-leap.academy",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://career-leap.academy/career-tracks?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors pb-24 md:pb-0">
+      <Helmet>
+        <title>CareerLeap | Real Company Simulation for Career Transition in Germany</title>
+        <meta name="description" content="Join a 3–4 month career simulation in IT, Data, or Marketing. Work as a junior team member, report to industry professionals, and build the experience German employers want." />
+      </Helmet>
+      <SchemaScript schema={schema} />
       {/* Hero */}
       <section className="relative pt-12 pb-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-teal-50 via-white to-amber-50 dark:from-teal-950 dark:via-slate-900 dark:to-amber-950 -z-10" />

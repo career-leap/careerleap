@@ -1,5 +1,27 @@
 import UpcomingTrack from './UpcomingTrack';
 
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Business / Operations Analyst Career Simulation",
+  "description": "A simulation-focused track for professionals aiming to enter operations, business analysis, or process improvement roles in Germany. Participants map workflows, identify bottlenecks, and implement practical solutions using modern operations tooling.",
+  "provider": {
+    "@type": "Organization",
+    "name": "CareerLeap",
+    "sameAs": "https://career-leap.academy"
+  },
+  "courseCode": "BUS-OPS-DE",
+  "educationalLevel": "Career transition / entry-level",
+  "teaches": "Process Mapping, Requirements Gathering, Operations Tools, Data-Driven Decisions, Change Communication, Risk Analysis",
+  "timeToComplete": "P8W",
+  "occupationalCredentialAwarded": "Portfolio experience and team lead reference",
+  "inLanguage": "en",
+  "availableAtOrFrom": {
+    "@type": "Place",
+    "name": "Germany"
+  }
+};
+
 export default function BusinessOperationsAnalyst() {
   return (
     <UpcomingTrack
@@ -9,6 +31,9 @@ export default function BusinessOperationsAnalyst() {
       cohortSize="10"
       duration="8 weeks"
       launchWindow="Opening Q4 2026"
+      seoTitle="Business Operations Analyst Simulation Germany | CareerLeap"
+      seoDescription="Learn process mapping, requirements gathering, and operations tooling in a simulated German company. Prepare for analyst roles through real projects."
+      schema={schema}
       expectedSkills={[
         { title: 'Process Mapping', description: 'Document and visualise end-to-end business workflows.' },
         { title: 'Requirement Gathering', description: 'Elicit, prioritise, and validate business requirements from stakeholders.' },

@@ -87,8 +87,9 @@ services:
         - vite.config.js
         - tailwind.config.js
         - index.html
+        - scripts/prerender.js
         - .env.production
-    buildCommand: "npm ci && npm run build"
+    buildCommand: "npm ci && npm run build:prerender"
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
@@ -100,5 +101,23 @@ services:
         source: /api/*
         destination: https://careerleap-backend.onrender.com/api/*
       - type: rewrite
-        source: /*
+        source: /login
+        destination: /index.html
+      - type: rewrite
+        source: /forgot-password
+        destination: /index.html
+      - type: rewrite
+        source: /reset-password
+        destination: /index.html
+      - type: rewrite
+        source: /mentors
+        destination: /index.html
+      - type: rewrite
+        source: /profile
+        destination: /index.html
+      - type: rewrite
+        source: /my-sessions
+        destination: /index.html
+      - type: rewrite
+        source: /files
         destination: /index.html

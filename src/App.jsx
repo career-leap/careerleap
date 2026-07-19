@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route, NavLink, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, Navigate, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { useAuthStore } from './store/authStore';
 import ThemeToggle from './components/ThemeToggle';
@@ -33,6 +33,31 @@ const FileUpload = lazy(() => import('./pages/FileUpload'));
 const Impressum = lazy(() => import('./pages/Impressum'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const CookiePolicy = lazy(() => import('./pages/CookiePolicy'));
+
+const defaultRouteComponents = {
+  Home,
+  About,
+  Mentors,
+  HowItWorks,
+  Pricing,
+  ITSystemsAdministration,
+  DataBICareerSimulation,
+  BusinessOperationsAnalyst,
+  CareerAccelerationSupport,
+  HelpMeChoose,
+  MentorExpertSupport,
+  PartnershipCollaboration,
+  Contact,
+  Login,
+  ForgotPassword,
+  ResetPassword,
+  Profile,
+  MySessions,
+  FileUpload,
+  Impressum,
+  PrivacyPolicy,
+  CookiePolicy,
+};
 
 // Simple fallback shown while lazy-loaded chunks download
 function PageLoader() {
@@ -157,7 +182,11 @@ function PageViewTracker() {
   return null;
 }
 
-function App() {
+function App({ 
+  RouterComponent = BrowserRouter, 
+  routerProps = {},
+  routeComponents = defaultRouteComponents 
+}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { checkAuth } = useAuthStore();
   const { openSettings } = useCookieConsent();
@@ -166,8 +195,33 @@ function App() {
     checkAuth();
   }, []);
 
+  const {
+    Home: HomeComponent,
+    About: AboutComponent,
+    Mentors: MentorsComponent,
+    HowItWorks: HowItWorksComponent,
+    Pricing: PricingComponent,
+    ITSystemsAdministration: ITSystemsAdministrationComponent,
+    DataBICareerSimulation: DataBICareerSimulationComponent,
+    BusinessOperationsAnalyst: BusinessOperationsAnalystComponent,
+    CareerAccelerationSupport: CareerAccelerationSupportComponent,
+    HelpMeChoose: HelpMeChooseComponent,
+    MentorExpertSupport: MentorExpertSupportComponent,
+    PartnershipCollaboration: PartnershipCollaborationComponent,
+    Contact: ContactComponent,
+    Login: LoginComponent,
+    ForgotPassword: ForgotPasswordComponent,
+    ResetPassword: ResetPasswordComponent,
+    Profile: ProfileComponent,
+    MySessions: MySessionsComponent,
+    FileUpload: FileUploadComponent,
+    Impressum: ImpressumComponent,
+    PrivacyPolicy: PrivacyPolicyComponent,
+    CookiePolicy: CookiePolicyComponent,
+  } = routeComponents;
+
   return (
-    <Router>
+    <RouterComponent {...routerProps}>
       <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
         <PageViewTracker />
         <Navigation mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
@@ -175,27 +229,27 @@ function App() {
         <main className="pt-16">
           <Suspense fallback={<PageLoader />}>
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/how-it-works" element={<HowItWorks />} />
-              <Route path="/career-tracks" element={<ITSystemsAdministration />} />
-              <Route path="/career-tracks/it-systems-administration" element={<ITSystemsAdministration />} />
-              <Route path="/career-tracks/data-bi-career-simulation" element={<DataBICareerSimulation />} />
-              <Route path="/career-tracks/business-operations-analyst" element={<BusinessOperationsAnalyst />} />
-              <Route path="/career-tracks/career-acceleration-support" element={<CareerAccelerationSupport />} />
-              <Route path="/career-tracks/help-me-choose" element={<HelpMeChoose />} />
-              <Route path="/career-tracks/mentor-expert-support" element={<MentorExpertSupport />} />
-              <Route path="/career-tracks/partnership-collaboration" element={<PartnershipCollaboration />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/" element={<HomeComponent />} />
+              <Route path="/about" element={<AboutComponent />} />
+              <Route path="/how-it-works" element={<HowItWorksComponent />} />
+              <Route path="/career-tracks" element={<ITSystemsAdministrationComponent />} />
+              <Route path="/career-tracks/it-systems-administration" element={<ITSystemsAdministrationComponent />} />
+              <Route path="/career-tracks/data-bi-career-simulation" element={<DataBICareerSimulationComponent />} />
+              <Route path="/career-tracks/business-operations-analyst" element={<BusinessOperationsAnalystComponent />} />
+              <Route path="/career-tracks/career-acceleration-support" element={<CareerAccelerationSupportComponent />} />
+              <Route path="/career-tracks/help-me-choose" element={<HelpMeChooseComponent />} />
+              <Route path="/career-tracks/mentor-expert-support" element={<MentorExpertSupportComponent />} />
+              <Route path="/career-tracks/partnership-collaboration" element={<PartnershipCollaborationComponent />} />
+              <Route path="/pricing" element={<PricingComponent />} />
+              <Route path="/contact" element={<ContactComponent />} />
+              <Route path="/login" element={<LoginComponent />} />
+              <Route path="/forgot-password" element={<ForgotPasswordComponent />} />
+              <Route path="/reset-password" element={<ResetPasswordComponent />} />
               <Route 
                 path="/mentors" 
                 element={
                   <ProtectedRoute>
-                    <Mentors />
+                    <MentorsComponent />
                   </ProtectedRoute>
                 } 
               />
@@ -203,7 +257,7 @@ function App() {
                 path="/profile" 
                 element={
                   <ProtectedRoute>
-                    <Profile />
+                    <ProfileComponent />
                   </ProtectedRoute>
                 } 
               />
@@ -211,7 +265,7 @@ function App() {
                 path="/my-sessions" 
                 element={
                   <ProtectedRoute>
-                    <MySessions />
+                    <MySessionsComponent />
                   </ProtectedRoute>
                 } 
               />
@@ -219,13 +273,13 @@ function App() {
                 path="/files" 
                 element={
                   <ProtectedRoute>
-                    <FileUpload />
+                    <FileUploadComponent />
                   </ProtectedRoute>
                 } 
               />
-              <Route path="/impressum" element={<Impressum />} />
-              <Route path="/privacy" element={<PrivacyPolicy />} />
-              <Route path="/cookies" element={<CookiePolicy />} />
+              <Route path="/impressum" element={<ImpressumComponent />} />
+              <Route path="/privacy" element={<PrivacyPolicyComponent />} />
+              <Route path="/cookies" element={<CookiePolicyComponent />} />
             </Routes>
           </Suspense>
         </main>
@@ -282,7 +336,7 @@ function App() {
 
         <CookieConsent />
       </div>
-    </Router>
+    </RouterComponent>
   );
 }
 

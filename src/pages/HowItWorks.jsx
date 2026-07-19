@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { 
@@ -42,7 +43,7 @@ const SIMULATION_STEPS = [
     icon: Award,
     title: 'Apply with Confidence',
     description:
-      'Leave with hands-on experience, references from team leads, and a clear narrative that German employers can understand and trust.',
+      'Be part of a community with hands-on experience, references from team leads, and a clear narrative that German employers can understand and trust',
   },
 ];
 
@@ -77,8 +78,13 @@ const COMPARISON = [
 
 export default function HowItWorks() {
   return (
-    <div>
-      {/* Hero */}
+    <>
+      <Helmet>
+        <title>How the Simulation Works | CareerLeap</title>
+        <meta name="description" content="Discover how CareerLeap's 3–4 month career simulation works: join a team, complete real tasks, get coaching, and transition into IT, Data, or Operations roles in Germany." />
+      </Helmet>
+      <div>
+        {/* Hero */}
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto text-center">
           <motion.div
@@ -291,5 +297,6 @@ export default function HowItWorks() {
         </div>
       </section>
     </div>
+    </>
   );
 }

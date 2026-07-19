@@ -1,6 +1,8 @@
+import { Helmet } from 'react-helmet-async';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import SchemaScript from '../../components/SchemaScript';
 import { 
   Users, 
   Monitor, 
@@ -50,6 +52,19 @@ const OutcomeItem = ({ title, index }) => (
       <CheckCircle size={18} className="text-teal-600 dark:text-teal-400" />
     </div>
     <span className="text-slate-700 dark:text-gray-300 font-medium">{title}</span>
+  </motion.div>
+);
+
+const FAQItem = ({ question, answer, index }) => (
+  <motion.div
+    className="bg-slate-50 dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700"
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.4, delay: index * 0.1 }}
+  >
+    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">{question}</h3>
+    <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{answer}</p>
   </motion.div>
 );
 
@@ -120,8 +135,73 @@ export default function CareerTracks() {
     'Respond to critical incidents under SLA pressure',
   ];
 
+  const audience = [
+    {
+      title: 'International graduates in Germany',
+      description: 'You have a degree in IT, computer science, or a related field and need German workplace experience to compete for entry-level roles.',
+    },
+    {
+      title: 'Career changers',
+      description: 'You are switching into IT operations or cloud administration and need hands-on projects that prove you can do the work.',
+    },
+    {
+      title: 'Self-taught IT professionals',
+      description: 'You have learned the theory from courses or certifications and now need structured practice with real M365 environments.',
+    },
+  ];
+
+  const faqs = [
+    {
+      question: 'Is this a bootcamp or a certification course?',
+      answer: 'Neither. CareerLeap is a work simulation. You join a team, receive tasks from a team lead, and deliver real systems and documentation. You leave with portfolio work and a reference, not a certificate.',
+    },
+    {
+      question: 'Do I need prior IT experience?',
+      answer: 'Some baseline familiarity with IT concepts is helpful, but the simulation is designed for people transitioning into IT operations. The team lead guides you through the tools and workflows.',
+    },
+    {
+      question: 'How is this different from free virtual work experiences?',
+      answer: 'Free simulators are usually self-paced and automated. CareerLeap gives you accountability, deadlines, feedback from a real industry professional, and a reference attesting to your work.',
+    },
+    {
+      question: 'Will this help me get a job in Germany?',
+      answer: 'The track is built around the skills German employers ask for in IT support, systems administration, and M365 operations roles. You also receive coaching on CVs, interviews, and applications tailored to the German market.',
+    },
+    {
+      question: 'Can I do this while working or studying?',
+      answer: 'The simulation requires 3–4 months of active participation, including team standups and task delivery. Many participants combine it with part-time work or study, but you should plan for consistent weekly commitment.',
+    },
+  ];
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "IT Systems Administration Career Simulation",
+    "description": "A 3–4 month hands-on simulation that prepares participants for real workplace IT operations in Microsoft 365 environments in Germany.",
+    "provider": {
+      "@type": "Organization",
+      "name": "CareerLeap",
+      "sameAs": "https://career-leap.academy"
+    },
+    "courseCode": "IT-ADMIN-DE",
+    "educationalLevel": "Career transition / entry-level",
+    "teaches": "Microsoft 365, Intune, Identity Management, Conditional Access, IT Security, Ticketing, Automation, Disaster Recovery, Incident Response",
+    "timeToComplete": "P3M",
+    "occupationalCredentialAwarded": "Portfolio experience and team lead reference",
+    "inLanguage": "en",
+    "availableAtOrFrom": {
+      "@type": "Place",
+      "name": "Germany"
+    }
+  };
+
   return (
     <div>
+      <Helmet>
+        <title>IT Systems Administration Work Experience Germany | CareerLeap</title>
+        <meta name="description" content="Join a 3–4 month IT work simulation in Germany. Learn Microsoft 365, Intune, identity management, and security through real team tasks. Build a portfolio German employers value." />
+      </Helmet>
+      <SchemaScript schema={schema} />
       {/* Hero Section */}
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
@@ -205,6 +285,39 @@ export default function CareerTracks() {
         </div>
       </section>
 
+      {/* Audience Section */}
+      <section className="py-20 px-4 bg-amber-50 dark:bg-slate-900 transition-colors">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-4">
+              Who Is This Track For?
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              This simulation is designed for people who need practical IT operations experience to break into the German job market.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {audience.map((item, index) => (
+              <motion.div
+                key={item.title}
+                className="bg-white dark:bg-gray-900 rounded-2xl p-6 border border-gray-100 dark:border-gray-700"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">
+                  {item.title}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                  {item.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Modules Grid */}
       <section className="py-20 px-4 bg-slate-50 dark:bg-gray-800 transition-colors">
         <div className="max-w-7xl mx-auto">
@@ -269,6 +382,24 @@ export default function CareerTracks() {
                 <OutcomeItem key={index} title={outcome} index={index} />
               ))}
             </motion.div>
+          </div>
+        </div>
+      </section>
+      {/* FAQ Section */}
+      <section className="py-20 px-4 bg-slate-50 dark:bg-slate-800 transition-colors">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              What applicants usually want to know before joining the simulation.
+            </p>
+          </div>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <FAQItem key={faq.question} {...faq} index={index} />
+            ))}
           </div>
         </div>
       </section>

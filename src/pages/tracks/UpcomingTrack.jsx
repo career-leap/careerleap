@@ -1,7 +1,9 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar, Users, Clock } from 'lucide-react';
+import SchemaScript from '../../components/SchemaScript';
 
 export default function UpcomingTrack({ 
   title, 
@@ -10,10 +12,20 @@ export default function UpcomingTrack({
   expectedSkills = [],
   cohortSize = '10',
   duration = '8 weeks',
-  launchWindow = 'Coming soon'
+  launchWindow = 'Coming soon',
+  seoTitle,
+  seoDescription,
+  schema,
 }) {
   return (
     <div>
+      <Helmet>
+        <title>{seoTitle || title}</title>
+        {seoDescription && (
+          <meta name="description" content={seoDescription} />
+        )}
+      </Helmet>
+      {schema && <SchemaScript schema={schema} />}
       {/* Hero Section */}
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
