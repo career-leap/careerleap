@@ -16,6 +16,11 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://career-leap.academy/career-tracks</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://career-leap.academy/career-tracks/it-systems-administration</loc>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
@@ -41,8 +46,38 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://career-leap.academy/career-tracks/mentor-expert-support</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://career-leap.academy/career-tracks/partnership-collaboration</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://career-leap.academy/pricing</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://career-leap.academy/contact</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://career-leap.academy/privacy</loc>
+    <priority>0.4</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://career-leap.academy/cookies</loc>
+    <priority>0.4</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://career-leap.academy/impressum</loc>
+    <priority>0.4</priority>
+    <changefreq>yearly</changefreq>
   </url>
 </urlset>
