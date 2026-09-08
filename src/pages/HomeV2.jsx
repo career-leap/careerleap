@@ -280,8 +280,8 @@ export default function HomeV2() {
               <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 p-6">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="font-bold text-slate-900 dark:text-white">CareerLeap Org</h3>
-                  <span className="text-xs font-medium text-green-600 bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">
-                    Active Simulation
+                  <span className="text-xs font-medium text-amber-700 bg-amber-100 dark:bg-amber-900/30 dark:text-amber-300 px-2 py-1 rounded-full">
+                    Upcoming
                   </span>
                 </div>
                 <div className="space-y-4">
