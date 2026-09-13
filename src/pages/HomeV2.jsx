@@ -102,7 +102,7 @@ const TESTIMONIALS = [
     photo: angelaPhoto,
     name: 'Angela',
     role: 'IT Infrastructure & DevOps Intern',
-    tag: 'Internship',
+    tag: 'Intern',
     tagColor:
       'text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-900/30',
     quote:
@@ -126,7 +126,7 @@ const TESTIMONIALS = [
     initials: 'D',
     name: 'Deborah',
     role: 'IT Systems Administration Pilot',
-    tag: 'Landed a German-speaking job',
+    tag: 'Landed a job',
     tagColor:
       'text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-900/30',
     quote:
