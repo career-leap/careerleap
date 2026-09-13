@@ -7,8 +7,8 @@ const TRACK_OPTIONS = [
   { 
     label: 'IT Systems Administration', 
     path: '/career-tracks/it-systems-administration',
-    badge: 'Live',
-    badgeColor: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'
+    badge: 'Upcoming',
+    badgeColor: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'
   },
   { 
     label: 'Data / BI Career Simulation', 
