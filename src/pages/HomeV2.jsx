@@ -17,8 +17,11 @@ import {
   CheckCircle2,
   Building2,
   GraduationCap,
+  Quote,
+  Camera,
 } from 'lucide-react';
 import CalendlyButton from '../components/CalendlyButton';
+import angelaPhoto from '../assets/testimonials/angela.jpg';
 
 const TEAM_CARDS = [
   {
@@ -96,32 +99,39 @@ const DIFFERENTIATORS = [
 
 const TESTIMONIALS = [
   {
-    type: 'chat',
-    name: 'IT Systems Administration Pilot Participant — Prince Emmanuel',
-    role: 'Career direction found',
-    messages: [
-      { sender: 'q', text: 'What motivated you to join the pilot?' },
-      { sender: 'a', text: 'I wanted practical experience using my IT skills in real job scenarios.' },
-      { sender: 'q', text: 'What was the most valuable part?' },
-      { sender: 'a', text: 'Career path orientation and skills development.' },
-      { sender: 'q', text: 'Would you recommend the programme?' },
-      { sender: 'a', text: 'YES — it gave my career a clear direction in IT.' },
-    ],
+    photo: angelaPhoto,
+    name: 'Angela',
+    role: 'IT Infrastructure & DevOps Intern',
+    tag: 'Internship',
+    tagColor:
+      'text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-900/30',
+    quote:
+      'What I value most is having a supportive environment where I am not expected to figure everything out on my own. I am learning through real tasks, putting my knowledge into practice, and gradually building the confidence and experience I need to find my feet in the German job market.',
+    highlight:
+      'For me, CareerLeap is more than just an internship experience — it is a place where I can contribute while being supported in my own professional journey.',
   },
   {
-    type: 'chat',
-    name: 'IT Systems Administration Pilot Participant — Deborah',
-    role: 'Landed a German-speaking job',
-    messages: [
-      { sender: 'q', text: 'What motivated you to join the pilot?' },
-      { sender: 'a', text: 'I wanted to learn new skills and refresh my old skills.' },
-      { sender: 'q', text: 'What was the most valuable part?' },
-      { sender: 'a', text: 'Career advice and job seeking support.' },
-      { sender: 'q', text: 'What new insights did you gain?' },
-      { sender: 'a', text: 'Insights about the German job market.' },
-      { sender: 'q', text: 'Would you recommend the programme?' },
-      { sender: 'a', text: 'Yes — it’s great for learning and networking.' },
-    ],
+    initials: 'P',
+    name: 'Prince',
+    role: 'IT System Administration',
+    tag: 'Pilot Graduate',
+    tagColor:
+      'text-cyan-700 dark:text-cyan-300 bg-cyan-50 dark:bg-cyan-900/30',
+    quote:
+      'The CareerLeap IT Systems Administration Pilot took me beyond theory — building real automation tools gave me the hands-on confidence and proof of skill I needed to move my career forward. It’s project-based rather than just theoretical, so you walk away with real, demonstrable work like automation scripts and device management exercises.',
+    highlight:
+      'That’s especially valuable if you are trying to break into or move up in IT administration and need concrete proof of hands-on skills for employers.',
+  },
+  {
+    initials: 'D',
+    name: 'Deborah',
+    role: 'IT Systems Administration Pilot',
+    tag: 'Landed a German-speaking job',
+    tagColor:
+      'text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-900/30',
+    quote:
+      'I joined the pilot to learn new skills and refresh the ones I already had. The most valuable part was the career advice and job-seeking support — I gained real insights into the German job market.',
+    highlight: 'I would recommend it to anyone: it’s great for learning and networking.',
   },
 ];
 
@@ -343,51 +353,77 @@ export default function HomeV2() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 px-4 bg-white dark:bg-gray-900 transition-colors">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
+      <section className="py-20 px-4 bg-slate-50 dark:bg-gray-950 transition-colors">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-6">
+            <span className="inline-block text-xs font-semibold uppercase tracking-widest text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/30 px-3 py-1 rounded-full mb-4">
+              Participant Stories
+            </span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-4">
-              From Simulation to Employment
+              Real People. Real Growth.
             </h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-6">
+
+          {/* Lead pull-quote from a CareerLeap volunteer/intern */}
+          <figure className="max-w-3xl mx-auto text-center mb-14">
+            <blockquote className="text-xl md:text-2xl font-medium text-slate-700 dark:text-gray-300 leading-relaxed">
+              “Being part of CareerLeap has given me the opportunity to{' '}
+              <span className="text-teal-600 dark:text-teal-400">learn, contribute, and grow</span>{' '}
+              at the same time. As a volunteer/intern, I get to share my knowledge and skills with
+              the team while also gaining hands-on experience and practical guidance.”
+            </blockquote>
+            <figcaption className="mt-4 text-sm text-gray-500 dark:text-gray-400 font-medium">
+              — CareerLeap Volunteer &amp; Intern
+            </figcaption>
+          </figure>
+
+          <div className="grid md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t, index) => (
-              <motion.div
-                key={index}
-                className="bg-slate-50 dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 flex flex-col"
+              <motion.article
+                key={t.name}
+                className="group relative bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                {t.type === 'chat' ? (
-                  <div className="flex-1 space-y-2 mb-4">
-                    {t.messages.map((m, i) =>
-                      m.sender === 'q' ? (
-                        <div key={i} className="flex justify-start">
-                          <div className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-2xl rounded-bl-sm px-4 py-2 max-w-[85%] text-sm leading-relaxed">
-                            {m.text}
-                          </div>
-                        </div>
-                      ) : (
-                        <div key={i} className="flex justify-end">
-                          <div className="bg-gradient-to-br from-teal-500 to-cyan-500 text-white rounded-2xl rounded-br-sm px-4 py-2 max-w-[85%] text-sm leading-relaxed">
-                            {m.text}
-                          </div>
-                        </div>
-                      )
-                    )}
+                <span className="absolute -top-5 left-8 bg-gradient-to-br from-teal-500 to-cyan-500 w-10 h-10 rounded-xl flex items-center justify-center shadow-lg">
+                  <Quote size={18} className="text-white" fill="white" />
+                </span>
+
+                <p className="flex-1 text-gray-700 dark:text-gray-300 leading-relaxed mb-8 mt-2">
+                  “{t.quote}
+                  <span className="block mt-3 text-slate-900 dark:text-white font-medium">
+                    {t.highlight}”
+                  </span>
+                </p>
+
+                <footer className="flex items-center gap-4 pt-6 border-t border-gray-100 dark:border-gray-700">
+                  {t.photo ? (
+                    <img
+                      src={t.photo}
+                      alt={t.name}
+                      className="w-14 h-14 rounded-full object-cover ring-2 ring-teal-500/40 ring-offset-2 ring-offset-white dark:ring-offset-gray-800"
+                    />
+                  ) : (
+                    <div className="relative w-14 h-14 rounded-full bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center text-white font-bold text-lg ring-2 ring-teal-500/40 ring-offset-2 ring-offset-white dark:ring-offset-gray-800">
+                      {t.initials}
+                      <span className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 flex items-center justify-center">
+                        <Camera size={10} className="text-gray-400" />
+                      </span>
+                    </div>
+                  )}
+                  <div>
+                    <p className="font-semibold text-slate-900 dark:text-white">{t.name}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{t.role}</p>
                   </div>
-                ) : (
-                  <p className="flex-1 text-lg text-gray-700 dark:text-gray-300 italic mb-4 leading-relaxed">
-                    “{t.quote}”
-                  </p>
-                )}
-                <div>
-                  <p className="font-semibold text-slate-900 dark:text-white">{t.name}</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{t.role}</p>
-                </div>
-              </motion.div>
+                </footer>
+                <span
+                  className={`mt-4 self-start text-xs font-medium px-2.5 py-1 rounded-full ${t.tagColor}`}
+                >
+                  {t.tag}
+                </span>
+              </motion.article>
             ))}
           </div>
         </div>
