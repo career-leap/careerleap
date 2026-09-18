@@ -29,7 +29,7 @@ const SIMULATION_STEPS = [
     icon: Briefcase,
     title: 'Work on Real Company Tasks',
     description:
-      'For 3–4 months you contribute to projects, attend team standups, document your work, and deliver outputs that go into a professional portfolio.',
+      'For 3–6 months you contribute to projects, attend team standups, document your work, and deliver outputs that go into a professional portfolio.',
   },
   {
     step: '03',
@@ -81,7 +81,7 @@ export default function HowItWorks() {
     <>
       <Helmet>
         <title>How the Simulation Works | CareerLeap</title>
-        <meta name="description" content="Discover how CareerLeap's 3–4 month career simulation works: join a team, complete real tasks, get coaching, and transition into IT, Data, or Operations roles in Germany." />
+        <meta name="description" content="Discover how CareerLeap's 3–6 month career simulation works: join a team, complete real tasks, get coaching, and transition into IT, Data, or Operations roles in Germany." />
       </Helmet>
       <div>
         {/* Hero */}
@@ -103,7 +103,7 @@ export default function HowItWorks() {
               </span>
             </h1>
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed mb-10">
-              CareerLeap places you inside a simulated company for 3–4 months. You work as a junior team member, report to an industry professional, and build the experience German employers actually want.
+              CareerLeap places you inside a simulated company for 3–6 months. You work as a junior team member, report to an industry professional, and build the experience German employers actually want.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link

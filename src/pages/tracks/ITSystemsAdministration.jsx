@@ -169,7 +169,7 @@ export default function CareerTracks() {
     },
     {
       question: 'Can I do this while working or studying?',
-      answer: 'The simulation requires 3–4 months of active participation, including team standups and task delivery. Many participants combine it with part-time work or study, but you should plan for consistent weekly commitment.',
+      answer: 'The simulation requires 3–6 months of active participation, including team standups and task delivery. Many participants combine it with part-time work or study, but you should plan for consistent weekly commitment.',
     },
   ];
 
@@ -177,7 +177,7 @@ export default function CareerTracks() {
     "@context": "https://schema.org",
     "@type": "Course",
     "name": "IT Systems Administration Career Simulation",
-    "description": "A 3–4 month hands-on simulation that prepares participants for real workplace IT operations in Microsoft 365 environments in Germany.",
+    "description": "A 3–6 month hands-on simulation that prepares participants for real workplace IT operations in Microsoft 365 environments in Germany.",
     "provider": {
       "@type": "Organization",
       "name": "CareerLeap",
@@ -199,7 +199,7 @@ export default function CareerTracks() {
     <div>
       <Helmet>
         <title>IT Systems Administration Work Experience Germany | CareerLeap</title>
-        <meta name="description" content="Join a 3–4 month IT work simulation in Germany. Learn Microsoft 365, Intune, identity management, and security through real team tasks. Build a portfolio German employers value." />
+        <meta name="description" content="Join a 3–6 month IT work simulation in Germany. Learn Microsoft 365, Intune, identity management, and security through real team tasks. Build a portfolio German employers value." />
       </Helmet>
       <SchemaScript schema={schema} />
       {/* Hero Section */}

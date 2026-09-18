@@ -58,7 +58,7 @@ const HOW_IT_WORKS = [
     step: '02',
     title: 'Work on Real Company Tasks',
     description:
-      'For 3–4 months you contribute to projects, attend team standups, and deliver work that goes into a portfolio.',
+      'For 3–6 months you contribute to projects, attend team standups, and deliver work that goes into a portfolio.',
   },
   {
     step: '03',
@@ -225,7 +225,7 @@ export default function HomeV2() {
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors pb-24 md:pb-0">
       <Helmet>
         <title>CareerLeap | Real Company Simulation for Career Transition in Germany</title>
-        <meta name="description" content="Join a 3–4 month career simulation in IT, Data, or Marketing. Work as a junior team member, report to industry professionals, and build the experience German employers want." />
+        <meta name="description" content="Join a 3–6 month career simulation in IT, Data, or Marketing. Work as a junior team member, report to industry professionals, and build the experience German employers want." />
       </Helmet>
       <SchemaScript schema={schema} />
       {/* Hero */}
@@ -249,7 +249,7 @@ export default function HomeV2() {
                 </span>
               </h1>
               <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-xl leading-relaxed">
-                Join a 3–4 month career simulation. Step into a junior role in IT,
+                Join a 3–6 month career simulation. Step into a junior role in IT,
                 Data, or Marketing, report to an industry professional, and build
                 the experience German employers actually want.
               </p>
@@ -268,7 +268,7 @@ export default function HomeV2() {
               <div className="mt-8 flex flex-wrap items-center gap-6 text-sm text-gray-500 dark:text-gray-400">
                 <span className="flex items-center gap-2">
                   <CheckCircle2 size={16} className="text-green-500" />
-                  3–4 months
+                  3–6 months
                 </span>
                 <span className="flex items-center gap-2">
                   <CheckCircle2 size={16} className="text-green-500" />
@@ -339,7 +339,7 @@ export default function HomeV2() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
               { label: 'Simulation Teams', value: '3+' },
-              { label: 'Program Duration', value: '3–4 Mo' },
+              { label: 'Program Duration', value: '3–6 Mo' },
               { label: 'Career Coaching', value: 'Included' },
               { label: 'Job Market', value: 'Germany' },
             ].map((stat) => (
