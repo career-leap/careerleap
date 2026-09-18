@@ -4,6 +4,7 @@ Django settings for backend_django project.
 
 from pathlib import Path
 from datetime import timedelta
+import ipaddress
 import os
 import dj_database_url
 
@@ -56,6 +57,29 @@ CORS_ALLOWED_ORIGINS = os.environ.get(
 ).split(',')
 CORS_ALLOW_CREDENTIALS = True
 
+# Trusted proxy networks for X-Forwarded-For parsing.
+# Requests coming from these networks will have REMOTE_ADDR rewritten to the
+# rightmost untrusted IP in X-Forwarded-For, which makes rate limiting and
+# logging work correctly behind nginx / Render.
+_trusted_proxies_env = os.environ.get('TRUSTED_PROXY_IPS', '')
+if _trusted_proxies_env:
+    TRUSTED_PROXY_IPS = [
+        ipaddress.ip_network(c.strip())
+        for c in _trusted_proxies_env.split(',')
+        if c.strip()
+    ]
+else:
+    # Default to RFC 1918 private ranges so Docker/nginx deployments work
+    # out of the box without exposing the app to X-Forwarded-For spoofing
+    # from public IP addresses.
+    TRUSTED_PROXY_IPS = [
+        ipaddress.ip_network('10.0.0.0/8'),
+        ipaddress.ip_network('172.16.0.0/12'),
+        ipaddress.ip_network('192.168.0.0/16'),
+        ipaddress.ip_network('127.0.0.0/8'),
+        ipaddress.ip_network('::1/128'),
+    ]
+
 # Security Headers (for production)
 # Render terminates SSL and forwards requests over HTTP; tell Django to trust the X-Forwarded-Proto header
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -102,6 +126,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'backend_django.middleware.XForwardedForMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'backend_django.middleware.SecurityHeadersMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

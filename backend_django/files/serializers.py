@@ -72,11 +72,16 @@ class FileUploadSerializer(serializers.ModelSerializer):
         return obj.user.role
     
     def get_file_url(self, obj):
-        """Get the full URL for the file"""
+        """Return the authenticated download endpoint URL.
+
+        Files must never be served directly from /media/; all access goes
+        through the API so ownership and is_public checks are enforced.
+        """
         request = self.context.get('request')
-        if request and obj.file:
-            return request.build_absolute_uri(obj.file.url)
-        return None
+        download_path = f'/api/files/{obj.id}/download/'
+        if request:
+            return request.build_absolute_uri(download_path)
+        return download_path
 
 
 class FileUploadCreateSerializer(serializers.ModelSerializer):

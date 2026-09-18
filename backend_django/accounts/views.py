@@ -6,6 +6,7 @@ from django.core.cache import cache
 from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
+from django.utils.html import escape
 from django.utils.decorators import method_decorator
 from rest_framework import status, generics, serializers
 from rest_framework.decorators import api_view, permission_classes
@@ -23,17 +24,6 @@ logger = logging.getLogger(__name__)
 User = get_user_model()
 
 
-# Rate limit key function
-def get_client_ip(request):
-    """Get client IP address from request"""
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    return ip
-
-
 def generate_reset_token():
     """Generate a cryptographically secure random token"""
     return secrets.token_urlsafe(32)
@@ -47,7 +37,11 @@ def hash_token(token):
 def send_reset_email(user, reset_link):
     """Send password reset email to user"""
     subject = 'Reset Your CareerLeap Password'
-    
+
+    # Escape user-controlled values for the HTML email.
+    first_name_html = escape(user.first_name or 'there')
+    reset_link_html = escape(reset_link)
+
     # Plain text message
     message = f"""Hello {user.first_name},
 
@@ -63,7 +57,7 @@ If you didn't request this reset, you can safely ignore this email.
 Best regards,
 The CareerLeap Team
 """
-    
+
     # HTML message
     html_message = f"""<!DOCTYPE html>
 <html>
@@ -86,7 +80,7 @@ The CareerLeap Team
                         <td style="padding: 40px;">
                             <h2 style="color: #111827; margin: 0 0 20px 0; font-size: 24px; font-weight: 700;">Reset Your Password</h2>
                             <p style="color: #6b7280; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
-                                Hello {user.first_name or 'there'},
+                                Hello {first_name_html},
                             </p>
                             <p style="color: #6b7280; font-size: 16px; line-height: 1.6; margin: 0 0 30px 0;">
                                 You requested a password reset for your CareerLeap account. Click the button below to reset your password:
@@ -106,7 +100,7 @@ The CareerLeap Team
                             </p>
                             <p style="color: #9ca3af; font-size: 14px; line-height: 1.5; margin: 20px 0 0 0;">
                                 If the button doesn't work, copy and paste this link into your browser:<br>
-                                <a href="{reset_link}" style="color: #4f46e5; word-break: break-all;">{reset_link}</a>
+                                <a href="{reset_link}" style="color: #4f46e5; word-break: break-all;">{reset_link_html}</a>
                             </p>
                         </td>
                     </tr>

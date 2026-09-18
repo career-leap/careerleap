@@ -1,6 +1,7 @@
 import logging
 from django.core.mail import send_mail
 from django.conf import settings
+from django.utils.html import escape
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
@@ -93,6 +94,24 @@ def send_internal_notification(lead):
 
     goals = ', '.join(lead.current_goal) if isinstance(lead.current_goal, list) else lead.current_goal
 
+    # Escape user-controlled values for the HTML email to prevent stored XSS.
+    full_name_html = escape(lead.full_name)
+    email_html = escape(lead.email)
+    phone_html = escape(lead.phone or 'N/A')
+    location_html = escape(lead.location)
+    career_stage_html = escape(lead.career_stage)
+    goals_html = escape(goals)
+    track_interest_html = escape(lead.track_interest)
+    career_priority_html = escape(lead.career_priority)
+    start_timeline_html = escape(lead.start_timeline)
+    info_call_html = escape(lead.info_call_availability)
+    contact_method_html = escape(lead.preferred_contact_method)
+    source_channel_html = escape(lead.source_channel or 'N/A')
+    message_html = escape(lead.message or 'N/A')
+    utm_source_html = escape(lead.utm_source or 'N/A')
+    utm_medium_html = escape(lead.utm_medium or 'N/A')
+    utm_campaign_html = escape(lead.utm_campaign or 'N/A')
+
     message = f"""New CareerLeap Journey Form Submission
 
 Full Name: {lead.full_name}
@@ -137,28 +156,28 @@ UTM Campaign: {lead.utm_campaign or 'N/A'}
                 <tr>
                     <td style="padding:40px;">
                         <div style="margin-bottom:20px;">
-                            <span style="display:inline-block;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;text-transform:uppercase;" 
+                            <span style="display:inline-block;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;text-transform:uppercase;"
                                 style="background:{'#fee2e2;color:#991b1b' if lead.lead_temperature=='hot' else '#fef3c7;color:#92400e' if lead.lead_temperature=='warm' else '#e0e7ff;color:#3730a3'};">
-                                {lead.get_lead_temperature_display()} Lead — Score: {lead.lead_score}
+                                {escape(lead.get_lead_temperature_display())} Lead — Score: {lead.lead_score}
                             </span>
                             <span style="display:inline-block;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;text-transform:uppercase;background:#f3f4f6;color:#374151;margin-left:8px;">
-                                {lead.get_lead_type_display()}
+                                {escape(lead.get_lead_type_display())}
                             </span>
                         </div>
                         <table width="100%" cellpadding="0" cellspacing="0" style="font-size:15px;color:#374151;line-height:1.6;">
-                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Full Name:</strong> {lead.full_name}</td></tr>
-                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Email:</strong> {lead.email}</td></tr>
-                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Phone:</strong> {lead.phone or 'N/A'}</td></tr>
-                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Location:</strong> {lead.location}</td></tr>
-                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Career Stage:</strong> {lead.career_stage}</td></tr>
-                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Goals:</strong> {goals}</td></tr>
-                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Track Interest:</strong> {lead.track_interest}</td></tr>
-                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Career Priority:</strong> {lead.career_priority}</td></tr>
-                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Start Timeline:</strong> {lead.start_timeline}</td></tr>
-                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Info Call:</strong> {lead.info_call_availability}</td></tr>
-                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Contact Method:</strong> {lead.preferred_contact_method}</td></tr>
-                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Source:</strong> {lead.source_channel or 'N/A'}</td></tr>
-                            <tr><td style="padding:8px 0;"><strong style="color:#111827;">Message:</strong><br><span style="color:#6b7280;">{lead.message or 'N/A'}</span></td></tr>
+                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Full Name:</strong> {full_name_html}</td></tr>
+                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Email:</strong> {email_html}</td></tr>
+                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Phone:</strong> {phone_html}</td></tr>
+                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Location:</strong> {location_html}</td></tr>
+                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Career Stage:</strong> {career_stage_html}</td></tr>
+                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Goals:</strong> {goals_html}</td></tr>
+                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Track Interest:</strong> {track_interest_html}</td></tr>
+                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Career Priority:</strong> {career_priority_html}</td></tr>
+                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Start Timeline:</strong> {start_timeline_html}</td></tr>
+                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Info Call:</strong> {info_call_html}</td></tr>
+                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Contact Method:</strong> {contact_method_html}</td></tr>
+                            <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;"><strong style="color:#111827;">Source:</strong> {source_channel_html}</td></tr>
+                            <tr><td style="padding:8px 0;"><strong style="color:#111827;">Message:</strong><br><span style="color:#6b7280;">{message_html}</span></td></tr>
                         </table>
                     </td>
                 </tr>
@@ -189,6 +208,7 @@ UTM Campaign: {lead.utm_campaign or 'N/A'}
 def send_auto_reply(lead):
     """Send auto-reply email to the user."""
     first_name = lead.full_name.split()[0] if lead.full_name else 'there'
+    first_name_html = escape(first_name)
 
     subject = 'We received your CareerLeap journey request'
 
@@ -224,7 +244,7 @@ CareerLeap Academy Team
                     <td style="padding:40px;">
                         <h2 style="color:#111827;margin:0 0 20px 0;font-size:22px;font-weight:700;">We received your CareerLeap journey request</h2>
                         <p style="color:#6b7280;font-size:16px;line-height:1.6;margin:0 0 20px 0;">
-                            Hi {first_name},
+                            Hi {first_name_html},
                         </p>
                         <p style="color:#6b7280;font-size:16px;line-height:1.6;margin:0 0 20px 0;">
                             Thank you for reaching out to CareerLeap.
