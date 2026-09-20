@@ -1,7 +1,7 @@
 # CareerLeap Docker Makefile
 # Provides convenient commands for managing the Docker environment
 
-.PHONY: help build up down restart logs shell migrate superuser clean
+.PHONY: help build up down restart logs shell migrate superuser clean graphify graphify-update graphify-serve graphify-serve-stdio graphify-install
 
 # Default target
 help:
@@ -19,6 +19,11 @@ help:
 	@echo "  make shell      - Open Django shell"
 	@echo "  make clean      - Remove all containers, volumes, and images"
 	@echo "  make fresh      - Clean build and start fresh"
+	@echo "  make graphify-install - Install project-scoped Graphify skill"
+	@echo "  make graphify   - Build knowledge graph (code only)"
+	@echo "  make graphify-update  - Incrementally update knowledge graph"
+	@echo "  make graphify-serve   - Serve graph over HTTP (curl/browser)"
+	@echo "  make graphify-serve-stdio - Serve graph as stdio MCP server"
 
 # Build all images
 build:
@@ -88,3 +93,32 @@ restore:
 		exit 1; \
 	fi
 	cat $(FILE) | docker-compose exec -T db psql -U careerleap_user -d careerleap
+
+# ---------------------------------------------------------------------------
+# Graphify knowledge graph (https://graphify.net)
+# ---------------------------------------------------------------------------
+
+# Install the project-scoped skill for Kimi Code and register the graph hook.
+# Requires `uv tool install graphifyy` or `pip install graphifyy` first.
+graphify-install:
+	graphify install --project --platform kimi
+	@echo "Graphify skill installed. Run 'make graphify' to build the graph."
+
+# Build a fresh knowledge graph of the entire repo (code only, no LLM cost).
+graphify:
+	graphify . --code-only
+
+# Incrementally update the graph after code changes.
+graphify-update:
+	graphify . --code-only --update
+
+# Serve the generated graph over HTTP so you can query it with curl or a browser.
+# Defaults to http://127.0.0.1:8080/mcp
+# Requires the MCP extra: uv tool install --upgrade "graphifyy[mcp]"
+graphify-serve:
+	graphify-mcp graphify-out/graph.json --transport http --host 127.0.0.1 --port 8080 --json-response
+
+# Serve the graph as a stdio MCP server (for Kimi Code / Claude Code / Codex).
+# Run this only when an MCP client is connected; it will exit if run standalone.
+graphify-serve-stdio:
+	graphify-mcp graphify-out/graph.json

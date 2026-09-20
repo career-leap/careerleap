@@ -98,3 +98,11 @@ notes.txt
 
 # Generated explainer video assets
 video_output/
+
+# Graphify knowledge-graph outputs
+# graphify-out/ is intentionally kept in version control per upstream guidance
+# (commit the graph so teammates get an instant map). Only local-only artifacts
+# and the large incremental cache are ignored.
+graphify-out/cost.json
+graphify-out/cache/
+
