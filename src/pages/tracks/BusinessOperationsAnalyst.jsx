@@ -13,7 +13,7 @@ const schema = {
   "courseCode": "BUS-OPS-DE",
   "educationalLevel": "Career transition / entry-level",
   "teaches": "Process Mapping, Requirements Gathering, Operations Tools, Data-Driven Decisions, Change Communication, Risk Analysis",
-  "timeToComplete": "P8W",
+  "timeToComplete": "P3M",
   "occupationalCredentialAwarded": "Portfolio experience and team lead reference",
   "inLanguage": "en",
   "availableAtOrFrom": {
@@ -29,7 +29,7 @@ export default function BusinessOperationsAnalyst() {
       subtitle="Optimise processes, reduce friction, and make operations scale."
       description="A simulation-focused track for professionals aiming to enter operations, business analysis, or process improvement roles. Participants map workflows, identify bottlenecks, and implement practical solutions using modern operations tooling."
       cohortSize="10"
-      duration="8 weeks"
+      duration="3–6 months"
       launchWindow="Opening Q4 2026"
       seoTitle="Business Operations Analyst Simulation Germany | CareerLeap"
       seoDescription="Learn process mapping, requirements gathering, and operations tooling in a simulated German company. Prepare for analyst roles through real projects."

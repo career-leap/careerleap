@@ -11,7 +11,7 @@ export default function UpcomingTrack({
   description, 
   expectedSkills = [],
   cohortSize = '10',
-  duration = '8 weeks',
+  duration = '3–6 months',
   launchWindow = 'Coming soon',
   seoTitle,
   seoDescription,

@@ -13,7 +13,7 @@ const schema = {
   "courseCode": "DATA-BI-DE",
   "educationalLevel": "Career transition / entry-level",
   "teaches": "SQL, Data Cleaning, Dashboard Design, Power BI, Tableau, Business Context, Stakeholder Communication, Data Ethics",
-  "timeToComplete": "P10W",
+  "timeToComplete": "P3M",
   "occupationalCredentialAwarded": "Portfolio experience and team lead reference",
   "inLanguage": "en",
   "availableAtOrFrom": {
@@ -29,7 +29,7 @@ export default function DataBICareerSimulation() {
       subtitle="Turn raw data into decisions that drive business outcomes."
       description="A structured simulation for aspiring data analysts and business intelligence professionals. Participants work through realistic data pipelines, reporting requests, and stakeholder presentations while building an interview-defendable portfolio of dashboards and analyses."
       cohortSize="10"
-      duration="10 weeks"
+      duration="3–6 months"
       launchWindow="Opening Q3 2026"
       seoTitle="Data & BI Career Simulation Germany | CareerLeap"
       seoDescription="Build dashboards, SQL queries, and data models in a German job market simulation. Get hands-on analytics experience for data analyst and BI roles."
