@@ -78,11 +78,13 @@ careerleap/
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/dredavidOps/careerleap.git
 cd careerleap
 
-# Copy environment file
-cp .env.docker .env
+# Create environment file (frontend vars + SECRET_KEY for the backend)
+cp .env.example .env
+# Edit .env: set a SECRET_KEY (docker-compose refuses to start without it)
+# e.g. python -c "import secrets; print(secrets.token_urlsafe(50))"
 
 # Start all services
 docker-compose up -d
@@ -145,7 +147,7 @@ See [Manual Setup Guide](#manual-setup) below for non-Docker development.
 
 ### Environment Variables
 
-Copy `.env.docker` to `.env` and customize:
+Copy `.env.example` to `.env` and customize. The backend reads the same `.env` via docker-compose (for `SECRET_KEY`, etc.); for manual backend runs use `backend_django/.env.example`.
 
 | Variable | Description | Default |
 |----------|-------------|---------|
@@ -222,11 +224,12 @@ docker-compose exec backend python manage.py migrate
 | POST | `/register/` | Register new user |
 | POST | `/login/` | Login and get JWT |
 | GET | `/me/` | Get current user |
-| PUT/PATCH | `/profile/update/` | Update current user profile |
+| PUT/PATCH | `/profile/` | Update current user profile |
+| POST | `/logout/` | Logout and blacklist refresh token |
 | POST | `/refresh/` | Refresh access token |
 | POST | `/forgot-password/` | Request password reset |
 | POST | `/reset-password/` | Reset password with token |
-| POST | `/validate-reset-token/` | Validate password reset token |
+| GET | `/validate-reset-token/` | Validate password reset token |
 | POST | `/contact/` | Submit contact form |
 
 ### Mentor Endpoints (`/api/mentors/`)
@@ -327,10 +330,6 @@ We welcome contributions! Please follow these steps:
 - Update documentation as needed
 - Follow the existing code style
 - Update `AGENTS.md` if you change architecture or workflows
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🆘 Support
 
