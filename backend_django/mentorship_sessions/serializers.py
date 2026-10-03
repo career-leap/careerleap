@@ -21,7 +21,6 @@ class SessionCreateSerializer(serializers.ModelSerializer):
         fields = ['mentor', 'scheduled_at', 'duration', 'topic', 'price']
     
     def validate(self, data):
-        # Ensure mentor is actually a mentor
         mentor = data.get('mentor')
         if mentor.role != 'mentor':
             raise serializers.ValidationError(

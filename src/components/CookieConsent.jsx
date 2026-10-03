@@ -136,7 +136,6 @@ export default function CookieConsent() {
     analytics: consent.analytics,
   });
 
-  // Sync local settings when opening settings
   useEffect(() => {
     if (showSettings) {
       setLocalSettings({
@@ -158,7 +157,6 @@ export default function CookieConsent() {
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           className="fixed bottom-0 left-0 right-0 z-[100]"
         >
-          {/* Backdrop for settings modal */}
           {showSettings && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -174,7 +172,6 @@ export default function CookieConsent() {
               showSettings ? 'mx-4 md:mx-auto' : 'mx-4 md:mx-auto'
             }`}
           >
-            {/* Banner content */}
             <div className="p-5 md:p-6">
               <div className="flex items-start gap-4">
                 <div className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
@@ -211,7 +208,6 @@ export default function CookieConsent() {
                 </button>
               </div>
 
-              {/* Expandable Settings */}
               <AnimatePresence>
                 {showSettings && (
                   <motion.div
@@ -241,7 +237,6 @@ export default function CookieConsent() {
                 )}
               </AnimatePresence>
 
-              {/* Actions */}
               <div className="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
                 <button
                   onClick={() => setShowSettings((s) => !s)}

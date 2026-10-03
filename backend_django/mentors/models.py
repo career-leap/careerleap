@@ -27,7 +27,6 @@ class MentorProfile(models.Model):
     )
     bio = models.TextField(blank=True, null=True)
     
-    # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -39,7 +38,6 @@ class MentorProfile(models.Model):
         return f"Mentor: {self.user.get_full_name()}"
     
     def update_rating(self, new_rating):
-        """Update average rating with a new rating"""
         if self.total_sessions > 0:
             total = self.average_rating * self.total_sessions
             self.average_rating = (total + new_rating) / (self.total_sessions + 1)

@@ -26,7 +26,6 @@ export const useThemeStore = create(
         const { theme, applyTheme } = get();
         applyTheme(theme);
         
-        // Listen for system theme changes
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         mediaQuery.addEventListener('change', () => {
           if (get().theme === 'system') {

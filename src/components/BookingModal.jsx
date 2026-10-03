@@ -5,7 +5,7 @@ import { X, Calendar, Clock, Check } from 'lucide-react';
 export default function BookingModal({ isOpen, onClose, mentor }) {
   const [selectedDate, setSelectedDate] = useState('');
   const [topic, setTopic] = useState('');
-  const [step, setStep] = useState(1); // 1: date, 2: time, 3: confirm
+  const [step, setStep] = useState(1);
   
   const {
     availability,
@@ -20,7 +20,6 @@ export default function BookingModal({ isOpen, onClose, mentor }) {
     setSelectedMentor
   } = useBookingStore();
 
-  // Set the mentor in the store when the modal opens
   useEffect(() => {
     if (isOpen && mentor) {
       setSelectedMentor(mentor);
@@ -63,7 +62,6 @@ export default function BookingModal({ isOpen, onClose, mentor }) {
     onClose();
   };
 
-  // Generate next 7 days
   const getNextDays = () => {
     const days = [];
     for (let i = 0; i < 7; i++) {
@@ -95,7 +93,6 @@ export default function BookingModal({ isOpen, onClose, mentor }) {
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white dark:bg-gray-800 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto transition-colors">
-        {/* Header */}
         <div className="p-6 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
           <div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white">Book a Session</h3>
@@ -106,14 +103,12 @@ export default function BookingModal({ isOpen, onClose, mentor }) {
           </button>
         </div>
 
-        {/* Error */}
         {error && (
           <div className="mx-6 mt-4 p-3 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-lg text-sm">
             {error}
           </div>
         )}
 
-        {/* Step 1: Select Date */}
         {step === 1 && (
           <div className="p-6">
             <h4 className="font-medium text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
@@ -138,7 +133,6 @@ export default function BookingModal({ isOpen, onClose, mentor }) {
           </div>
         )}
 
-        {/* Step 2: Select Time */}
         {step === 2 && (
           <div className="p-6">
             <h4 className="font-medium text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
@@ -176,7 +170,6 @@ export default function BookingModal({ isOpen, onClose, mentor }) {
           </div>
         )}
 
-        {/* Step 3: Confirm */}
         {step === 3 && (
           <div className="p-6">
             <h4 className="font-medium text-gray-700 dark:text-gray-300 mb-4">Confirm Booking</h4>

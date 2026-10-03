@@ -31,7 +31,6 @@ def validate_password_strength(password):
     if not re.search(r'[!@#$%^&*(),.?":{}|<>\-_=+\[\]\\;/`~]', password):
         raise ValidationError('Password must contain at least one special character.')
     
-    # Check for common passwords (basic list)
     common_passwords = ['password', '123456', 'qwerty', 'admin', 'letmein', 'welcome']
     if password.lower() in common_passwords:
         raise ValidationError('This password is too common. Please choose a more unique password.')
@@ -48,8 +47,7 @@ class MentorProfileSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     mentor_profile = MentorProfileSerializer(read_only=True)
-    
-    # Map snake_case to camelCase for frontend compatibility
+
     firstName = serializers.CharField(source='first_name', read_only=True)
     lastName = serializers.CharField(source='last_name', read_only=True)
     yearsOfExperience = serializers.IntegerField(source='years_of_experience', read_only=True)
@@ -80,7 +78,6 @@ class UserCreateSerializer(serializers.ModelSerializer):
         fields = ['email', 'password', 'firstName', 'lastName', 'role']
     
     def validate_password(self, value):
-        """Validate password strength"""
         try:
             validate_password_strength(value)
         except ValidationError as e:
@@ -97,7 +94,6 @@ class UserCreateSerializer(serializers.ModelSerializer):
         return value
     
     def create(self, validated_data):
-        # Map camelCase back to snake_case for model
         user_data = {
             'email': validated_data.get('email'),
             'password': validated_data.get('password'),
@@ -108,7 +104,6 @@ class UserCreateSerializer(serializers.ModelSerializer):
         
         user = User.objects.create_user(**user_data)
         
-        # Create mentor profile if role is mentor
         if user.role == 'mentor':
             MentorProfile.objects.create(
                 user=user,
@@ -125,7 +120,6 @@ class LoginSerializer(serializers.Serializer):
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):
-    """Serializer for updating user profile"""
     firstName = serializers.CharField(source='first_name', required=False)
     lastName = serializers.CharField(source='last_name', required=False)
     yearsOfExperience = serializers.IntegerField(source='years_of_experience', required=False, allow_null=True)
@@ -135,7 +129,6 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         fields = ['firstName', 'lastName', 'bio', 'industry', 'location', 'yearsOfExperience']
     
     def validate_yearsOfExperience(self, value):
-        """Validate years of experience is a positive integer"""
         if value is not None and value < 0:
             raise serializers.ValidationError("Years of experience cannot be negative.")
         return value

@@ -95,7 +95,6 @@ export function render(route, template) {
     helmet.script.toString(),
   ].join('\n    ');
 
-  // Inject the rendered head tags and body content into the Vite-built template.
   let html = template
     .replace(/<title>.*?<\/title>/, headHtml)
     .replace(/<meta name="description" content=".*?"\/?>/i, '')

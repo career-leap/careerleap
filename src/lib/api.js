@@ -25,9 +25,7 @@ const processQueue = (error, token = null) => {
   failedQueue = [];
 };
 
-// Add token to requests
 api.interceptors.request.use((config) => {
-  // Get token from localStorage
   const token = localStorage.getItem('accessToken');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -43,13 +41,11 @@ api.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
-// Handle errors and token refresh
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // Handle 401 Unauthorized - token expired or invalid
     if (error.response?.status === 401 && originalRequest && !originalRequest._retry) {
       // Avoid retrying the refresh request itself
       if (originalRequest.url === '/auth/refresh/') {
@@ -107,7 +103,6 @@ api.interceptors.response.use(
       }
     }
 
-    // Handle 403 Forbidden - rate limit exceeded
     if (error.response?.status === 429) {
       console.warn('Rate limit exceeded. Please try again later.');
     }

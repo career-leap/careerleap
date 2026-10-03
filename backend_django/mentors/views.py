@@ -15,13 +15,11 @@ User = get_user_model()
 @permission_classes([IsAuthenticated])
 @ratelimit(key='user', rate='60/m', method=['GET'])
 def mentor_list(request):
-    """Get list of available mentors with filtering and pagination"""
     if getattr(request, 'limited', False):
         return Response({
             'success': False,
             'message': 'Rate limit exceeded. Please try again later.'
         }, status=status.HTTP_429_TOO_MANY_REQUESTS)
-    # Get query parameters
     page = int(request.query_params.get('page', 1))
     limit = int(request.query_params.get('limit', 9))
     search = request.query_params.get('search', '')
@@ -33,7 +31,6 @@ def mentor_list(request):
     # Base queryset (select_related user to avoid N+1)
     mentors = MentorProfile.objects.filter(is_available=True).select_related('user')
     
-    # Apply filters
     if search:
         mentors = mentors.filter(
             user__first_name__icontains=search
@@ -50,7 +47,6 @@ def mentor_list(request):
     if max_rate:
         mentors = mentors.filter(hourly_rate__lte=float(max_rate))
     
-    # Apply sorting
     if sort_by == 'rating':
         mentors = mentors.order_by('-average_rating')
     elif sort_by == 'price_low':
@@ -60,7 +56,6 @@ def mentor_list(request):
     elif sort_by == 'experience':
         mentors = mentors.order_by('-total_sessions')
     
-    # Pagination
     total = mentors.count()
     pages = (total + limit - 1) // limit
     start = (page - 1) * limit
@@ -85,13 +80,11 @@ def mentor_list(request):
 @permission_classes([IsAuthenticated])
 @ratelimit(key='user', rate='60/m', method=['GET'])
 def mentor_filters(request):
-    """Get available filter options for mentors"""
     if getattr(request, 'limited', False):
         return Response({
             'success': False,
             'message': 'Rate limit exceeded. Please try again later.'
         }, status=status.HTTP_429_TOO_MANY_REQUESTS)
-    # Get unique industries from users who are mentors
     industries = User.objects.filter(
         role='mentor',
         industry__isnull=False
@@ -99,7 +92,6 @@ def mentor_filters(request):
         industry=''
     ).values_list('industry', flat=True).distinct()
     
-    # Get price range
     price_stats = MentorProfile.objects.filter(is_available=True).aggregate(
         min_price=Min('hourly_rate'),
         max_price=Max('hourly_rate')
@@ -121,7 +113,6 @@ def mentor_filters(request):
 @permission_classes([IsAuthenticated])
 @ratelimit(key='user', rate='60/m', method=['GET'])
 def mentor_detail(request, mentor_id):
-    """Get mentor details"""
     if getattr(request, 'limited', False):
         return Response({
             'success': False,
@@ -147,7 +138,6 @@ def mentor_detail(request, mentor_id):
 @permission_classes([IsAuthenticated])
 @ratelimit(key='user', rate='20/m', method=['PUT', 'PATCH'])
 def update_mentor_profile(request):
-    """Update mentor's own profile"""
     if getattr(request, 'limited', False):
         return Response({
             'success': False,

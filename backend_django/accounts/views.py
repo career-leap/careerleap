@@ -25,7 +25,6 @@ User = get_user_model()
 
 
 def generate_reset_token():
-    """Generate a cryptographically secure random token"""
     return secrets.token_urlsafe(32)
 
 
@@ -35,14 +34,11 @@ def hash_token(token):
 
 
 def send_reset_email(user, reset_link):
-    """Send password reset email to user"""
     subject = 'Reset Your CareerLeap Password'
 
-    # Escape user-controlled values for the HTML email.
     first_name_html = escape(user.first_name or 'there')
     reset_link_html = escape(reset_link)
 
-    # Plain text message
     message = f"""Hello {user.first_name},
 
 You requested a password reset for your CareerLeap account.
@@ -58,7 +54,6 @@ Best regards,
 The CareerLeap Team
 """
 
-    # HTML message
     html_message = f"""<!DOCTYPE html>
 <html>
 <head>
@@ -129,7 +124,6 @@ The CareerLeap Team
 
 
 def get_tokens_for_user(user):
-    """Generate JWT tokens for user"""
     refresh = RefreshToken.for_user(user)
     return {
         'accessToken': str(refresh.access_token),
@@ -141,7 +135,6 @@ def get_tokens_for_user(user):
 @permission_classes([AllowAny])
 @ratelimit(key='ip', rate='5/h', block=True, method='POST')
 def register(request):
-    """Register a new user - Rate limited to 5 per hour per IP"""
     serializer = UserCreateSerializer(data=request.data)
     
     if not serializer.is_valid():
@@ -151,7 +144,6 @@ def register(request):
             'errors': serializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)
     
-    # Check if email already exists
     email = serializer.validated_data.get('email')
     if User.objects.filter(email=email).exists():
         return Response({
@@ -159,7 +151,6 @@ def register(request):
             'message': 'Email already registered'
         }, status=status.HTTP_409_CONFLICT)
     
-    # Create user
     user = serializer.save()
     tokens = get_tokens_for_user(user)
     
@@ -177,7 +168,7 @@ def register(request):
         httponly=True,
         secure=settings.SESSION_COOKIE_SECURE,
         samesite='Lax',
-        max_age=7 * 24 * 60 * 60  # 7 days
+        max_age=7 * 24 * 60 * 60
     )
 
     return response
@@ -187,7 +178,6 @@ def register(request):
 @permission_classes([AllowAny])
 @ratelimit(key='ip', rate='10/m', block=True, method='POST')
 def login(request):
-    """Login user - Rate limited to 10 per minute per IP"""
     serializer = LoginSerializer(data=request.data)
     
     if not serializer.is_valid():
@@ -220,7 +210,6 @@ def login(request):
             'message': 'Invalid credentials'
         }, status=status.HTTP_401_UNAUTHORIZED)
     
-    # Update last login
     user.update_last_login()
     
     tokens = get_tokens_for_user(user)
@@ -239,7 +228,7 @@ def login(request):
         httponly=True,
         secure=settings.SESSION_COOKIE_SECURE,
         samesite='Lax',
-        max_age=7 * 24 * 60 * 60  # 7 days
+        max_age=7 * 24 * 60 * 60
     )
 
     return response
@@ -267,7 +256,6 @@ def update_profile(request):
     
     if serializer.is_valid():
         serializer.save()
-        # Return updated user data
         return Response({
             'success': True,
             'message': 'Profile updated successfully',
@@ -344,7 +332,6 @@ class CookieTokenRefreshView(TokenRefreshView):
             'accessToken': serializer.validated_data['access'],
         })
 
-        # If rotation produced a new refresh token, set it as httpOnly cookie
         if 'refresh' in serializer.validated_data:
             response.set_cookie(
                 'refreshToken',
@@ -352,15 +339,11 @@ class CookieTokenRefreshView(TokenRefreshView):
                 httponly=True,
                 secure=settings.SESSION_COOKIE_SECURE,
                 samesite='Lax',
-                max_age=7 * 24 * 60 * 60  # 7 days
+                max_age=7 * 24 * 60 * 60
             )
 
         return response
 
-
-# =============================================================================
-# PASSWORD RESET VIEWS
-# =============================================================================
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -373,7 +356,6 @@ def forgot_password(request):
     """
     email = request.data.get('email', '').lower().strip()
     
-    # Validate email format
     if not email:
         return Response({
             'success': False,
@@ -393,22 +375,17 @@ def forgot_password(request):
     try:
         user = User.objects.get(email=email, is_active=True)
         
-        # Generate token and store hashed version
         token = generate_reset_token()
         hashed_token = hash_token(token)
         
-        # Store in cache with 30 minute expiry
         cache_key = f"pwd_reset:{hashed_token}"
         cache.set(cache_key, str(user.id), timeout=1800)  # 30 minutes
         
-        # Increment rate limit counter (1 hour expiry)
         cache.set(rate_limit_key, request_count + 1, timeout=3600)
         
-        # Build reset link
         frontend_url = settings.FRONTEND_URL.rstrip('/')
         reset_link = f"{frontend_url}/reset-password?token={token}"
         
-        # Send email
         send_reset_email(user, reset_link)
         
     except User.DoesNotExist:
@@ -435,7 +412,6 @@ def reset_password(request):
     new_password = request.data.get('new_password', '')
     confirm_password = request.data.get('confirm_password', '')
     
-    # Validate inputs
     if not token:
         return Response({
             'success': False,
@@ -460,7 +436,6 @@ def reset_password(request):
             'message': 'Password must be at least 8 characters long'
         }, status=status.HTTP_400_BAD_REQUEST)
     
-    # Hash token and look up in cache
     hashed_token = hash_token(token)
     cache_key = f"pwd_reset:{hashed_token}"
     user_id = cache.get(cache_key)
@@ -474,14 +449,11 @@ def reset_password(request):
     try:
         user = User.objects.get(id=user_id, is_active=True)
         
-        # Set new password
         user.set_password(new_password)
         user.save()
         
-        # Invalidate the token
         cache.delete(cache_key)
         
-        # Send confirmation email
         send_mail(
             subject='Your CareerLeap Password Has Been Changed',
             message=f"""Hello {user.first_name or 'there'},
@@ -555,27 +527,23 @@ def contact_form(request):
     Sends an email to info@career-leap.academy with the form data.
     Rate limited to 5 submissions per minute per IP.
     """
-    # Check if request was rate limited
     if getattr(request, 'limited', False):
         return Response({
             'success': False,
             'message': 'Too many requests. Please try again later.'
         }, status=status.HTTP_429_TOO_MANY_REQUESTS)
     
-    # Get form data
     name = request.data.get('name', '').strip()
     email = request.data.get('email', '').strip()
     subject = request.data.get('subject', '').strip()
     message = request.data.get('message', '').strip()
     
-    # Validate required fields
     if not all([name, email, subject, message]):
         return Response({
             'success': False,
             'message': 'All fields are required'
         }, status=status.HTTP_400_BAD_REQUEST)
     
-    # Validate email format
     from django.core.validators import validate_email
     from django.core.exceptions import ValidationError
     try:
@@ -586,7 +554,6 @@ def contact_form(request):
             'message': 'Invalid email address'
         }, status=status.HTTP_400_BAD_REQUEST)
     
-    # Construct email
     email_subject = f"Contact Form: {subject}"
     email_body = f"""New message from CareerLeap contact form:
 

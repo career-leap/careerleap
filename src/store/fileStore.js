@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import api from '../lib/api';
 
-// Create a custom axios instance for file uploads with progress tracking
 const uploadApi = api;
 
 export const useFileStore = create((set, get) => ({
@@ -19,18 +18,12 @@ export const useFileStore = create((set, get) => ({
     currentPage: 1
   },
 
-  // ===========================================================================
-  // API INTEGRATION METHODS
-  // ===========================================================================
-
-  // Fetch uploads from backend with optional filters
   fetchUploads: async (params = {}) => {
     set({ isLoading: true, error: null });
     
     try {
       const response = await api.get('/files/', { params });
       
-      // Handle paginated response
       if (response.data.results) {
         set({
           uploads: response.data.results,
@@ -54,21 +47,18 @@ export const useFileStore = create((set, get) => ({
     }
   },
 
-  // Upload a file to backend with progress tracking
   uploadFile: async (file, options = {}) => {
     const { onProgress, description = '', category = 'other', isPublic = false } = options;
     
     set({ isUploading: true, uploadProgress: 0, error: null });
     
     try {
-      // Create FormData
       const formData = new FormData();
       formData.append('file', file);
       formData.append('description', description);
       formData.append('category', category);
       formData.append('is_public', isPublic);
 
-      // Upload with progress tracking
       const response = await api.post('/files/upload/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -82,7 +72,6 @@ export const useFileStore = create((set, get) => ({
         }
       });
 
-      // Add new upload to state
       if (response.data.upload) {
         set(state => ({
           uploads: [response.data.upload, ...state.uploads],
@@ -110,14 +99,12 @@ export const useFileStore = create((set, get) => ({
     }
   },
 
-  // Delete an upload from backend
   deleteUpload: async (uploadId) => {
     set({ isLoading: true, error: null });
     
     try {
       await api.delete(`/files/${uploadId}/delete/`);
       
-      // Remove from state
       set(state => ({
         uploads: state.uploads.filter(u => u.id !== uploadId),
         isLoading: false
@@ -131,14 +118,12 @@ export const useFileStore = create((set, get) => ({
     }
   },
 
-  // Download a file
   downloadFile: async (uploadId, filename) => {
     try {
       const response = await api.get(`/files/${uploadId}/download/`, {
         responseType: 'blob'
       });
       
-      // Create download link
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
@@ -155,7 +140,6 @@ export const useFileStore = create((set, get) => ({
     }
   },
 
-  // Fetch upload statistics
   fetchStats: async () => {
     try {
       const response = await api.get('/files/stats/');
@@ -167,7 +151,6 @@ export const useFileStore = create((set, get) => ({
     }
   },
 
-  // Fetch categories
   fetchCategories: async () => {
     try {
       const response = await api.get('/files/categories/');
@@ -179,7 +162,6 @@ export const useFileStore = create((set, get) => ({
     }
   },
 
-  // Get upload details
   getUploadDetail: async (uploadId) => {
     try {
       const response = await api.get(`/files/${uploadId}/`);
@@ -190,39 +172,29 @@ export const useFileStore = create((set, get) => ({
     }
   },
 
-  // ===========================================================================
-  // UTILITY METHODS
-  // ===========================================================================
-
-  // Get uploads sorted by date (newest first)
   getSortedUploads: () => {
     return [...get().uploads].sort((a, b) => 
       new Date(b.uploaded_at) - new Date(a.uploaded_at)
     );
   },
 
-  // Get uploads by a specific user
   getUploadsByUser: (userId) => {
     return get().uploads.filter(u => u.user?.id === userId || u.user_id === userId);
   },
 
-  // Get recent uploads (last 24 hours)
   getRecentUploads: () => {
     const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
     return get().uploads.filter(u => new Date(u.uploaded_at) > oneDayAgo);
   },
 
-  // Get uploads by category
   getUploadsByCategory: (category) => {
     return get().uploads.filter(u => u.category === category);
   },
 
-  // Calculate total size of all uploads
   getTotalSize: () => {
     return get().uploads.reduce((total, upload) => total + (upload.file_size || 0), 0);
   },
 
-  // Search uploads
   searchUploads: (query) => {
     const lowerQuery = query.toLowerCase();
     return get().uploads.filter(u => 
@@ -231,10 +203,8 @@ export const useFileStore = create((set, get) => ({
     );
   },
 
-  // Clear error
   clearError: () => set({ error: null }),
 
-  // Reset state
   resetState: () => set({
     uploads: [],
     isUploading: false,

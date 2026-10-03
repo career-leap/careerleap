@@ -7,7 +7,6 @@ export const useAuthStore = create((set, get) => ({
   isLoading: false,
   error: null,
 
-  // Register new user
   register: async (userData) => {
     set({ isLoading: true, error: null });
     try {
@@ -19,20 +18,17 @@ export const useAuthStore = create((set, get) => ({
         throw new Error('Invalid response from server');
       }
       
-      // Refresh token is stored in an httpOnly cookie by the backend
       localStorage.setItem('accessToken', accessToken);
       set({ user, isAuthenticated: true, isLoading: false });
       
       return { success: true };
     } catch (error) {
-      // Extract error message from response
       let message = 'Registration failed';
       if (error.response?.status === 429) {
         message = 'Too many registration attempts. Please try again later.';
       } else if (error.response?.data?.message) {
         message = error.response.data.message;
       } else if (error.response?.data?.errors) {
-        // Handle validation errors
         const errors = error.response.data.errors;
         message = Object.entries(errors)
           .map(([field, msgs]) => `${field}: ${Array.isArray(msgs) ? msgs.join(', ') : msgs}`)
@@ -46,7 +42,6 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
-  // Login user
   login: async (email, password) => {
     set({ isLoading: true, error: null });
     try {
@@ -58,13 +53,11 @@ export const useAuthStore = create((set, get) => ({
         throw new Error('Invalid response from server');
       }
       
-      // Refresh token is stored in an httpOnly cookie by the backend
       localStorage.setItem('accessToken', accessToken);
       set({ user, isAuthenticated: true, isLoading: false });
       
       return { success: true };
     } catch (error) {
-      // Extract error message from response
       let message = 'Login failed';
       if (error.response?.status === 429) {
         message = 'Too many login attempts. Please try again later.';
@@ -79,10 +72,8 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
-  // Logout
   logout: async () => {
     try {
-      // Refresh token is sent automatically as an httpOnly cookie
       await api.post('/auth/logout/');
     } catch (e) {
       // Ignore error - still clear local storage
@@ -91,7 +82,6 @@ export const useAuthStore = create((set, get) => ({
     set({ user: null, isAuthenticated: false });
   },
 
-  // Refresh access token using the httpOnly cookie
   refreshAccessToken: async () => {
     try {
       // Refresh token is sent automatically as an httpOnly cookie
@@ -110,7 +100,6 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
-  // Check if user is logged in (on app start)
   checkAuth: async () => {
     const token = localStorage.getItem('accessToken');
     if (!token) return;
@@ -124,11 +113,6 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
-  // =============================================================================
-  // PASSWORD RESET METHODS
-  // =============================================================================
-
-  // Request password reset link
   forgotPassword: async (email) => {
     set({ isLoading: true, error: null });
     try {
@@ -145,7 +129,6 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
-  // Validate reset token (check if still valid)
   validateResetToken: async (token) => {
     set({ isLoading: true, error: null });
     try {
@@ -165,7 +148,6 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
-  // Reset password with token
   resetPassword: async (token, newPassword, confirmPassword) => {
     set({ isLoading: true, error: null });
     try {

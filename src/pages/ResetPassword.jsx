@@ -19,7 +19,6 @@ export default function ResetPassword() {
   
   const { validateResetToken, resetPassword, isLoading, error, clearError } = useAuthStore();
 
-  // Validate token on mount
   useEffect(() => {
     const checkToken = async () => {
       if (!token) {

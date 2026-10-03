@@ -23,14 +23,12 @@ export const useMentorStore = create((set, get) => ({
     sortBy: 'rating'
   },
 
-  // Fetch mentors with filters
   fetchMentors: async (page = 1) => {
     set({ loading: true, error: null });
     
     try {
       const { selectedFilters } = get();
       
-      // Build query params
       const params = new URLSearchParams();
       params.append('page', page);
       params.append('limit', 9);
@@ -57,7 +55,6 @@ export const useMentorStore = create((set, get) => ({
     }
   },
 
-  // Fetch filter options
   fetchFilters: async () => {
     try {
       const response = await api.get('/mentors/filters/');
@@ -67,7 +64,6 @@ export const useMentorStore = create((set, get) => ({
     }
   },
 
-  // Update filters
   setFilter: (key, value) => {
     set((state) => ({
       selectedFilters: {
@@ -77,7 +73,6 @@ export const useMentorStore = create((set, get) => ({
     }));
   },
 
-  // Clear all filters
   clearFilters: () => {
     set({
       selectedFilters: {

@@ -10,20 +10,14 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load environment variables from .env file if it exists
 # Only set variables that are not already defined (Docker env vars take precedence)
 if os.path.exists(BASE_DIR / '.env'):
     with open(BASE_DIR / '.env') as f:
         for line in f:
             if line.strip() and not line.startswith('#'):
                 key, value = line.strip().split('=', 1)
-                # Only set if not already defined (allows Docker env vars to take precedence)
                 if key not in os.environ:
                     os.environ[key] = value
-
-# =============================================================================
-# SECURITY SETTINGS
-# =============================================================================
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 if not SECRET_KEY:
@@ -32,7 +26,6 @@ if not SECRET_KEY:
         "Please set a secure SECRET_KEY in your .env file."
     )
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 # Render provides its own hostname, so we need to handle this dynamically
@@ -43,13 +36,10 @@ if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 if DEBUG:
-    # Add local development hosts
     ALLOWED_HOSTS.extend(['localhost', '127.0.0.1', '[::1]'])
 
-# Remove duplicates while preserving order
 ALLOWED_HOSTS = list(dict.fromkeys(ALLOWED_HOSTS))
 
-# CORS settings
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = os.environ.get(
     'CORS_ALLOWED_ORIGINS', 
@@ -80,7 +70,6 @@ else:
         ipaddress.ip_network('::1/128'),
     ]
 
-# Security Headers (for production)
 # Render terminates SSL and forwards requests over HTTP; tell Django to trust the X-Forwarded-Proto header
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'False').lower() == 'true'
@@ -91,7 +80,6 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 
-# Cookie security
 SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', 'False').lower() == 'true'
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
@@ -99,7 +87,6 @@ CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', 'False').lower() == 't
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SAMESITE = 'Lax'
 
-# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -107,14 +94,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    # Third party
+
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
-    
-    # Local apps
+
     'accounts',
     'mentors',
     'mentorship_sessions',
@@ -157,7 +142,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend_django.wsgi.application'
 
-# Database - PostgreSQL
 # Use DATABASE_URL from Render (or local .env) if available, otherwise fall back to individual settings
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if DATABASE_URL:

@@ -72,22 +72,12 @@ export async function trackEvent(eventType, metadata = {}) {
   }
 }
 
-/**
- * Track a page view.
- */
 export function trackPageView(path) {
   trackEvent('page_view', { path });
 }
 
-/**
- * Track a custom user action (e.g., button click, form start).
- */
 export function trackAction(actionName, extra = {}) {
   trackEvent('action', { action: actionName, ...extra });
 }
 
-/**
- * React hook helper: call once per route change.
- * Usage: useEffect(() => { trackPageView(location.pathname); }, [location]);
- */
 export { getSessionId, hasAnalyticsConsent };

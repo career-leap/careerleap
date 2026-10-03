@@ -7,8 +7,6 @@ import CareerTracksDropdown from './components/CareerTracksDropdown';
 import CookieConsent, { useCookieConsent } from './components/CookieConsent';
 import { trackPageView } from './lib/metrics';
 
-// Eagerly load only the landing page for fast first paint;
-// lazy-load all other route-level pages to reduce initial bundle size.
 // PREVIEW: using HomeV2 for internal review. Swap back to Home before production.
 import Home from './pages/HomeV2';
 
@@ -59,7 +57,6 @@ const defaultRouteComponents = {
   CookiePolicy,
 };
 
-// Simple fallback shown while lazy-loaded chunks download
 function PageLoader() {
   return (
     <div className="min-h-[50vh] flex items-center justify-center">
@@ -68,13 +65,11 @@ function PageLoader() {
   );
 }
 
-// Protected route wrapper
 function ProtectedRoute({ children }) {
   const { isAuthenticated } = useAuthStore();
   return isAuthenticated ? children : <Navigate to="/login" />;
 }
 
-// Navigation component
 function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
   const { user, isAuthenticated, logout } = useAuthStore();
   
@@ -171,7 +166,6 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
   );
 }
 
-// Track page views on route changes
 function PageViewTracker() {
   const location = useLocation();
 

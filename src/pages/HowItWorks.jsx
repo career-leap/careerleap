@@ -84,7 +84,6 @@ export default function HowItWorks() {
         <meta name="description" content="Discover how CareerLeap's 3–6 month career simulation works: join a team, complete real tasks, get coaching, and transition into IT, Data, or Operations roles in Germany." />
       </Helmet>
       <div>
-        {/* Hero */}
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto text-center">
           <motion.div

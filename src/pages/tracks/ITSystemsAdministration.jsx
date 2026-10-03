@@ -202,7 +202,6 @@ export default function CareerTracks() {
         <meta name="description" content="Join a 3–6 month IT work simulation in Germany. Learn Microsoft 365, Intune, identity management, and security through real team tasks. Build a portfolio German employers value." />
       </Helmet>
       <SchemaScript schema={schema} />
-      {/* Hero Section */}
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <motion.div 
@@ -236,7 +235,6 @@ export default function CareerTracks() {
         </div>
       </section>
 
-      {/* Track Overview */}
       <section className="py-16 px-4 bg-white dark:bg-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-6">
@@ -263,7 +261,6 @@ export default function CareerTracks() {
             ))}
           </div>
 
-          {/* Progress bar */}
           <motion.div 
             className="mt-8 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
@@ -285,7 +282,6 @@ export default function CareerTracks() {
         </div>
       </section>
 
-      {/* Audience Section */}
       <section className="py-20 px-4 bg-amber-50 dark:bg-slate-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -318,7 +314,6 @@ export default function CareerTracks() {
         </div>
       </section>
 
-      {/* Modules Grid */}
       <section className="py-20 px-4 bg-slate-50 dark:bg-gray-800 transition-colors">
         <div className="max-w-7xl mx-auto">
           <motion.div 
@@ -345,7 +340,6 @@ export default function CareerTracks() {
         </div>
       </section>
 
-      {/* Outcomes Section */}
       <section className="py-20 px-4 bg-white dark:bg-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -385,7 +379,6 @@ export default function CareerTracks() {
           </div>
         </div>
       </section>
-      {/* FAQ Section */}
       <section className="py-20 px-4 bg-slate-50 dark:bg-slate-800 transition-colors">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">

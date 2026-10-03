@@ -5,15 +5,12 @@ from django.conf import settings
 
 
 def user_upload_path(instance, filename):
-    """Generate upload path: uploads/<user_id>/<filename>"""
     ext = filename.split('.')[-1]
     filename = f"{uuid.uuid4().hex}.{ext}"
     return os.path.join('uploads', str(instance.user.id), filename)
 
 
 class FileUpload(models.Model):
-    """Model for storing file upload metadata"""
-    
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -21,14 +18,12 @@ class FileUpload(models.Model):
         related_name='file_uploads',
         db_index=True
     )
-    
-    # Original file info
+
     original_filename = models.CharField(max_length=255)
     file = models.FileField(upload_to=user_upload_path, max_length=500)
     file_type = models.CharField(max_length=100, blank=True)
-    file_size = models.BigIntegerField()  # in bytes
-    
-    # Metadata
+    file_size = models.BigIntegerField()
+
     description = models.TextField(blank=True)
     category = models.CharField(
         max_length=50,
@@ -42,12 +37,10 @@ class FileUpload(models.Model):
         ],
         default='other'
     )
-    
-    # Status
+
     is_public = models.BooleanField(default=False, db_index=True)
     download_count = models.PositiveIntegerField(default=0)
-    
-    # Timestamps
+
     uploaded_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
     

@@ -228,7 +228,6 @@ export default function HomeV2() {
         <meta name="description" content="Join a 3–6 month career simulation in IT, Data, or Marketing. Work as a junior team member, report to industry professionals, and build the experience German employers want." />
       </Helmet>
       <SchemaScript schema={schema} />
-      {/* Hero */}
       <section className="relative pt-12 pb-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-teal-50 via-white to-amber-50 dark:from-teal-950 dark:via-slate-900 dark:to-amber-950 -z-10" />
         <div className="max-w-7xl mx-auto">
@@ -333,7 +332,6 @@ export default function HomeV2() {
         </div>
       </section>
 
-      {/* Trust / Stats */}
       <section className="py-12 bg-teal-900 dark:bg-teal-950 text-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
@@ -352,7 +350,6 @@ export default function HomeV2() {
         </div>
       </section>
 
-      {/* Testimonials */}
       <section className="py-20 px-4 bg-slate-50 dark:bg-gray-950 transition-colors">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-6">
@@ -364,7 +361,6 @@ export default function HomeV2() {
             </h2>
           </div>
 
-          {/* Lead pull-quote from a CareerLeap volunteer/intern */}
           <figure className="max-w-3xl mx-auto text-center mb-14">
             <blockquote className="text-xl md:text-2xl font-medium text-slate-700 dark:text-gray-300 leading-relaxed">
               “Being part of CareerLeap has given me the opportunity to{' '}
@@ -429,7 +425,6 @@ export default function HomeV2() {
         </div>
       </section>
 
-      {/* CTA after testimonials */}
       <section className="py-12 px-4 bg-white dark:bg-gray-900 transition-colors">
         <CTABanner
           title="Join the participants who turned simulation into employment"
@@ -437,7 +432,6 @@ export default function HomeV2() {
         />
       </section>
 
-      {/* How it works */}
       <section className="py-20 px-4 bg-amber-50 dark:bg-slate-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -473,7 +467,6 @@ export default function HomeV2() {
         </div>
       </section>
 
-      {/* CTA after how it works */}
       <section className="py-12 px-4 bg-amber-50 dark:bg-slate-900 transition-colors">
         <CTABanner
           title="Ready to work like a junior team member?"
@@ -482,7 +475,6 @@ export default function HomeV2() {
         />
       </section>
 
-      {/* Teams */}
       <section className="py-20 px-4 bg-white dark:bg-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -528,7 +520,6 @@ export default function HomeV2() {
         </div>
       </section>
 
-      {/* CTA after teams */}
       <section className="py-12 px-4 bg-white dark:bg-gray-900 transition-colors">
         <CTABanner
           title="Pick the team that fits your career goal"
@@ -536,7 +527,6 @@ export default function HomeV2() {
         />
       </section>
 
-      {/* Differentiators */}
       <section className="py-20 px-4 bg-slate-50 dark:bg-slate-800 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -574,7 +564,6 @@ export default function HomeV2() {
         </div>
       </section>
 
-      {/* CTA after differentiators */}
       <section className="py-12 px-4 bg-slate-50 dark:bg-slate-800 transition-colors">
         <CTABanner
           title="Not a bootcamp. Real work experience."
@@ -583,7 +572,6 @@ export default function HomeV2() {
         />
       </section>
 
-      {/* Sticky mobile CTA bar */}
       <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-t border-gray-200 dark:border-gray-700 md:hidden">
         <div className="flex gap-3">
           <Link

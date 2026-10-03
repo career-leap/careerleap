@@ -93,7 +93,6 @@ export default function About() {
 
   return (
     <div>
-      {/* Hero Section - Why CareerLeap Exists */}
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <motion.div 
@@ -139,11 +138,9 @@ export default function About() {
         </div>
       </section>
 
-      {/* What We Deliver vs What We Are Not */}
       <section className="py-20 px-4 bg-white dark:bg-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12">
-            {/* What We Deliver */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -168,7 +165,6 @@ export default function About() {
               </p>
             </motion.div>
 
-            {/* What We Are Not */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -193,11 +189,9 @@ export default function About() {
         </div>
       </section>
 
-      {/* Mission & Vision */}
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-800 dark:to-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Mission */}
             <motion.div 
               className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-700"
               initial={{ opacity: 0, x: -50 }}

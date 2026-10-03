@@ -10,7 +10,6 @@ export const useBookingStore = create((set, get) => ({
   error: null,
   bookingSuccess: false,
 
-  // Set selected mentor
   setSelectedMentor: (mentor) => {
     set({ 
       selectedMentor: mentor, 
@@ -20,7 +19,6 @@ export const useBookingStore = create((set, get) => ({
     });
   },
 
-  // Fetch availability for a date
   fetchAvailability: async (mentorId, date) => {
     set({ loading: true, error: null, availability: [] });
     
@@ -39,12 +37,10 @@ export const useBookingStore = create((set, get) => ({
     }
   },
 
-  // Select a time slot
   selectSlot: (slot) => {
     set({ selectedSlot: slot });
   },
 
-  // Book session
   bookSession: async (topic) => {
     const { selectedMentor, selectedSlot } = get();
     
@@ -56,7 +52,6 @@ export const useBookingStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      // Get the mentor ID from the nested user object or directly
       const mentorId = selectedMentor.user?.id || selectedMentor.id;
       
       const response = await api.post('/sessions/create/', {
@@ -77,13 +72,12 @@ export const useBookingStore = create((set, get) => ({
       console.error('Booking failed:', error);
       set({ 
         error: error.response?.data?.message || 'Booking failed',
-        loading: false
+        loading: false 
       });
       return { success: false };
     }
   },
 
-  // Fetch my sessions
   fetchMySessions: async () => {
     set({ loading: true, error: null });
     
@@ -102,7 +96,6 @@ export const useBookingStore = create((set, get) => ({
     }
   },
 
-  // Clear booking state
   clearBooking: () => {
     set({
       selectedMentor: null,

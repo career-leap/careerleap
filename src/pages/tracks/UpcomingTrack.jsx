@@ -26,7 +26,6 @@ export default function UpcomingTrack({
         )}
       </Helmet>
       {schema && <SchemaScript schema={schema} />}
-      {/* Hero Section */}
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <motion.div 
@@ -62,7 +61,6 @@ export default function UpcomingTrack({
         </div>
       </section>
 
-      {/* Track Overview */}
       <section className="py-16 px-4 bg-white dark:bg-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
@@ -90,7 +88,6 @@ export default function UpcomingTrack({
         </div>
       </section>
 
-      {/* Expected Skills / Modules */}
       {expectedSkills.length > 0 && (
         <section className="py-20 px-4 bg-slate-50 dark:bg-gray-800 transition-colors">
           <div className="max-w-7xl mx-auto">
@@ -132,7 +129,6 @@ export default function UpcomingTrack({
         </section>
       )}
 
-      {/* CTA */}
       <section className="py-20 px-4 bg-white dark:bg-gray-900 transition-colors">
         <div className="max-w-3xl mx-auto text-center">
           <motion.div

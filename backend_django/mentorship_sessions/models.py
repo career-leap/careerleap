@@ -47,8 +47,7 @@ class Session(models.Model):
         default='pending'
     )
     meeting_link = models.CharField(max_length=255, blank=True, null=True)
-    
-    # Timestamps
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

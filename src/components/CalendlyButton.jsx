@@ -2,10 +2,6 @@ import { Calendar } from 'lucide-react';
 
 const CALENDLY_URL = import.meta.env.VITE_CALENDLY_URL;
 
-/**
- * Reusable button that opens the Calendly info-session scheduling page.
- * Falls back to the contact page if no Calendly URL is configured.
- */
 export default function CalendlyButton({
   children = 'Book a Free Info Session',
   variant = 'outline',

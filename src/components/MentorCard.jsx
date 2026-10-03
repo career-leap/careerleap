@@ -6,15 +6,12 @@ export default function MentorCard({ mentor }) {
   const [showBooking, setShowBooking] = useState(false);
   
   // Handle both Django and Node.js response formats
-  // Django format: mentor has user nested object with mentor_profile
-  // Node.js format: mentor has mentorProfile directly
   const user = mentor.user || mentor;
   const profile = mentor.mentor_profile || mentor.mentorProfile || mentor;
   
   return (
     <>
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm dark:shadow-gray-900/50 hover:shadow-lg dark:hover:shadow-gray-900/50 transition-all p-6 border border-gray-100 dark:border-gray-700">
-        {/* Header */}
         <div className="flex items-start gap-4 mb-4">
           <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-full flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
             {user.firstName?.[0]}{user.lastName?.[0]}
@@ -25,7 +22,6 @@ export default function MentorCard({ mentor }) {
             </h3>
             <p className="text-gray-500 dark:text-gray-400 text-sm">{user.industry || 'No industry'}</p>
             
-            {/* Rating */}
             <div className="flex items-center gap-1 mt-1">
               <Star className="text-yellow-400 fill-current" size={16} />
               <span className="text-sm font-medium text-gray-900 dark:text-white">
@@ -38,12 +34,10 @@ export default function MentorCard({ mentor }) {
           </div>
         </div>
 
-        {/* Bio */}
         <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
           {profile.bio || user.bio || 'No bio available'}
         </p>
 
-        {/* Stats */}
         <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
           <div className="flex items-center gap-1">
             <Briefcase size={16} />
@@ -57,7 +51,6 @@ export default function MentorCard({ mentor }) {
           )}
         </div>
 
-        {/* Footer */}
         <div className="flex items-center justify-end pt-4 border-t border-gray-100 dark:border-gray-700">
           <button 
             onClick={() => setShowBooking(true)}

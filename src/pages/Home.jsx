@@ -27,7 +27,6 @@ const Step = ({ number, title, description }) => (
 export default function Home() {
   return (
     <div>
-      {/* Hero Section */}
       <section className="relative pt-16 pb-8 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-900 overflow-hidden transition-colors">
         <div className="absolute top-0 right-0 w-96 h-96 bg-teal-600/5 dark:bg-teal-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         
@@ -57,11 +56,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pilot Cohort Section */}
       <section className="pt-8 pb-16 px-4 bg-slate-50 dark:bg-gray-800 transition-colors overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          {/* Section Header */}
-          <motion.div 
+          <motion.div
             className="text-center mb-10"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -92,7 +89,6 @@ export default function Home() {
             </p>
           </motion.div>
 
-          {/* Cohort Overview Cards */}
           <div className="grid md:grid-cols-3 gap-6 mb-10">
             {[
               { icon: Users, label: 'Cohort Size', value: '5 Participants' },
@@ -116,8 +112,7 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Learn More CTA */}
-          <motion.div 
+          <motion.div
             className="text-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -138,11 +133,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* The Transition Gap Section */}
       <section className="py-20 px-4 bg-white dark:bg-gray-900 transition-colors overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-center">
-            {/* Left Column - Animates from Left */}
             <motion.div
               initial={{ opacity: 0, x: -100 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -185,8 +178,7 @@ export default function Home() {
               </motion.p>
             </motion.div>
 
-            {/* Right Column - Animates from Right */}
-            <motion.div 
+            <motion.div
               className="bg-slate-50 dark:bg-gray-800 rounded-2xl p-8"
               initial={{ opacity: 0, x: 100 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -234,8 +226,7 @@ export default function Home() {
             </motion.div>
           </div>
 
-          {/* Bottom Text - Fades in from bottom */}
-          <motion.div 
+          <motion.div
             className="mt-12 text-center"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -264,7 +255,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* The CareerLeap Model Section */}
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-800 dark:to-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -304,7 +294,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="py-20 px-4 bg-white dark:bg-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -322,7 +311,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How It Works Section */}
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-800 dark:to-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -339,7 +327,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Designed for International Talent Section */}
       <section className="py-20 px-4 bg-white dark:bg-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -377,7 +364,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Institutional Alignment Section */}
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-800 dark:to-gray-900 transition-colors">
         <div className="max-w-3xl mx-auto">
           <motion.div 
@@ -406,7 +392,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Take the Next Step - CTA Section */}
       <section className="py-20 px-4 bg-gradient-to-r from-teal-500 to-cyan-500 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2" />
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl translate-y-1/2 translate-x-1/2" />

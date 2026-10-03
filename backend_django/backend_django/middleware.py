@@ -67,9 +67,7 @@ class SecurityHeadersMiddleware:
     
     def __call__(self, request):
         response = self.get_response(request)
-        
-        # Content Security Policy
-        # Restricts sources of content to prevent XSS attacks
+
         response['Content-Security-Policy'] = (
             "default-src 'self'; "
             "script-src 'self' 'unsafe-inline'; "
@@ -83,16 +81,10 @@ class SecurityHeadersMiddleware:
             "form-action 'self';"
         )
         
-        # Prevent MIME type sniffing
         response['X-Content-Type-Options'] = 'nosniff'
-        
-        # XSS Protection
         response['X-XSS-Protection'] = '1; mode=block'
-        
-        # Referrer Policy
         response['Referrer-Policy'] = 'strict-origin-when-cross-origin'
         
-        # Permissions Policy (formerly Feature Policy)
         response['Permissions-Policy'] = (
             'geolocation=(), '
             'microphone=(), '
@@ -104,7 +96,6 @@ class SecurityHeadersMiddleware:
             'speaker=()'
         )
         
-        # Remove server information
         response['Server'] = 'CareerLeap'
         
         return response

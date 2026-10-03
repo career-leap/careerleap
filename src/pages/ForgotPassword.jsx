@@ -18,7 +18,6 @@ export default function ForgotPassword() {
     }
   };
 
-  // Success state - show confirmation message
   if (isSubmitted) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center py-12 px-4 transition-colors">

@@ -38,7 +38,6 @@ export default function HelpMeChoose() {
         <title>Choose the Right Career Track | CareerLeap</title>
         <meta name="description" content="Not sure which CareerLeap track fits your goals? Compare simulation cohorts and support options for IT, Data, Business Operations, and German job market coaching." />
       </Helmet>
-      {/* Hero Section */}
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <motion.div 
@@ -66,7 +65,6 @@ export default function HelpMeChoose() {
         </div>
       </section>
 
-      {/* Options Grid */}
       <section className="py-20 px-4 bg-white dark:bg-gray-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <motion.div 
@@ -108,7 +106,6 @@ export default function HelpMeChoose() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-20 px-4 bg-slate-50 dark:bg-gray-800 transition-colors">
         <div className="max-w-3xl mx-auto text-center">
           <motion.div

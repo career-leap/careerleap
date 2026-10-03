@@ -28,7 +28,6 @@ import {
 import api from '../lib/api';
 import { trackAction } from '../lib/metrics';
 
-/* ──────────────── Field Config ──────────────── */
 const LOCATION_OPTIONS = ['Germany', 'Other EU country', 'Outside Europe'];
 
 const CAREER_STAGE_OPTIONS = [
@@ -105,7 +104,6 @@ const SECTIONS = [
   { id: 'next', label: 'Next Step', icon: Rocket }
 ];
 
-/* ──────────────── Component ──────────────── */
 export default function JourneyFormMockup() {
   const [currentSection, setCurrentSection] = useState(0);
   const [formData, setFormData] = useState({
@@ -131,7 +129,6 @@ export default function JourneyFormMockup() {
   const [submitted, setSubmitted] = useState(false);
   const [utmParams, setUtmParams] = useState({});
 
-  /* Capture UTM params on mount */
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setUtmParams({
@@ -224,7 +221,6 @@ export default function JourneyFormMockup() {
     }
   };
 
-  /* ──────────────── Thank You Screen ──────────────── */
   if (submitted) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-4">
@@ -258,11 +254,9 @@ export default function JourneyFormMockup() {
     );
   }
 
-  /* ──────────────── Form Render ──────────────── */
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
       <div className="max-w-3xl mx-auto">
-        {/* Header */}
         <div className="text-center mb-10">
           <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white mb-3">
             Start Your CareerLeap Journey
@@ -272,7 +266,6 @@ export default function JourneyFormMockup() {
           </p>
         </div>
 
-        {/* Progress Steps */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
             {SECTIONS.map((section, index) => {
@@ -309,7 +302,6 @@ export default function JourneyFormMockup() {
           </div>
         </div>
 
-        {/* Form Card */}
         <motion.div
           key={currentSection}
           initial={{ opacity: 0, x: 20 }}
@@ -330,7 +322,6 @@ export default function JourneyFormMockup() {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <AnimatePresence mode="wait">
-              {/* ═══════════ SECTION 1: ABOUT YOU ═══════════ */}
               {currentSection === 0 && (
                 <motion.div
                   key="about"
@@ -344,7 +335,6 @@ export default function JourneyFormMockup() {
                     About You
                   </h2>
 
-                  {/* Full Name */}
                   <div>
                     <label className="block font-semibold text-slate-900 dark:text-white mb-2">
                       Full Name <span className="text-red-500">*</span>
@@ -361,7 +351,6 @@ export default function JourneyFormMockup() {
                     {errors.full_name && <p className="text-red-500 text-sm mt-1">{errors.full_name}</p>}
                   </div>
 
-                  {/* Email */}
                   <div>
                     <label className="block font-semibold text-slate-900 dark:text-white mb-2">
                       Email Address <span className="text-red-500">*</span>
@@ -381,7 +370,6 @@ export default function JourneyFormMockup() {
                     {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                   </div>
 
-                  {/* Phone */}
                   <div>
                     <label className="block font-semibold text-slate-900 dark:text-white mb-2">
                       Phone / WhatsApp Number
@@ -398,7 +386,6 @@ export default function JourneyFormMockup() {
                     </div>
                   </div>
 
-                  {/* Location */}
                   <div>
                     <label className="block font-semibold text-slate-900 dark:text-white mb-2">
                       Location <span className="text-red-500">*</span>
@@ -421,7 +408,6 @@ export default function JourneyFormMockup() {
                 </motion.div>
               )}
 
-              {/* ═══════════ SECTION 2: YOUR CAREER SITUATION ═══════════ */}
               {currentSection === 1 && (
                 <motion.div
                   key="situation"
@@ -435,7 +421,6 @@ export default function JourneyFormMockup() {
                     Your Career Situation
                   </h2>
 
-                  {/* Career Stage */}
                   <div>
                     <label className="block font-semibold text-slate-900 dark:text-white mb-2">
                       Which best describes you? <span className="text-red-500">*</span>
@@ -456,7 +441,6 @@ export default function JourneyFormMockup() {
                     {errors.career_stage && <p className="text-red-500 text-sm mt-1">{errors.career_stage}</p>}
                   </div>
 
-                  {/* Current Goal (Checkbox Group) */}
                   <div>
                     <label className="block font-semibold text-slate-900 dark:text-white mb-3">
                       What are you looking for right now? <span className="text-red-500">*</span>
@@ -485,7 +469,6 @@ export default function JourneyFormMockup() {
                     {errors.current_goal && <p className="text-red-500 text-sm mt-2">{errors.current_goal}</p>}
                   </div>
 
-                  {/* Track Interest */}
                   <div>
                     <label className="block font-semibold text-slate-900 dark:text-white mb-2">
                       Which CareerLeap path are you most interested in? <span className="text-red-500">*</span>
@@ -506,7 +489,6 @@ export default function JourneyFormMockup() {
                     {errors.track_interest && <p className="text-red-500 text-sm mt-1">{errors.track_interest}</p>}
                   </div>
 
-                  {/* Career Priority */}
                   <div>
                     <label className="block font-semibold text-slate-900 dark:text-white mb-2">
                       What is your current career priority? <span className="text-red-500">*</span>
@@ -529,7 +511,6 @@ export default function JourneyFormMockup() {
                 </motion.div>
               )}
 
-              {/* ═══════════ SECTION 3: NEXT STEP ═══════════ */}
               {currentSection === 2 && (
                 <motion.div
                   key="next"
@@ -543,7 +524,6 @@ export default function JourneyFormMockup() {
                     Next Step
                   </h2>
 
-                  {/* Start Timeline */}
                   <div>
                     <label className="block font-semibold text-slate-900 dark:text-white mb-2">
                       When would you like to start? <span className="text-red-500">*</span>
@@ -564,7 +544,6 @@ export default function JourneyFormMockup() {
                     {errors.start_timeline && <p className="text-red-500 text-sm mt-1">{errors.start_timeline}</p>}
                   </div>
 
-                  {/* Info Call Availability (Radio) */}
                   <div>
                     <label className="block font-semibold text-slate-900 dark:text-white mb-3">
                       Are you available for a short info call? <span className="text-red-500">*</span>
@@ -594,7 +573,6 @@ export default function JourneyFormMockup() {
                     {errors.info_call_availability && <p className="text-red-500 text-sm mt-2">{errors.info_call_availability}</p>}
                   </div>
 
-                  {/* Preferred Contact Method */}
                   <div>
                     <label className="block font-semibold text-slate-900 dark:text-white mb-2">
                       Preferred Contact Method <span className="text-red-500">*</span>
@@ -615,7 +593,6 @@ export default function JourneyFormMockup() {
                     {errors.preferred_contact_method && <p className="text-red-500 text-sm mt-1">{errors.preferred_contact_method}</p>}
                   </div>
 
-                  {/* Source Channel */}
                   <div>
                     <label className="block font-semibold text-slate-900 dark:text-white mb-2">
                       How did you hear about CareerLeap?
@@ -633,7 +610,6 @@ export default function JourneyFormMockup() {
                     </div>
                   </div>
 
-                  {/* Message */}
                   <div>
                     <label className="block font-semibold text-slate-900 dark:text-white mb-2">
                       Tell us briefly about your career goal or challenge
@@ -647,7 +623,6 @@ export default function JourneyFormMockup() {
                     />
                   </div>
 
-                  {/* GDPR Consent */}
                   <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
                     <label className="flex items-start gap-3 cursor-pointer">
                       <input
@@ -667,7 +642,6 @@ export default function JourneyFormMockup() {
                     {errors.gdpr_consent && <p className="text-red-500 text-sm mt-2">{errors.gdpr_consent}</p>}
                   </div>
 
-                  {/* Marketing Consent */}
                   <div>
                     <label className="flex items-start gap-3 cursor-pointer">
                       <input
@@ -685,7 +659,6 @@ export default function JourneyFormMockup() {
               )}
             </AnimatePresence>
 
-            {/* Navigation Buttons */}
             <div className="flex items-center justify-between pt-6 border-t border-gray-200 dark:border-gray-700">
               <button
                 type="button"
@@ -729,7 +702,6 @@ export default function JourneyFormMockup() {
           </form>
         </motion.div>
 
-        {/* Trust Badge */}
         <div className="mt-8 text-center">
           <div className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
             <ShieldCheck size={16} />

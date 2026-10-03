@@ -23,7 +23,6 @@ import {
 import { useFileStore } from '../store/fileStore';
 import { useAuthStore } from '../store/authStore';
 
-// File type icons mapping
 const getFileIcon = (type) => {
   if (type?.startsWith('image/')) return Image;
   if (type?.includes('pdf')) return FileText;

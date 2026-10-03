@@ -24,7 +24,6 @@ export default function Mentors() {
     fetchMentors(1);
   }, []);
 
-  // Refetch when filters change (debounced)
   useEffect(() => {
     const timer = setTimeout(() => {
       fetchMentors(1);

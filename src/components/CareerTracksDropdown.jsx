@@ -36,7 +36,6 @@ export default function CareerTracksDropdown({ mobile = false, onItemClick }) {
   const location = useLocation();
   const isActive = location.pathname.startsWith('/career-tracks');
 
-  // Close on click outside
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -47,7 +46,6 @@ export default function CareerTracksDropdown({ mobile = false, onItemClick }) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Close on route change
   useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);

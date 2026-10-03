@@ -51,7 +51,6 @@ def _validate_status_transition(current_status, new_status, is_mentor, is_mentee
 @permission_classes([IsAuthenticated])
 @ratelimit(key='user', rate='60/m', method=['GET'])
 def session_list(request):
-    """Get user's sessions (as mentee or mentor)"""
     if getattr(request, 'limited', False):
         return Response({
             'success': False,
@@ -60,7 +59,7 @@ def session_list(request):
 
     user = request.user
     
-    # Get sessions where user is either mentee or mentor (select_related to avoid N+1)
+    # select_related to avoid N+1 queries on mentee/mentor
     sessions = Session.objects.filter(mentee=user) | Session.objects.filter(mentor=user)
     sessions = sessions.select_related('mentee', 'mentor').order_by('-created_at')
     
@@ -76,7 +75,6 @@ def session_list(request):
 @permission_classes([IsAuthenticated])
 @ratelimit(key='user', rate='60/m', method=['GET'])
 def session_availability(request):
-    """Get available time slots for a mentor on a specific date"""
     if getattr(request, 'limited', False):
         return Response({
             'success': False,
@@ -93,16 +91,13 @@ def session_availability(request):
         }, status=status.HTTP_400_BAD_REQUEST)
     
     try:
-        # Parse the date
         selected_date = datetime.strptime(date_str, '%Y-%m-%d').date()
         
-        # Generate time slots (9 AM to 5 PM, hourly)
         slots = []
         for hour in range(9, 18):  # 9 AM to 5 PM
             slot_time = datetime.combine(selected_date, datetime.min.time().replace(hour=hour))
             time_iso = slot_time.isoformat()
             
-            # Check if slot is already booked
             is_booked = Session.objects.filter(
                 mentor_id=mentor_id,
                 scheduled_at=slot_time,
@@ -112,7 +107,7 @@ def session_availability(request):
             if not is_booked:
                 slots.append({
                     'time': time_iso,
-                    'hour': slot_time.strftime('%I:%M %p')  # Format like "09:00 AM"
+                    'hour': slot_time.strftime('%I:%M %p')
                 })
         
         return Response({
@@ -131,7 +126,6 @@ def session_availability(request):
 @permission_classes([IsAuthenticated])
 @ratelimit(key='user', rate='10/m', method=['POST'])
 def create_session(request):
-    """Create a new session (booking)"""
     if getattr(request, 'limited', False):
         return Response({
             'success': False,
@@ -139,7 +133,6 @@ def create_session(request):
         }, status=status.HTTP_429_TOO_MANY_REQUESTS)
     data = request.data.copy()
     
-    # Handle both camelCase and snake_case
     if 'mentorId' in data:
         data['mentor'] = data.pop('mentorId')
     if 'scheduledAt' in data:
@@ -179,7 +172,6 @@ def create_session(request):
     # Atomic creation + select_for_update prevents race-condition double-booking
     try:
         with transaction.atomic():
-            # Lock the mentor's existing active sessions for this slot
             existing = Session.objects.select_for_update().filter(
                 mentor=mentor,
                 scheduled_at=scheduled_at,

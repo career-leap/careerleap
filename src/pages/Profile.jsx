@@ -29,7 +29,6 @@ export default function Profile() {
     try {
       const response = await api.patch('/auth/profile/', formData);
       if (response.data.success) {
-        // Update user data in store with the returned user data
         useAuthStore.setState({ user: response.data.user });
         setMessage('Profile updated successfully!');
         setEditing(false);
