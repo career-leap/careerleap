@@ -1,7 +1,6 @@
 # CareerLeap — System Design Document
 
-> Architecture overview for the CareerLeap mentorship and career simulation platform. Copy this document into Notion for internal reference.
-
+> Architecture overview for the CareerLeap mentorship and career simulation platform.
 ---
 
 ## 1. System Overview
